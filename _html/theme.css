@@ -1,6 +1,7 @@
 body {
-    padding-top: 70px;
+    padding-top: 50px;
     padding-bottom: 30px;
+    background-color: #eee;
 }
 
 .theme-dropdown .dropdown-menu {
@@ -15,4 +16,23 @@ body {
 
 .theme-showcase .navbar .container {
     width: auto;
+}
+
+input {
+    border:none !important;
+}
+
+.navbar-custom {
+    position: fixed;
+    top: 0;
+    left: 0;
+    border: none;
+    border-radius: 0;
+    background-color: rgba(255,255,255,.9);
+    width: 100%;
+    z-index: 2000;
+}
+
+hr {
+    border-top: 1px solid #ddd !important;;
 }

@@ -8,19 +8,13 @@
     <meta name="author" content="">
     <link rel="icon" href="favicon.ico">
 
-    <title>Menurestoo</title>
+    <title>RstrntMenu</title>
 
     <!-- Bootstrap core CSS -->
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap theme -->
-    <link href="bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
+    <link href="../web/bootflat/css/bootflat.min.css" rel="stylesheet">
     <link href="theme.css" rel="stylesheet">
-
-    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
-    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-    <!--<script src="../../assets/js/ie-emulation-modes-warning.js"></script>
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -32,7 +26,7 @@
 <body role="document">
 
 <!-- Fixed navbar -->
-<div class="navbar navbar-fixed-top" role="navigation">
+<div class="navbar navbar-custom navbar-fixed-top" role="navigation">
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
@@ -41,10 +35,13 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Menurestoo</a>
+            <a class="navbar-brand" href="#">
+                <span class="glyphicon glyphicon-cutlery" aria-hidden="true"></span>
+                RstrntMenu
+            </a>
         </div>
         <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
+            <ul class="nav navbar-nav navbar-right">
                 <li class="active"><a href="#">Log in</a></li>
                 <li><a href="#about">About</a></li>
                 <li class="dropdown">
@@ -69,9 +66,55 @@
 
 
 
-<div class="container theme-showcase" role="main">
-    <h1>A quoi ça sert ?</h1>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <h3>The problem</h3>
+            <p>Lost in a restaurant menu? Disappointed with the chosen dish? <b>Do not be anymore!</b></p>
+        </div>
+        <div class="col-md-4">
+            <h3>The solution</h3>
+            <p><b>RstrntMenu</b> is the simplest and easiest way to get the menu, reviews and photos of each dish of a restaurant.</p>
+        </div>
+        <div class="col-md-4">
+            <h3>Review and log</h3>
+            <p>On <b>RstrntMenu</b>, make your log of your passages in restaurants! Review not only the restaurant but also your dish.</p>
+        </div>
+    </div>
 </div> <!-- /container -->
+
+
+<div class="site-footer">
+    <div class="container">
+        <hr class="dashed">
+        <div class="row">
+            <div class="col-md-6">
+                <h3>Talk to us</h3>
+                <ul>
+                    <li>Twitter</li>
+                    <li>Facebook</li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <!-- Begin MailChimp Signup Form -->
+                <div id="mc_embed_signup">
+                    <h3>Newsletter</h3>
+                    <p>Keep informed only once a month</p>
+                    <form action="" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate="">
+                        <input style="margin-bottom: 10px;" type="email" value="" name="EMAIL" class="email form-control" id="mce-EMAIL" placeholder="email address" required="">
+                        <span class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="btn btn-primary"></span>
+                    </form>
+                </div>
+                <!--End mc_embed_signup-->
+            </div>
+        </div>
+        <hr class="dashed">
+        <div class="copyright clearfix">
+            <p><b>RstrntMenu</b>&nbsp;&nbsp;&nbsp;&nbsp;<a href="">Getting Started</a>&nbsp;•&nbsp;<a href="documentation.html">Documentation</a>&nbsp;•&nbsp;<a href="">Who are we</a></p>
+            <p>© 2014 RstrntMenu</p>
+        </div>
+    </div>
+</div>
 
 
 <!-- Bootstrap core JavaScript
