@@ -42,13 +42,16 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
-                <li class="active"><a href="#">Home</a></li>
-                <li><a href="#about">Log in</a></li>
-                <li><a href="#contact">Sign in</a></li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                <li><a href="#">
+                    Home
+                </a></li>
+                <li class="active" class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                        Richard <span class="caret"></span>
+                    </a>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a href="#">Action</a></li>
+                        <li class="active"><a href="#">My timeline</a></li>
                         <li><a href="#">Another action</a></li>
                         <li><a href="#">Something else here</a></li>
                         <li class="divider"></li>
@@ -63,43 +66,69 @@
 </nav>
 
 
-<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d83998.91163207506!2d2.347059900000012!3d48.858858949999956!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x3b2a6b976546924d!2sRestaurant+Lao-Thai!5e0!3m2!1sfr!2sfr!4v1412280030350" width="100%" height="450" frameborder="0" style="border:0"></iframe>
 
-
-
-<div class="container" style="margin-top:-60px">
+<div class="container">
+    <h1>My timeline</h1>
     <div class="row">
-        <div class="col-md-6 col-md-offset-3">
-            <form>
-                <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search an address or a restaurant name">
-                    <div class="input-group-btn">
-                        <button type="button" class="btn btn-primary">Search</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
+        <div class="col-md-12">
+            <div class="timeline">
+                <dl>
+                    <dt>Apr 2014</dt>
+                    <dd class="pos-right clearfix">
+                        <div class="circ"></div>
+                        <div class="time">Apr 14</div>
+                        <div class="events">
+                            <div class="pull-left">
+                                <img class="events-object img-rounded" src="../web/img/samples/burger.jpg" width="96" height="96">
+                            </div>
+                            <div class="events-body">
+                                <h4 class="events-heading"><a href="#">Cheeze Burger</a><br>@ <a href="#">Burger Queen</a></h4>
+                                <p>Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica.</p>
+                            </div>
+                        </div>
+                    </dd>
+                    <dd class="pos-left clearfix">
+                        <div class="circ"></div>
+                        <div class="time">Apr 10</div>
+                        <div class="events">
+                            <div class="pull-left">
+                                <img class="events-object img-rounded" src="../web/img/samples/pizza.png" width="96" height="96">
+                            </div>
+                            <div class="events-body">
+                                <h4 class="events-heading"><a href="#">Pizza napolitana</a><br>@ <a href="#">Pizz'ahoolic</a></h4>
+                                <p>Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica.</p>
+                            </div>
+                        </div>
+                    </dd>
+                    <dt>Mar 2014</dt>
+                    <dd class="pos-right clearfix">
+                        <div class="circ"></div>
+                        <div class="time">Mar 15</div>
+                        <div class="events">
+                            <div class="pull-left">
+                                <img class="events-object img-rounded" src="../web/img/samples/pizza.png" width="96" height="96">
+                            </div>
+                            <div class="events-body">
+                                <h4 class="events-heading"><a href="#">Pizza napolitana</a><br>@ <a href="#">Pizz'ahoolic</a></h4>
+                                <p>Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica.</p>
+                            </div>
+                        </div>
+                    </dd>
+                    <dd class="pos-left clearfix">
+                        <div class="circ"></div>
+                        <div class="time">Mar 8</div>
+                        <div class="events">
+                            <div class="pull-left">
+                                <img class="events-object img-rounded" src="../web/img/samples/burger.jpg" width="96" height="96">
+                            </div>
+                            <div class="events-body">
+                                <h4 class="events-heading"><a href="#">Paupiette de veau sauce moutard à l'ancienne</a><br>@ <a href="#">The good french</a></h4>
+                                <p>Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica.</p>
+                            </div>
+                        </div>
+                    </dd>
 
-<div class="container" style="margin-top:40px">
-    <div class="row">
-        <div class="col-md-4">
-            <div class="alert alert-danger">
-                <h4>The problem</h4>
-                <p>Lost in a restaurant menu? Disappointed with the chosen dish?<br><b>Do not be anymore!</b></p>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="alert alert-success">
-                <h4>The solution</h4>
-                <p><b>RstrntMenu</b> is the simplest and easiest way to get the menu, reviews and photos of each dish of a restaurant.</p>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="alert alert-info">
-                <h4>Review and log</h4>
-                <p>On <b>RstrntMenu</b>, make your timeline of visited restaurants! Review not only the restaurant but also your dish.</p>
+                </dl>
             </div>
         </div>
     </div>
@@ -146,12 +175,12 @@
                     <h4>Newsletter</h4>
                     <p>Keep informed only once a month</p>
                     <form>
-                        <div class="input-group">
-                            <input type="text" class="form-control noborder" placeholder="Your email">
-                            <div class="input-group-btn">
-                                <button type="button" class="btn btn-primary">Subscribe</button>
-                            </div>
+                    <div class="input-group">
+                        <input type="text" class="form-control noborder" placeholder="Your email">
+                        <div class="input-group-btn">
+                            <button type="button" class="btn btn-primary">Subscribe</button>
                         </div>
+                    </div>
                     </form>
                 </div>
                 <!--End mc_embed_signup-->
