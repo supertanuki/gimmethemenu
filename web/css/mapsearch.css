@@ -1,0 +1,58 @@
+#map_canvas {
+    width: 100%;
+    height: 440px;
+    border-bottom: 4px solid #37bc9b;
+}
+#listing {
+    position: absolute;
+    width: 200px;
+    height: 400px;
+    overflow: auto;
+    right: 0px;
+    top: 80px;
+    cursor: pointer;
+    overflow-x: hidden;
+    border: 1px solid lightgrey;
+}
+#controls {
+    width: 346px;
+    text-align: right;
+    padding-top: 2px;
+}
+#keywordField {
+    width: 220px;
+    height: 25px;
+}
+#keyword {
+    width: 100%;
+}
+.placeIcon {
+    width: 32px;
+    height: 37px;
+    margin: 4px;
+}
+.hotelIcon {
+    width: 24px;
+    height: 24px;
+}
+#resultsTable {
+    border-collapse: collapse;
+    width: 240px;
+}
+#rating {
+    font-size: 13px;
+    font-family: Arial Unicode MS;
+}
+#keywordsLabel {
+    text-align: right;
+    width: 70px;
+    font-size: 14px;
+    padding: 4px;
+}
+.iw_table_row {
+    height: 18px;
+}
+.iw_attribute_name {
+    font-weight: bold;
+    text-align: right;
+}
