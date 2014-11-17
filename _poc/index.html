@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>JQuery UI Touch</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.3/css/base/jquery.ui.all.css" rel="stylesheet">
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.2/css/lightness/jquery-ui-1.10.2.custom.min.css" rel="stylesheet">
+
+    <style>
+        .draggable { position: relative; cursor:move; font-weight:bold; top:150px; left:100px; opacity: 0.7; filter: alpha(opacity=70); background:#fff; width: 200px; height: 60px; padding: 0.5em; float: left; margin:0; }
+        #containment-wrapper { width: 100%; margin-bottom:20px }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Menu</h1>
+
+        <div id="containment-wrapper">
+            <img src="img/menu.png" class="img-responsive">
+            <div id="myArea" class="draggable ui-widget-content" style="position: absolute;">
+                <p>Placez-moi sur un plat</p>
+            </div>
+        </div>
+
+        <p><button class="btn btn-primary" data-toggle="modal" data-target="#myModal">Enregistrer</button></p>
+
+    </div><!-- /.container -->
+
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Enregistrer un plat</h4>
+                </div>
+                <div class="modal-body">
+                    <form role="form">
+                        <div class="form-group">
+                            <label for="input1">Nom du plat</label>
+                            <input type="text" class="form-control" id="input1" placeholder="Nom du plat">
+                        </div>
+                        <div class="form-group">
+                            <label for="input2">Prix</label>
+                            <div class="input-group col-lg-3">
+                                <input id="input2" type="text" class="form-control" placeholder="Prix">
+                                <span class="input-group-addon">€</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputFile">Prenez une photo du plat</label>
+                            <input type="file" id="exampleInputFile">
+                        </div>
+                        <div class="form-group">
+                            <label>Votre note</label><br>
+                            <label class="radio-inline">
+                                <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"> 1
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"> 2
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3"> 3
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="inlineRadioOptions" id="inlineRadio4" value="option3"> 4
+                            </label>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                    <button type="button" class="btn btn-primary">Enregistrer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.2/jquery.ui.touch-punch.min.js"></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+    <script>
+        $( "#myArea" )
+            .resizable({
+                containment: "#containment-wrapper"
+            })
+            .draggable({
+                containment: "#containment-wrapper",
+                scroll: false
+            })
+    </script>
+</body>
+</html>
+
+
+
