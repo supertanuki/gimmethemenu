@@ -9,22 +9,10 @@
     height: 400px;
     overflow: auto;
     right: 0px;
-    top: 80px;
+    top: 72px;
     cursor: pointer;
     overflow-x: hidden;
     border: 1px solid lightgrey;
-}
-#controls {
-    width: 346px;
-    text-align: right;
-    padding-top: 2px;
-}
-#keywordField {
-    width: 220px;
-    height: 25px;
-}
-#keyword {
-    width: 100%;
 }
 .placeIcon {
     width: 32px;
@@ -41,13 +29,6 @@
 }
 #rating {
     font-size: 13px;
-    font-family: Arial Unicode MS;
-}
-#keywordsLabel {
-    text-align: right;
-    width: 70px;
-    font-size: 14px;
-    padding: 4px;
 }
 .iw_table_row {
     height: 18px;
