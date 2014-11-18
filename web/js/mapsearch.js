@@ -102,12 +102,34 @@ function reallyDoSearch() {
                     icon: icon
                 }));
                 google.maps.event.addListener(markers[i], 'click', getDetails(results[i], i));
-                window.setTimeout(dropMarker(i), i * 100);
+                window.setTimeout(dropMarker(i), i * 50);
                 addResult(results[i], i);
             }
+        } else {
+            handlePlacesError(status)
         }
     });
 }
+
+function handlePlacesError(status) {
+    var serviceStatus = google.maps.places.PlacesServiceStatus;
+    if (status == serviceStatus.ZERO_RESULTS) {
+        var content = 'No result was found for this request.';
+    } else if (status == serviceStatus.ERROR) {
+        var content = 'There was a problem contacting the Google servers.';
+    } else if (status == serviceStatus.INVALID_REQUEST) {
+        var content = 'This request was invalid.';
+    } else if (status == serviceStatus.OVER_QUERY_LIMIT) {
+        var content = 'The webpage has gone over its request quota. Please try later';
+    } else if (status == serviceStatus.REQUEST_DENIED) {
+        var content = 'The webpage is not allowed to use the PlacesService.';
+    } else { // UNKNOWN_ERROR
+        var content = 'The PlacesService request could not be processed due to a server error. The request may succeed if you try again.';
+    }
+
+    showMyAlertModal(content);
+}
+
 
 function clearMarkers() {
     for (var i = 0; i < markers.length; i++) {
@@ -218,7 +240,7 @@ function getIWContent(place) {
 
 function handleNoGeolocation(errorFlag) {
     if (errorFlag) {
-        var content = 'Error: The Geolocation service failed.';
+        var content = 'The Geolocation service is not available for your browser.\nPlease search an address!';
     } else {
         var content = 'Error: Your browser doesn\'t support geolocation.';
     }
@@ -229,8 +251,9 @@ function handleNoGeolocation(errorFlag) {
         content: content
     };
 
-    var infowindow = new google.maps.InfoWindow(options);
     map.setCenter(options.position);
+
+    showMyAlertModal(content)
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
