@@ -5,8 +5,8 @@
 }
 #listing {
     position: absolute;
-    width: 200px;
-    height: 400px;
+    max-width: 200px;
+    max-height: 400px;
     overflow: auto;
     right: 0px;
     top: 72px;
@@ -19,13 +19,9 @@
     height: 37px;
     margin: 4px;
 }
-.hotelIcon {
-    width: 24px;
-    height: 24px;
-}
 #resultsTable {
     border-collapse: collapse;
-    width: 200px;
+    max-width: 200px;
 }
 #rating {
     font-size: 13px;
