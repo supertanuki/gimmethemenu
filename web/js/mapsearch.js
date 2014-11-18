@@ -101,11 +101,19 @@ function initialize() {
 
     // Try HTML5 geolocation
     if(navigator.geolocation) {
+        showMyAlertModal('We try to geolocate you.', 'Please wait...');
+
         navigator.geolocation.getCurrentPosition(function(position) {
             var pos = new google.maps.LatLng(position.coords.latitude,
                 position.coords.longitude);
             map.setCenter(pos);
             map.setZoom(17);  // Why 17? Because it looks good.
+
+            // show info
+            showMyAlertModal('You are now geolocated !', 'Yeah !');
+
+            // hide modal
+            window.setTimeout(hideMyAlertModal, 1000);
 
         }, function() {
             handleNoGeolocation(true);
@@ -335,7 +343,7 @@ function handleNoGeolocation(errorFlag) {
 
     map.setCenter(options.position);
 
-    showMyAlertModal(content)
+    showMyAlertModal(content);
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
