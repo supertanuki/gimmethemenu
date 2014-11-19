@@ -41,11 +41,6 @@ function initialize() {
         anchorPoint: new google.maps.Point(0, -29)
     });
 
-    // clear on focus
-    input.onfocus = function() {
-        this.value = '';
-    }
-
     google.maps.event.addListener(autocomplete, 'place_changed', function() {
         infowindow.close();
         marker.setVisible(false);
@@ -115,6 +110,9 @@ function initialize() {
             // hide modal
             window.setTimeout(hideMyAlertModal, 1000);
 
+            // show inputSearch
+            showInputSearch();
+
         }, function() {
             handleNoGeolocation(true);
         });
@@ -123,8 +121,6 @@ function initialize() {
         handleNoGeolocation(false);
     }
 
-
-
 //    document.getElementById('keyword').onkeyup = function(e) {
 //        if (!e) var e = window.event;
 //        if (e.keyCode != 13) return;
@@ -132,6 +128,27 @@ function initialize() {
 //        var keyword = document.getElementById('keyword').value;
 //        search(keyword);
 //    }
+}
+
+function showInputSearch() {
+    var input = $('#map-search-input');
+
+    input.show();
+
+    // info on input
+    input.popover({
+        animation: true,
+        trigger: 'manual',
+        placement:'bottom'
+    });
+
+    input.popover('show');
+
+    // clear on focus
+    input.on('focus', function() {
+        this.value = '';
+        $(input).popover('destroy');
+    });
 }
 
 function tilesLoaded() {
@@ -294,7 +311,7 @@ function showInfoWindow(i) {
 
 function getIWContent(place) {
     var content = '';
-    content += '<b><a href="' + place.id + '">' + place.name + '</a></b><br>';
+    content += '<b><a href="restaurant.html?id=' + place.id + '">' + place.name + '</a></b><br>';
     content += place.vicinity;
 //    content += '<table>';
 //    content += '<tr class="iw_table_row">';
@@ -330,7 +347,7 @@ function getIWContent(place) {
 
 function handleNoGeolocation(errorFlag) {
     if (errorFlag) {
-        var content = 'The Geolocation service is not allowed by your browser.\nPlease search manually an address!';
+        var content = 'The Geolocation service is not allowed by your browser.';
     } else {
         var content = 'Sorry, your browser doesn\'t support geolocation.';
     }
@@ -344,6 +361,9 @@ function handleNoGeolocation(errorFlag) {
     map.setCenter(options.position);
 
     showMyAlertModal(content);
+    window.setTimeout(hideMyAlertModal, 3000);
+
+    showInputSearch();
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);

@@ -38,7 +38,8 @@
             </button>
             <a class="navbar-brand" href="#">
                 <span class="glyphicon glyphicon-cutlery" aria-hidden="true"></span>
-                GimmeTheMenu
+                GimmeThe<b>Menu</b>
+                <span class="label label-warning">Paris</span>
             </a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
@@ -64,12 +65,20 @@
 </nav>
 
 
-<input id="map-search-input" type="text" placeholder="Search an address or a restaurant name">
-<div id="map_canvas"></div>
-<div id="listing" class="hidden-xs"><table id="resultsTable"><tbody id="results"></tbody></table></div>
+<input id="map-search-input" type="text" placeholder="Search an address or a restaurant name"
+       data-toggle="popover"
+       data-content="First of all, search a restaurant or an address, you will see all restaurants around."
+        ><!-- SearchInput -->
+<div id="map_canvas"></div><!-- map -->
+<div id="listing" class="hidden-xs">
+    <table id="resultsTable">
+        <tbody id="results"></tbody>
+    </table>
+</div><!-- listing on the right of the map -->
 
 
-<div class="container" style="margin-top:40px">
+
+<div class="container" style="margin-top:20px">
     <div class="row">
         <div class="col-md-4">
             <div class="alert alert-danger">
@@ -86,7 +95,7 @@
         <div class="col-md-4">
             <div class="alert alert-info">
                 <h4>Review and log</h4>
-                <p>On <b>GimmeTheMenu</b>, make your timeline of visited restaurants! Review not only the restaurant but also your dish. <a href="#">Here an example</a>.</p>
+                <p>On <b>GimmeTheMenu</b>, make your timeline of visited restaurants! Review not only the restaurant but also your chosen dish. <a href="timeline.html">Here an example</a>.</p>
             </div>
         </div>
     </div>
@@ -100,6 +109,13 @@
                 <div class="caption text-center">
                     <h3><a href="#">CheezeBurger</a></h3>
                     <p>@ <a href="#">The place2bee</a>, Paris</p>
+                    <p>
+                        <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                        <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                        <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                        <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
+                        <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
+                    </p>
                 </div>
             </div>
         </div>
@@ -177,6 +193,13 @@
                 <div class="caption text-center">
                     <h3><a href="#">An american in Paris</a></h3>
                     <p>Paris</p>
+                    <p>
+                        <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                        <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                        <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                        <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
+                        <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
+                    </p>
                 </div>
             </div>
         </div>

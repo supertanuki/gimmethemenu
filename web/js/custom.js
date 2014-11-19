@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    $('input').iCheck();
+//    $('input').iCheck();
 });
 
 function showMyAlertModal(content, title) {
