@@ -25,3 +25,7 @@ input.noborder {
 hr {
     border-top: 1px solid #ddd !important;;
 }
+
+.restaurantAddress {
+    padding-left: 24px;
+}

@@ -70,12 +70,15 @@
 
 <div class="container">
 
-        <ol class="breadcrumb">
-            <li><a href="#">Home</a></li>
-            <li class="active"><a href="#">Paris</a></li>
-        </ol>
+    <ol class="breadcrumb">
+        <li><a href="#">Home</a></li>
+        <li class="active"><a href="#">Paris</a></li>
+    </ol>
 
-    <h1>&ldquo; Le père tranquille &rdquo;</h1>
+    <h1>&ldquo;Le père tranquille&rdquo;</h1>
+    <p class="restaurantAddress">
+        16 rue des Trois Frères, 75018 Paris
+    </p>
     <hr>
 
     <div class="row">
@@ -114,21 +117,7 @@
         </div>
 
         <div class="col-md-6">
-            <h2><i>Voilà</i> the address</h2>
-            <div class="well">
-                <p>
-                    16 rue des Trois Frères<br>
-                    75018 Paris<br>
-                    Tel: 01 53 28 26 20
-                </p>
-
-                <script>
-                    var restaurantPosition = { 'lat':48.858859, 'lng':2.3470599 };
-                </script>
-                <div id="map_restaurant"></div>
-            </div>
-
-            <h2>All the dishes</h2>
+            <h2><i>Voilà</i> the dishes</h2>
 
             <div class="well">
                 <b>Dibs!</b><br>
@@ -223,8 +212,26 @@
                 </div>
 
             </div><!-- /row -->
+
+
+
         </div><!-- /col-md-6 -->
     </div><!-- /row -->
+
+    <h2><i>Voilà</i> the address</h2>
+    <div class="well">
+        <p>
+            <b>Le père tranquille</b><br>
+            16 rue des Trois Frères<br>
+            75018 Paris<br>
+            Tel: 01 53 28 26 20
+        </p>
+
+        <script>
+            var restaurantPosition = { 'lat':48.858859, 'lng':2.3470599 };
+        </script>
+        <div id="map_restaurant"></div>
+    </div>
 
 </div> <!-- /container -->
 
