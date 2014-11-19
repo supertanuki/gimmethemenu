@@ -8,7 +8,7 @@ var rankBy = 'prominence'; // other criteria : distance
 var defaultIcon = 'img/mapicons/restaurant.png';
 var activeIcon = 'img/mapicons-active/restaurant.png';
 var countryRestrict = { 'country': 'fr' };
-
+var cookieGeolocalisationName = 'geolocalisation_cache';
 
 function initialize() {
     var myOptions = {
@@ -54,7 +54,7 @@ function initialize() {
             map.fitBounds(place.geometry.viewport);
         } else {
             map.setCenter(place.geometry.location);
-            map.setZoom(17);  // Why 17? Because it looks good.
+            map.setZoom(17);
         }
 
         // show marker and infowindow only if it is a restaurant
@@ -94,15 +94,28 @@ function initialize() {
     places = new google.maps.places.PlacesService(map);
     google.maps.event.addListener(map, 'tilesloaded', tilesLoaded);
 
+    var geolocalisation_cache = getCookie(cookieGeolocalisationName);
+
+    if(geolocalisation_cache) {
+        var position = geolocalisation_cache.split(',');
+        setMapCenter(position[0], position[1]);
+
+        // show inputSearch
+        showInputSearch();
+
+        // stop this script
+        return;
+    }
+
     // Try HTML5 geolocation
     if(navigator.geolocation) {
         showMyAlertModal('We try to geolocate you.', 'Please wait...');
 
         navigator.geolocation.getCurrentPosition(function(position) {
-            var pos = new google.maps.LatLng(position.coords.latitude,
-                position.coords.longitude);
-            map.setCenter(pos);
-            map.setZoom(17);  // Why 17? Because it looks good.
+            setMapCenter(position.coords.latitude, position.coords.longitude);
+
+            // save geolocalisation for 5 minutes
+            setCookie(cookieGeolocalisationName, position.coords.latitude + ',' + position.coords.longitude, 300);
 
             // show info
             showMyAlertModal('You are now geolocated !', 'Yeah !');
@@ -129,6 +142,13 @@ function initialize() {
 //        search(keyword);
 //    }
 }
+
+function setMapCenter(lat, lng) {
+    var pos = new google.maps.LatLng(lat, lng);
+    map.setCenter(pos);
+    map.setZoom(17);
+}
+
 
 function showInputSearch() {
     var input = $('#map-search-input');
