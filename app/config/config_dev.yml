@@ -1,0 +1,37 @@
+imports:
+    - { resource: config.yml }
+
+framework:
+    router:
+        resource: "%kernel.root_dir%/config/routing_dev.yml"
+        strict_requirements: true
+    profiler: { only_exceptions: false }
+
+web_profiler:
+    toolbar: true
+    intercept_redirects: false
+
+monolog:
+    handlers:
+        main:
+            type:  stream
+            path:  "%kernel.logs_dir%/%kernel.environment%.log"
+            level: debug
+        firephp:
+            type:  firephp
+            level: info
+        chromephp:
+            type:  chromephp
+            level: info
+
+assetic:
+    use_controller: true
+
+ewz_recaptcha:
+    public_key:   6Lcn2_gSAAAAADTIWqTFAmKp6PjQGmynjqVKXIdB # keys for localhost
+    private_key:  6Lcn2_gSAAAAAMRZKbruKHt320-AQqMtsf0dkFQz
+    locale_key:   %kernel.default_locale%
+    enabled:      true
+
+swiftmailer:
+    delivery_address: rhanna@itnetwork.fr

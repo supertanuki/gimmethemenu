@@ -1,0 +1,64 @@
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+
+        <service id="sonata.admin.project" class="TE\Bundle\MainBundle\Admin\ProjectAdmin">
+            <tag name="sonata.admin" manager_type="orm" group="Content" label="Project"/>
+            <argument />
+            <argument>TE\Bundle\MainBundle\Entity\Project</argument>
+            <argument />
+            <call method="setTranslationDomain">
+                <argument>messages</argument>
+            </call>
+            <call method="addChild">
+                <argument type="service" id="sonata.admin.project.response" />
+            </call>
+        </service>
+
+        <service id="sonata.admin.project.file" class="TE\Bundle\MainBundle\Admin\ProjectFileAdmin">
+            <tag name="sonata.admin" manager_type="orm"/>
+            <argument />
+            <argument>TE\Bundle\MainBundle\Entity\ProjectFile</argument>
+            <argument />
+            <call method="setTranslationDomain">
+                <argument>messages</argument>
+            </call>
+        </service>
+
+        <service id="sonata.admin.project.response" class="TE\Bundle\MainBundle\Admin\ProjectResponseAdmin">
+            <tag name="sonata.admin" manager_type="orm" label="Response" />
+            <argument />
+            <argument>TE\Bundle\MainBundle\Entity\ProjectResponse</argument>
+            <argument />
+            <call method="setTranslationDomain">
+                <argument>messages</argument>
+            </call>
+            <call method="setTemplate">
+                <argument>edit</argument>
+                <argument>TEMainBundle:Admin:project_response_edit.html.twig</argument>
+            </call>
+        </service>
+
+        <service id="sonata.admin.category" class="TE\Bundle\MainBundle\Admin\CategoryAdmin">
+            <tag name="sonata.admin" manager_type="orm" group="Content" label="Category"/>
+            <argument />
+            <argument>TE\Bundle\MainBundle\Entity\Category</argument>
+            <argument />
+            <call method="setTranslationDomain">
+                <argument>messages</argument>
+            </call>
+        </service>
+
+        <service id="sonata.admin.user" class="TE\Bundle\MainBundle\Admin\UserAdmin">
+            <tag name="sonata.admin" manager_type="orm" group="Users" label="User"/>
+            <argument />
+            <argument>TE\Bundle\MainBundle\Entity\User</argument>
+            <argument />
+            <call method="setTranslationDomain">
+                <argument>messages</argument>
+            </call>
+        </service>
+
+    </services>
+</container>

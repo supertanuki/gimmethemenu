@@ -1,0 +1,56 @@
+{% extends 'SonataAdminBundle:CRUD:base_edit.html.twig' %}
+
+{% block sonata_tab_content %}
+    {% for name, form_group in admin.formgroups %}
+        <div class="{{ form_group.class|default('col-md-12') }}">
+            <div class="box box-success">
+                <div class="box-header">
+                    <h4 class="box-title">
+                        {{ admin.trans(name, {}, form_group.translation_domain) }}
+                    </h4>
+                </div>
+
+                <div class="box-body">
+
+                    <p><a href="{{ path('admin_te_main_user_edit', {id: object.user.id}) }}">{{ object.user }}</a> :</p>
+                    <p>{{ object.description }}</p>
+
+                    {% if object.projectResponseFiles|length > 0 %}
+                        <p>
+                            <b>Fichiers attachés :</b>
+                            <ul>
+                                {% for responseFile in object.projectResponseFiles %}
+                                    <li>
+                                        {% if responseFile.documentName %}
+                                            <a href="{{ vich_uploader_asset(responseFile, 'project_response_file') }}" target="_blank">
+                                                {{ responseFile.name }}
+                                            </a>
+                                        {% else %}
+                                            {{ responseFile.name }} <small>(pas de fichier attaché)</small>
+                                        {% endif %}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </p>
+                    {% else %}
+                        <p class="alert alert-info">Pas de fichier attaché</p>
+                    {% endif %}
+
+                    <hr>
+
+                    <div class="sonata-ba-collapsed-fields">
+                        {% if form_group.description != false %}
+                            <p>{{ form_group.description|raw }}</p>
+                        {% endif %}
+
+                        {% for field_name in form_group.fields %}
+                            {% if admin.formfielddescriptions[field_name] is defined %}
+                                {{ form_row(form[field_name])}}
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

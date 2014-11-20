@@ -1,0 +1,155 @@
+sonata_block:
+    default_contexts: [cms]
+    blocks:
+        # Enable the SonataAdminBundle block
+        sonata.admin.block.admin_list:
+            contexts: [admin]
+        # Your other blocks
+        sonata.block.service.text:
+            contexts: [admin]
+
+sonata_admin:
+    title:      Administration
+    templates:
+        # default global templates
+        layout: TEMainBundle:Admin:layout.html.twig
+        user_block: TEMainBundle:Admin:user_block.html.twig
+
+    options:
+        use_select2:    false # disable select2
+
+    dashboard:
+        blocks:
+#            -
+#                position: top
+#                class: col-md-12
+#                type: sonata.block.service.text
+#                settings:
+#                    content: >
+#                        <h2>Administration</h2>
+#                        <p>Hello !</p>
+            -
+                position: top
+                class: col-md-12
+                type: sonata.admin.block.admin_list
+                settings:
+                    groups: [contents, users]
+        groups:
+            contents:
+                label: 'Contenus'
+                items:
+                    - sonata.admin.project
+                    - sonata.admin.category
+                    - sonata.admin.page
+            users:
+                label: 'Utilisateurs'
+                items:
+                    - sonata.admin.user
+
+sonata_media:
+    # if you don't use default namespace configuration
+    #class:
+    #    media: MyVendor\MediaBundle\Entity\Media
+    #    gallery: MyVendor\MediaBundle\Entity\Gallery
+    #    gallery_has_media: MyVendor\MediaBundle\Entity\GalleryHasMedia
+    default_context: default
+    db_driver: doctrine_orm # or doctrine_mongodb, doctrine_phpcr
+    contexts:
+        default:  # the default context is mandatory
+            download:
+                strategy: sonata.media.security.connected_strategy
+                mode: http
+
+            providers:
+                - sonata.media.provider.image
+                - sonata.media.provider.file
+                - sonata.media.provider.dailymotion
+                - sonata.media.provider.youtube
+
+            formats:
+                small: { width: 100 , quality: 70}
+                big:   { width: 500 , quality: 70}
+
+        Projet:
+            download:
+                strategy: sonata.media.security.connected_strategy
+                mode: http
+
+            providers:
+                - sonata.media.provider.file
+                - sonata.media.provider.image
+
+            formats:
+                small: { width: 100 , quality: 70}
+                big:   { width: 500 , quality: 70}
+
+    cdn:
+        server:
+            path: /uploads/media # http://media.sonata-project.org/
+
+    filesystem:
+        local:
+            directory:  %kernel.root_dir%/../web/uploads/media
+            create:     false
+
+    # you can determine the resizer to use; the default value is sonata.media.resizer.simple but you can change it to sonata.media.resizer.square
+    providers:
+        image:
+            resizer: sonata.media.resizer.simple
+
+sonata_formatter:
+    ckeditor:
+        templates:
+            browser: 'SonataFormatterBundle:Ckeditor:browser.html.twig'
+            upload: 'SonataFormatterBundle:Ckeditor:upload.html.twig'
+
+    formatters:
+        richhtml:
+            service: sonata.formatter.text.raw
+            extensions:
+                - sonata.formatter.twig.control_flow
+                - sonata.formatter.twig.gist
+        #        - sonata.media.formatter.twig
+#        markdown:
+#            service: sonata.formatter.text.markdown
+#            extensions:
+#                - sonata.formatter.twig.control_flow
+#                - sonata.formatter.twig.gist
+#        #        - sonata.media.formatter.twig #keep this commented unless you are using media bundle.
+
+#        text:
+#            service: sonata.formatter.text.text
+#            extensions:
+#                - sonata.formatter.twig.control_flow
+#                - sonata.formatter.twig.gist
+#        #        - sonata.media.formatter.twig
+
+#        rawhtml:
+#            service: sonata.formatter.text.raw
+#            extensions:
+#                - sonata.formatter.twig.control_flow
+#                - sonata.formatter.twig.gist
+#        #        - sonata.media.formatter.twig
+
+#        twig:
+#            service: sonata.formatter.text.twigengine
+#            extensions: [] # Twig formatter cannot have extensions
+
+
+ivory_ck_editor:
+    default_config: default
+    configs:
+        default:
+            filebrowserBrowseRoute: admin_sonata_media_media_ckeditor_browser
+            filebrowserImageBrowseRoute: admin_sonata_media_media_ckeditor_browser
+            # Display images by default when clicking the image dialog browse button
+            filebrowserImageBrowseRouteParameters:
+                provider: sonata.media.provider.image
+            filebrowserUploadRoute: admin_sonata_media_media_ckeditor_upload
+            filebrowserUploadRouteParameters:
+                provider: sonata.media.provider.file
+            # Upload file as image when sending a file from the image dialog
+            filebrowserImageUploadRoute: admin_sonata_media_media_ckeditor_upload
+            filebrowserImageUploadRouteParameters:
+                provider: sonata.media.provider.image
+#                context: my-context # Optional, to upload in a custom context

@@ -1,0 +1,14 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Projets{% endblock %}
+
+{% block body %}
+    <h1>Les projets</h1>
+
+    {{ include('TEMainBundle:Project:categories.html.twig', {'categories': categories}) }}
+
+    <hr>
+
+    {{ include('TEMainBundle:Project:projects.html.twig', {'projects': projects}) }}
+
+{% endblock %}

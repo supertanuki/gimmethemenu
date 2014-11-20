@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}!!!Title à définir!!!{% endblock %} - Tendances Edition</title>
+        {% block stylesheets %}{% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    </head>
+    <body style="margin-top:50px">
+        <div style="top:0; left:0; background:#eee; position:fixed; padding:10px;">
+            <a href="{{ path('homepage') }}">Accueil</a>
+            |
+            <a href="{{ path('project_index') }}">Projets</a>
+
+            {{ render(controller('TEPageBundle:Page:list')) }}
+
+        {% if app.user %}
+            |
+            Connecté en tant que <a href="{{ path('fos_user_profile_edit') }}">{{ app.user }}</a>
+            |
+            <a href="{{ path('profile_project_index') }}">Mes projets</a>
+            |
+            <a href="{{ path('fos_user_security_logout') }}">Déconnecter</a>
+        {% else %}
+            |
+            <a href="{{ path('fos_user_security_login') }}">Se connecter</a>
+            |
+            <a href="{{ path('fos_user_registration_register') }}">S'inscrire</a>
+        {% endif %}
+        </div>
+
+        {# On affiche tous les messages flash dont le nom est « info » #}
+        {% for message in app.session.flashbag.get('info') %}
+            <p style="padding:10px; background:yellow">{{ message }}</p>
+        {% endfor %}
+
+        <div>
+            {% block body %}{% endblock %}
+        </div>
+
+        {% block javascripts %}
+            <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        {% endblock %}
+
+        {% javascripts '@TEMainBundle/Resources/public/js/*' %}
+            <script type="text/javascript" src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+    </body>
+</html>

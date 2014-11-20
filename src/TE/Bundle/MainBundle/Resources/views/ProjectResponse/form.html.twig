@@ -1,0 +1,22 @@
+{{ form_start(form) }}
+
+    {{ form_row(form.description) }}
+
+    <ul
+        class="collection"
+        data-label-add="Ajouter un fichier"
+        data-label-delete="Supprimer ce fichier"
+        data-label-delete-confirm="Confirmer la suppression de ce fichier ?"
+        data-prototype="{{ form_widget(form.projectResponseFiles.vars.prototype)|e }}"
+    >
+    {% for responseFile in form.projectResponseFiles %}
+        <li>
+            {{ form_row(responseFile.name) }}
+            {{ form_row(responseFile.documentFile) }}
+        </li>
+    {% endfor %}
+    </ul>
+
+    {{ form_rest(form) }}
+
+{{ form_end(form) }}

@@ -1,0 +1,32 @@
+<div>
+    <ul>
+        {% for project in projects %}
+            <li style="border-bottom:1px solid #ccc">
+                <h3>
+                    <a href="{{ path('project_show', { 'slug_category': project.category.slug, 'slug_project': project.slug }) }}">
+                        {{ project.title }}
+                    </a>
+                </h3>
+                <p>
+                    {{ project.summary }}
+                </p>
+                <p>
+                    <small>
+                        Catégorie :
+                        <a href="{{ path('project_category', { 'slug': project.category.slug }) }}">
+                            {{ project.category }}
+                        </a>
+                        <br>
+                        Etat : <i>{{ project.statusLabel }}</i>
+                        <br>
+                        <i>Budget : {{ project.budget }} €</i>
+                        <br>
+                        <i>Fin des soumissions : {{ project.endAt|localizeddate('full', 'none') }}</i>
+                    </small>
+                </p>
+            </li>
+        {%  else %}
+            <li>Aucun projet trouvé</li>
+        {%  endfor %}
+    </ul>
+</div>

@@ -1,0 +1,36 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+
+        <service id="te_main.project_close_ended" class="TE\Bundle\MainBundle\Service\ProjectCloseEnded">
+            <argument type="service" id="doctrine.orm.entity_manager"/>
+            <argument type="service" id="logger" />
+        </service>
+
+        <service id="te_main.registration.form.type" class="TE\Bundle\MainBundle\Form\Type\RegistrationFormType">
+            <tag name="form.type" alias="te_main_user_registration" />
+            <argument>%fos_user.model.user.class%</argument>
+        </service>
+
+        <service id="te_main.profile.form.type" class="TE\Bundle\MainBundle\Form\Type\ProfileFormType">
+            <tag name="form.type" alias="te_main_user_profile" />
+            <argument>%fos_user.model.user.class%</argument>
+        </service>
+
+        <service id="te_main.project_response_file.listener" class="TE\Bundle\MainBundle\Listener\ProjectResponseFileListener">
+            <tag name="doctrine.event_listener" event="postPersist" />
+            <tag name="doctrine.event_listener" event="postUpdate" />
+            <tag name="doctrine.event_listener" event="postRemove" />
+        </service>
+
+        <service id="te_main.project_response.listener" class="TE\Bundle\MainBundle\Listener\ProjectResponseListener">
+            <tag name="doctrine.event_listener" event="preUpdate" />
+            <argument type="service" id="session"/>
+        </service>
+
+    </services>
+</container>
