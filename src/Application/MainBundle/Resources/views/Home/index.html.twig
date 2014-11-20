@@ -1,0 +1,29 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block body %}
+    <h1>Welcome !</h1>
+
+    <p>Ceci est la page d'accueil</p>
+
+    {% if not app.user %}
+        <hr>
+        <h2>Se connecter</h2>
+        {{ render(controller('FOSUserBundle:Security:login')) }}
+        <p>ou <a href="{{ path('fos_user_registration_register') }}">S'inscrire</a></p>
+    {% endif %}
+
+    <hr>
+
+    <h2>Les projets en cours</h2>
+
+    {{ include('ApplicationMainBundle:Project:projects.html.twig', {'projects': projects}) }}
+
+    <div>
+        <a href="{{ path('project_index') }}">
+            Voir tous les projets
+        </a>
+    </div>
+
+{% endblock %}

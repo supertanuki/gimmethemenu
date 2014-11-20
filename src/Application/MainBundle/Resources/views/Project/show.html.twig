@@ -1,0 +1,69 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}{{ project.title }}{% endblock %}
+
+{% block body %}
+    <h1>{{ project.title }}</h1>
+
+    <p>
+        <small>
+            Catégorie : <a href="{{ path('project_category', { 'slug': category.slug }) }}">{{ category }}</a>
+            <br><i>{{ project.statusLabel }}</i>
+        </small>
+    </p>
+
+    <h2>Résumé du projet</h2>
+    <p>
+        {{ project.summary }}
+    </p>
+
+    <p>
+        <i>Budget : {{ project.budget }} €</i>
+        <br>
+        <i>Fin des soumissions : {{ project.endAt|localizeddate('full', 'none') }}</i>
+    </p>
+
+    {% if not app.user %}
+
+        <h2>Connectez-vous pour consulter le détail du projet et y répondre</h2>
+
+        {{ render(controller('FOSUserBundle:Security:login')) }}
+
+        <p><a href="{{ path('fos_user_registration_register') }}">S'inscrire</a></p>
+
+    {% else %}
+
+        <h2>Description du projet</h2>
+        <p>
+            {{ project.description|raw }}
+        </p>
+
+        <h2>Fichiers attachés</h2>
+        <p>
+            <ul>
+            {% for file in project.projectFiles %}
+                <li>
+                    <a href="{{ url('sonata_media_download', { 'id' : file.media|sonata_urlsafeid , 'format' : 'reference'}) }}">
+                        {{ file.name }} <small>({{ (file.media.size/1024)|round }} Ko)</small><br >
+                        {% media file.media, 'small' %}
+                    </a>
+                </li>
+            {% else %}
+                <li>Aucun fichier</li>
+            {% endfor %}
+            </ul>
+        </p>
+
+        <hr>
+
+        {% include 'ApplicationMainBundle:ProjectResponse:project_responses.html.twig' with {'project_responses': project_responses} %}
+
+        {% if project.status is constant('Application\\MainBundle\\Entity\\Project::STATUS_PUBLISHED') %}
+            <hr>
+            <h2>Soumettre une proposition</h2>
+            <p>Vous pouvez soumettre une ou plusieurs réponses</p>
+            {% include 'ApplicationMainBundle:ProjectResponse:form.html.twig' with {'form': form_project_response_add} %}
+        {% endif %}
+
+    {% endif %}
+{% endblock %}

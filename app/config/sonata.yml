@@ -12,8 +12,8 @@ sonata_admin:
     title:      Administration
     templates:
         # default global templates
-        layout: TEMainBundle:Admin:layout.html.twig
-        user_block: TEMainBundle:Admin:user_block.html.twig
+        layout: ApplicationMainBundle:Admin:layout.html.twig
+        user_block: ApplicationMainBundle:Admin:user_block.html.twig
 
     options:
         use_select2:    false # disable select2

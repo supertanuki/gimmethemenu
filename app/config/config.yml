@@ -3,7 +3,6 @@ imports:
     - { resource: sonata.yml }
     - { resource: doctrine_extensions.yml }
     - { resource: parameters.yml }
-    - { resource: parameters.php }
 
 framework:
     #esi:             ~
@@ -70,21 +69,21 @@ doctrine:
         entity_managers:
             default:
                 mappings:
-                    TEMainBundle: ~
-                    TEPageBundle: ~
+                    ApplicationMainBundle: ~
+                    ApplicationPageBundle: ~
                     ApplicationSonataMediaBundle: ~
                     SonataMediaBundle: ~
 
 fos_user:
     db_driver: orm
     firewall_name: main
-    user_class: TE\Bundle\MainBundle\Entity\User
+    user_class: Application\MainBundle\Entity\User
     registration:
         form:
-            type: te_main_user_registration
+            type: application_main_user_registration
     profile:
         form:
-            type: te_main_user_profile
+            type: appplication_main_user_profile
 
 vich_uploader:
     db_driver:  orm

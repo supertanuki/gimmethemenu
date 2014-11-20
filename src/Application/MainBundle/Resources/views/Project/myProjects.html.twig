@@ -1,0 +1,23 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Mes propositions aux projets{% endblock %}
+
+{% block body %}
+    <h1>Mes propositions aux projets</h1>
+
+    {#
+    <p>
+        Filtrer par état
+        <ul>
+        {% for id_status, status in published_status %}
+            <li><a href="{{ path('profile_project_index', { status: status })  }}">{{ status }}</a></li>
+        {% endfor %}
+        </ul>
+    </p>
+
+    <hr>
+    #}
+
+    {{ include('ApplicationMainBundle:Project:projects.html.twig', {'projects': projects}) }}
+
+{% endblock %}

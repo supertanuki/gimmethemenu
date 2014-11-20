@@ -1,0 +1,16 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Projets - {{ category.name }}{% endblock %}
+
+{% block body %}
+
+    <h1>Les projets</h1>
+
+    {{ include('ApplicationMainBundle:Project:categories.html.twig', {'categories': categories}) }}
+
+    <hr>
+
+    <h2>{{ category.name }}</h2>
+
+    {{ include('ApplicationMainBundle:Project:projects.html.twig', {'projects': projects}) }}
+{% endblock %}

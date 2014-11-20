@@ -48,8 +48,8 @@ class AppKernel extends Kernel
             new Vich\UploaderBundle\VichUploaderBundle(),
 
             // Main application bundle
-            new TE\Bundle\MainBundle\TEMainBundle(),
-            new TE\Bundle\PageBundle\TEPageBundle(),
+            new Application\MainBundle\ApplicationMainBundle(),
+            new Application\PageBundle\ApplicationPageBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

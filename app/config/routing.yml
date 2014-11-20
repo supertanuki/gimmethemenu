@@ -4,7 +4,7 @@
 
 fos_user_security_login:
     pattern: /se-connecter
-    defaults:  { _controller: TEMainBundle:Security:login }
+    defaults:  { _controller: ApplicationMainBundle:Security:login }
 
 fos_user_security_check:
     pattern: /se-connecter-verification
@@ -32,12 +32,12 @@ fos_user_change_password:
     resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
     prefix: /mon-profil
 
-te_main:
-    resource: "@TEMainBundle/Controller/"
+application_main:
+    resource: "@ApplicationMainBundle/Controller/"
     type:     annotation
     prefix:   /
 
-# admin_login route defined in TE\Bundle\MainBundle\Controller\AdminSecurityController.php
+# admin_login route defined in Application\MainBundle\Controller\AdminSecurityController.php
 admin_login_check:
     pattern:   /_administration/login_check
 
@@ -62,7 +62,7 @@ media:
     prefix: /media
 
 # always on end
-te_page:
-    resource: "@TEPageBundle/Controller/"
+application_page:
+    resource: "@ApplicationPageBundle/Controller/"
     type:     annotation
     prefix:   /

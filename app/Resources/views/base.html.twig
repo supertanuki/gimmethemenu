@@ -12,7 +12,7 @@
             |
             <a href="{{ path('project_index') }}">Projets</a>
 
-            {{ render(controller('TEPageBundle:Page:list')) }}
+            {{ render(controller('ApplicationPageBundle:Page:list')) }}
 
         {% if app.user %}
             |
@@ -42,7 +42,7 @@
             <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
         {% endblock %}
 
-        {% javascripts '@TEMainBundle/Resources/public/js/*' %}
+        {% javascripts '@ApplicationMainBundle/Resources/public/js/*' %}
             <script type="text/javascript" src="{{ asset_url }}"></script>
         {% endjavascripts %}
     </body>
