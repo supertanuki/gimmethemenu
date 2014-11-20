@@ -1,41 +1,13 @@
 #map_canvas {
     width: 100%;
-    height: 440px;
-    border-bottom: 4px solid #37bc9b;
+    height: 400px;
 }
 
 #listing {
-    position: absolute;
-    max-width: 200px;
+    cursor: pointer;
     max-height: 400px;
     overflow: auto;
-    right: 0px;
-    top: 72px;
-    cursor: pointer;
-    overflow-x: hidden;
-    border: 1px solid lightgrey;
 }
-
-.placeIcon {
-    width: 32px;
-    height: 37px;
-    margin: 4px;
-}
-#resultsTable {
-    border-collapse: collapse;
-    max-width: 200px;
-}
-#rating {
-    font-size: 13px;
-}
-.iw_table_row {
-    height: 18px;
-}
-.iw_attribute_name {
-    font-weight: bold;
-    text-align: right;
-}
-
 
 #map-search-input {
     background-color: #fff;
@@ -64,10 +36,6 @@
 @media screen and (max-width: 767px) {
     #map_canvas {
         height: 240px;
-    }
-
-    #listing {
-        max-height: 200px;
     }
 
     #map-search-input {
