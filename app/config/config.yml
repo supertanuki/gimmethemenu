@@ -83,7 +83,7 @@ fos_user:
             type: application_main_user_registration
     profile:
         form:
-            type: appplication_main_user_profile
+            type: application_main_user_profile
 
 vich_uploader:
     db_driver:  orm

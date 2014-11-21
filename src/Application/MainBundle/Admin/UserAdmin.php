@@ -25,12 +25,12 @@ class UserAdmin extends Admin
     {
         $formMapper
             ->add('firstName')
-            ->add('lastName')
-            ->add('address')
-            ->add('postalCode')
-            ->add('city')
-            ->add('country')
-            ->add('phone')
+//            ->add('lastName')
+//            ->add('address')
+//            ->add('postalCode')
+//            ->add('city')
+//            ->add('country')
+//            ->add('phone')
             ->add('locked', null, array('required' => false))
         ;
     }
@@ -40,7 +40,7 @@ class UserAdmin extends Admin
     {
         $datagridMapper
             ->add('firstName')
-            ->add('lastName')
+//            ->add('lastName')
             ->add('email')
             ->add('locked')
         ;
@@ -52,8 +52,8 @@ class UserAdmin extends Admin
         $listMapper
             ->addIdentifier('email')
             ->add('firstName')
-            ->add('lastName')
-            ->add('city')
+//            ->add('lastName')
+//            ->add('city')
             ->add('locked')
             ->add('lastLogin')
             ->add('createdAt')

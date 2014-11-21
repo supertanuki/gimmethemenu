@@ -2,6 +2,10 @@
 
 {% trans_default_domain 'FOSUserBundle' %}
 
+{% block title %}Login{% endblock %}
+
+{% block h1 %}Login{% endblock h1 %}
+
 {% block fos_user_content %}
     {{ render(controller('FOSUserBundle:Security:login')) }}
 {% endblock fos_user_content %}

@@ -18,12 +18,12 @@ class RegistrationFormType extends BaseType
         // custom users fields
         $builder
             ->add('firstName')
-            ->add('lastName')
-            ->add('address')
-            ->add('postalCode')
-            ->add('city')
-            ->add('country')
-            ->add('phone')
+//            ->add('lastName')
+//            ->add('address')
+//            ->add('postalCode')
+//            ->add('city')
+//            ->add('country')
+//            ->add('phone')
             ->add('recaptcha', 'ewz_recaptcha', array(
                     'attr' => array(
                         'options' => array(
@@ -40,6 +40,6 @@ class RegistrationFormType extends BaseType
 
     public function getName()
     {
-        return 'te_main_user_registration';
+        return 'application_main_user_registration';
     }
 }

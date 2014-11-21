@@ -3,6 +3,13 @@ $(document).ready(function() {
 });
 
 function showMyAlertModal(content, title) {
+
+    $('#messageGeolocate').html(
+        (title != undefined ? '<b>'+title+'</b> ' : '')
+        + '<i>' + content + '</i>'
+    );
+
+    /*
     var myAlertModal = $('#myAlertModal');
     myAlertModal.find('.modal-body').text(content);
 
@@ -11,10 +18,11 @@ function showMyAlertModal(content, title) {
     }
 
     myAlertModal.modal('show');
+    */
 }
 
 function hideMyAlertModal() {
-    $('#myAlertModal').modal('hide');
+//    $('#myAlertModal').modal('hide');
 }
 
 function setCookie(cname, cvalue, expireseconds) {

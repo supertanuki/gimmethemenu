@@ -1,9 +1,13 @@
 {% extends "FOSUserBundle::layout.html.twig" %}
 
+{% block title %}Sign in{% endblock %}
+
+{% block h1 %}Sign in{% endblock h1 %}
+
 {% block fos_user_content %}
     {% if not app.user %}
         {% include "FOSUserBundle:Registration:register_content.html.twig" %}
     {% else %}
-        <p>Vous êtes déjà inscrit !</p>
+        <p>You are already registered!</p>
     {% endif %}
 {% endblock fos_user_content %}

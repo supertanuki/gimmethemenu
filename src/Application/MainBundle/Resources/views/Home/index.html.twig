@@ -1,6 +1,6 @@
 {% extends '::base.html.twig' %}
 
-{% block title %}Accueil{% endblock %}
+{% block title %}Home{% endblock %}
 
 {% block body %}
 
@@ -26,8 +26,6 @@
     </div>
     #}
 
-
-
     <div class="row">
         <div class="col-xs-12 col-sm-4 col-md-4">
             <div class="alert alert-danger">
@@ -50,7 +48,8 @@
     </div>
 
     <div class="well">
-        First of all, search a restaurant or an address below, you will see all restaurants around. <span class="glyphicon glyphicon-arrow-down"></span>
+        <span class="glyphicon glyphicon-arrow-down"></span> First of all, search a restaurant or an address below, you will see all restaurants around.
+        <span id="messageGeolocate" class="pull-right"></span>
     </div>
 
     <div class="row">
@@ -60,7 +59,7 @@
         </div>
         <div class="col-sm-2 col-md-2 hidden-xs">
             <div id="listing">
-                <table id="resultsTable" class="table">
+                <table id="resultsTable" class="table table-condensed table-striped table-bordered table-hover">
                     <tbody id="results"></tbody>
                 </table>
             </div><!-- listing on the right of the map -->
@@ -68,7 +67,7 @@
     </div>
 
     <hr>
-    <h4>Latest dishes</h4>
+    <h2>Latest dishes</h2>
     <div class="row">
         <div class="col-xs-12 col-sm-3 col-md-2">
             <div class="thumbnail">
@@ -104,7 +103,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-xs-12 col-sm-3 col-md-2">
+        <div class="col-xs-12 col-sm-3 col-md-2 hidden-xs">
             <div class="thumbnail">
                 <a href="#"><img class="img-rounded" src="img/samples/burger.jpg"></a>
                 <div class="caption text-center">
@@ -113,7 +112,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-xs-12 col-sm-3 col-md-2">
+        <div class="col-xs-12 col-sm-3 col-md-2 hidden-xs">
             <div class="thumbnail">
                 <img class="img-rounded" src="img/samples/pizza.png"></a>
                 <div class="caption text-center">
@@ -122,7 +121,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-xs-12 col-sm-3 col-md-2">
+        <div class="col-xs-12 col-sm-3 col-md-2 hidden-xs">
             <div class="thumbnail">
                 <a href="#"><img class="img-rounded" src="img/samples/pizza.png"></a>
                 <div class="caption text-center">
@@ -134,7 +133,7 @@
     </div>
 
     <hr>
-    <h4>Latest menus</h4>
+    <h2>Latest menus</h2>
     <div class="row">
         <div class="col-xs-12 col-sm-3 col-md-2">
             <div class="thumbnail">
@@ -170,7 +169,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-xs-12 col-sm-3 col-md-2">
+        <div class="col-xs-12 col-sm-3 col-md-2 hidden-xs">
             <div class="thumbnail">
                 <a href="#"><img class="img-rounded" src="img/samples/pizza.png"></a>
                 <div class="caption text-center">
@@ -179,7 +178,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-xs-12 col-sm-3 col-md-2">
+        <div class="col-xs-12 col-sm-3 col-md-2 hidden-xs">
             <div class="thumbnail">
                 <a href="#"><img class="img-rounded" src="img/samples/pizza.png"></a>
                 <div class="caption text-center">
@@ -188,7 +187,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-xs-12 col-sm-3 col-md-2">
+        <div class="col-xs-12 col-sm-3 col-md-2 hidden-xs">
             <div class="thumbnail">
                 <a href="#"><img class="img-rounded" src="img/samples/burger.jpg"></a>
                 <div class="caption text-center">

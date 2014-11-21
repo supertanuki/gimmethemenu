@@ -1,9 +1,10 @@
 {% extends '::base.html.twig' %}
 
-{% block title %}Mon compte{% endblock %}
+{% block title %}My profile{% endblock %}
+
+{% block h1 %}My profile{% endblock h1 %}
 
 {% block body %}
-    <h1>Mon compte</h1>
-    {% block fos_user_content %}
-    {% endblock fos_user_content %}
+    {{ parent() }}
+    {% block fos_user_content %}{% endblock fos_user_content %}
 {% endblock body %}

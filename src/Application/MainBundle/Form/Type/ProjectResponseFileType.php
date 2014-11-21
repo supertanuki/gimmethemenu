@@ -23,7 +23,7 @@ class ProjectResponseFileType extends AbstractType
 
     public function getName()
     {
-        return 'te_main_project_response_file';
+        return 'application_main_project_response_file';
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

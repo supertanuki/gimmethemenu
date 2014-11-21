@@ -12,7 +12,7 @@
 
                 <div class="box-body">
 
-                    <p><a href="{{ path('admin_te_main_user_edit', {id: object.user.id}) }}">{{ object.user }}</a> :</p>
+                    <p><a href="{{ path('admin_application_main_user_edit', {id: object.user.id}) }}">{{ object.user }}</a> :</p>
                     <p>{{ object.description }}</p>
 
                     {% if object.projectResponseFiles|length > 0 %}

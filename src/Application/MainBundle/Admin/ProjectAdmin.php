@@ -82,7 +82,7 @@ class ProjectAdmin extends Admin
             ->add('statusLabel')
             ->add('ProjectResponsesCount', 'url', array(
                 'route' => array(
-                        'name' => 'admin_te_main_project_projectresponse_list',
+                        'name' => 'admin_application_main_project_projectresponse_list',
                         'identifier_parameter_name' => 'id'
                     )
                 )

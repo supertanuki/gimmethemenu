@@ -20,17 +20,17 @@ class ProfileFormType extends BaseType
         // custom users fields
         $builder
             ->add('firstName')
-            ->add('lastName')
-            ->add('address')
-            ->add('postalCode')
-            ->add('city')
-            ->add('country')
-            ->add('phone')
+//            ->add('lastName')
+//            ->add('address')
+//            ->add('postalCode')
+//            ->add('city')
+//            ->add('country')
+//            ->add('phone')
         ;
     }
 
     public function getName()
     {
-        return 'te_main_user_profile';
+        return 'application_main_user_profile';
     }
 }

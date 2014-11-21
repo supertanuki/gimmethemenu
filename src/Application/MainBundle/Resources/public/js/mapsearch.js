@@ -5,8 +5,8 @@ var centerMarker;
 var hostnameRegexp = new RegExp('^https?://.+?/');
 var typeSearch = 'restaurant'; // others types : bar, cafe
 var rankBy = 'prominence'; // other criteria : distance
-var defaultIcon = 'img/mapicons/restaurant.png';
-var activeIcon = 'img/mapicons-active/restaurant.png';
+var defaultIcon = assets_dir + '/img/mapicons/restaurant.png';
+var activeIcon = assets_dir + '/img/mapicons-active/restaurant.png';
 var countryRestrict = { 'country': 'fr' };
 var cookieGeolocalisationName = 'geolocalisation_cache';
 
@@ -14,7 +14,8 @@ function initialize() {
     var myOptions = {
         zoom: 12,
         mapTypeId: google.maps.MapTypeId.ROADMAP,
-        streetViewControl: false
+        streetViewControl: false,
+        center: new google.maps.LatLng(48.858859, 2.3470599) // Paris
     }
     map = new google.maps.Map(document.getElementById('map_canvas'), myOptions);
 
@@ -23,6 +24,7 @@ function initialize() {
      */
     var input = document.getElementById('map-search-input');
     map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
 
 //    var southWest = new google.maps.LatLng( 25.341233, 68.289986 );
 //    var northEast = new google.maps.LatLng( 25.450715, 68.428345 );
@@ -89,6 +91,8 @@ function initialize() {
      * End autocomplete
      */
 
+    showInputSearch();
+
 
     // places on the map
     places = new google.maps.places.PlacesService(map);
@@ -102,6 +106,9 @@ function initialize() {
 
         // show inputSearch
         showInputSearch();
+
+        // show info
+        showMyAlertModal('We show your last geolocalisation.', '');
 
         // stop this script
         return;
@@ -372,18 +379,8 @@ function handleNoGeolocation(errorFlag) {
         var content = 'Sorry, your browser doesn\'t support geolocation.';
     }
 
-    var options = {
-        map: map,
-        position: new google.maps.LatLng(48.858859, 2.3470599), // Paris
-        content: content
-    };
-
-    map.setCenter(options.position);
-
     showMyAlertModal(content);
-    window.setTimeout(hideMyAlertModal, 3000);
-
-    showInputSearch();
+//    window.setTimeout(hideMyAlertModal, 3000);
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);

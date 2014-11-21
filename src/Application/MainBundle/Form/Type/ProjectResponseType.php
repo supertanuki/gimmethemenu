@@ -25,7 +25,7 @@ class ProjectResponseType extends AbstractType
 
     public function getName()
     {
-        return 'te_main_project_response';
+        return 'application_main_project_response';
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
