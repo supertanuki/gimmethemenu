@@ -3,6 +3,16 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
 
+        <service id="sonata.admin.restaurant" class="Application\MainBundle\Admin\RestaurantAdmin">
+            <tag name="sonata.admin" manager_type="orm" group="Content" label="Restaurant"/>
+            <argument />
+            <argument>Application\MainBundle\Entity\Restaurant</argument>
+            <argument />
+            <call method="setTranslationDomain">
+                <argument>messages</argument>
+            </call>
+        </service>
+
         <service id="sonata.admin.project" class="Application\MainBundle\Admin\ProjectAdmin">
             <tag name="sonata.admin" manager_type="orm" group="Content" label="Project"/>
             <argument />
