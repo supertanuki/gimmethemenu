@@ -3,27 +3,200 @@
 {% block title %}Accueil{% endblock %}
 
 {% block body %}
-    <h1>Welcome !</h1>
 
-    <p>Ceci est la page d'accueil</p>
+    {#
+    <div class="well">
+        {% if not app.user %}
+            <h2>Se connecter</h2>
+            {{ render(controller('FOSUserBundle:Security:login')) }}
+            <p>ou <a href="{{ path('fos_user_registration_register') }}">S'inscrire</a></p>
+        {% endif %}
 
-    {% if not app.user %}
         <hr>
-        <h2>Se connecter</h2>
-        {{ render(controller('FOSUserBundle:Security:login')) }}
-        <p>ou <a href="{{ path('fos_user_registration_register') }}">S'inscrire</a></p>
-    {% endif %}
+
+        <h2>Les projets en cours</h2>
+
+        {{ include('ApplicationMainBundle:Project:projects.html.twig', {'projects': projects}) }}
+
+        <div>
+            <a href="{{ path('project_index') }}">
+                Voir tous les projets
+            </a>
+        </div>
+    </div>
+    #}
+
+
+
+    <div class="row">
+        <div class="col-xs-12 col-sm-4 col-md-4">
+            <div class="alert alert-danger">
+                <h4>The problem</h4>
+                <p>Lost in a restaurant menu? Disappointed with the chosen dish?<br><b>Do not be anymore!</b></p>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-4 col-md-4">
+            <div class="alert alert-success">
+                <h4>The solution</h4>
+                <p><b>GimmeTheMenu</b> is the simplest and easiest way to get the menu, reviews and photos of each dish of a restaurant.</p>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-4 col-md-4">
+            <div class="alert alert-info">
+                <h4>Review and log</h4>
+                <p>On <b>GimmeTheMenu</b>, make your timeline of visited restaurants! Review not only the restaurant but also your chosen dish. <a href="timeline.html">Here an example</a>.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="well">
+        First of all, search a restaurant or an address below, you will see all restaurants around. <span class="glyphicon glyphicon-arrow-down"></span>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12 col-sm-10 col-md-10">
+            <input id="map-search-input" type="text" placeholder="Search a restaurant name or any address">
+            <div id="map_canvas"></div><!-- map -->
+        </div>
+        <div class="col-sm-2 col-md-2 hidden-xs">
+            <div id="listing">
+                <table id="resultsTable" class="table">
+                    <tbody id="results"></tbody>
+                </table>
+            </div><!-- listing on the right of the map -->
+        </div>
+    </div>
 
     <hr>
+    <h4>Latest dishes</h4>
+    <div class="row">
+        <div class="col-xs-12 col-sm-3 col-md-2">
+            <div class="thumbnail">
+                <a href="#"><img class="img-rounded" src="img/samples/burger.jpg"></a>
+                <div class="caption text-center">
+                    <h3><a href="#">CheezeBurger</a></h3>
+                    <p>@ <a href="#">The place2bee</a>, Paris</p>
+                    <p>
+                        <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                        <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                        <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                        <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
+                        <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-3 col-md-2">
+            <div class="thumbnail">
+                <a href="#"><img class="img-rounded" src="img/samples/pizza.png"></a>
+                <div class="caption text-center">
+                    <h3><a href="#">Pizza origan fromage truc muche</a></h3>
+                    <p>@ <a href="#">Pizza Arte del Italia</a>, Chelles</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-3 col-md-2">
+            <div class="thumbnail">
+                <a href="#"><img class="img-rounded" src="img/samples/burger.jpg"></a>
+                <div class="caption text-center">
+                    <h3><a href="#">Hamburgueur français</a></h3>
+                    <p>@ <a href="#">Le snack</a>, Paris</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-3 col-md-2">
+            <div class="thumbnail">
+                <a href="#"><img class="img-rounded" src="img/samples/burger.jpg"></a>
+                <div class="caption text-center">
+                    <h3><a href="#">Hamburgueur français</a></h3>
+                    <p>@ <a href="#">Le snack</a>, Paris</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-3 col-md-2">
+            <div class="thumbnail">
+                <img class="img-rounded" src="img/samples/pizza.png"></a>
+                <div class="caption text-center">
+                    <h3><a href="#">Pizza quattro formaggi</a></h3>
+                    <p>@ <a href="#">Little Italy of Tino</a>, Paris</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-3 col-md-2">
+            <div class="thumbnail">
+                <a href="#"><img class="img-rounded" src="img/samples/pizza.png"></a>
+                <div class="caption text-center">
+                    <h3><a href="#">Pizza quattro formaggi</a></h3>
+                    <p>@ <a href="#">Tino</a>, Paris</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <h2>Les projets en cours</h2>
-
-    {{ include('ApplicationMainBundle:Project:projects.html.twig', {'projects': projects}) }}
-
-    <div>
-        <a href="{{ path('project_index') }}">
-            Voir tous les projets
-        </a>
+    <hr>
+    <h4>Latest menus</h4>
+    <div class="row">
+        <div class="col-xs-12 col-sm-3 col-md-2">
+            <div class="thumbnail">
+                <a href="#"><img class="img-rounded" src="img/samples/pizza.png"></a>
+                <div class="caption text-center">
+                    <h3><a href="#">Pizza Tino</a></h3>
+                    <p>Chelles</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-3 col-md-2">
+            <div class="thumbnail">
+                <img class="img-rounded" src="img/samples/burger.jpg"></a>
+                <div class="caption text-center">
+                    <h3><a href="#">The place2bee</a></h3>
+                    <p>Paris</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-3 col-md-2">
+            <div class="thumbnail">
+                <a href="#"><img class="img-rounded" src="img/samples/burger.jpg"></a>
+                <div class="caption text-center">
+                    <h3><a href="#">An american in Paris</a></h3>
+                    <p>Paris</p>
+                    <p>
+                        <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                        <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                        <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                        <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
+                        <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-3 col-md-2">
+            <div class="thumbnail">
+                <a href="#"><img class="img-rounded" src="img/samples/pizza.png"></a>
+                <div class="caption text-center">
+                    <h3><a href="#">Little Italy</a></h3>
+                    <p>Paris</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-3 col-md-2">
+            <div class="thumbnail">
+                <a href="#"><img class="img-rounded" src="img/samples/pizza.png"></a>
+                <div class="caption text-center">
+                    <h3><a href="#">Chez Michel</a></h3>
+                    <p>Paris</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-3 col-md-2">
+            <div class="thumbnail">
+                <a href="#"><img class="img-rounded" src="img/samples/burger.jpg"></a>
+                <div class="caption text-center">
+                    <h3><a href="#">An american in Paris</a></h3>
+                    <p>Paris</p>
+                </div>
+            </div>
+        </div>
     </div>
 
 {% endblock %}
