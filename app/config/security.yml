@@ -30,20 +30,20 @@ security:
         main:
             pattern: ^/
             form_login:
-                login_path:  /se-connecter
-                check_path:  /se-connecter-verification
+                login_path:  /login
+                check_path:  /login-verification
                 provider: fos_userbundle
                 csrf_provider: form.csrf_provider
-                default_target_path: /mon-profil
+                default_target_path: /my-profile
                 use_referer: true
             logout:       true
             anonymous:    true
 
     access_control:
-        - { path: ^/se-connecter, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/se-connecter-verification, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/s-inscrire, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/reinitialisation, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/login, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/login-verification, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/sign-in, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/reset-password, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/_administration/login, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/_administration/login_check, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/_administration/, role: ROLE_SUPER_ADMIN }

@@ -1,23 +1,44 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
-{% if error %}
-    <div>{{ error|trans }}</div>
-{% endif %}
 
-<form action="{{ path("fos_user_security_check") }}" method="post">
-    <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
 
-    <label for="username">{{ 'security.login.username'|trans }}</label>
-    <input type="text" id="username" name="_username" value="{{ last_username }}" required="required" />
+<div class="row">
+    <div class="col-xs-12 col-md-6 col-md-offset-3">
 
-    <label for="password">{{ 'security.login.password'|trans }}</label>
-    <input type="password" id="password" name="_password" required="required" />
+        {% if error %}
+            <div class="alert alert-danger">{{ error|trans }}</div>
+        {% endif %}
 
-    <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
-    <label for="remember_me">{{ 'security.login.remember_me'|trans }}</label>
+        <div class="panel panel-primary">
+            <div class="panel-body">
 
-    <input type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" />
-</form>
+                <form action="{{ path("fos_user_security_check") }}" method="post">
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
 
-<p><a href="{{ path('fos_user_resetting_request') }}">Password forgotten?</a></p>
-<p><a href="{{ path('fos_user_registration_register') }}">Not a member? Sign in!</a></p>
+                    <div class="form-group">
+                        <label for="username">Email</label>
+                        <input class="form-control" type="text" id="username" name="_username" value="{{ last_username }}" required="required" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">{{ 'security.login.password'|trans }}</label>
+                        <input class="form-control" type="password" id="password" name="_password" required="required" />
+                    </div>
+
+                    <div class="form-group">
+                        <input class="" type="checkbox" id="remember_me" name="_remember_me" value="on" />
+                        <label for="remember_me">{{ 'security.login.remember_me'|trans }}</label>
+                    </div>
+
+                    <button type="submit" id="_submit" name="_submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+
+
+        <div class="well">
+            <a href="{{ path('fos_user_resetting_request') }}">Password forgotten?</a><br>
+            <a href="{{ path('fos_user_registration_register') }}">Not a member? Sign in!</a>
+        </div>
+    </div>
+</div>
