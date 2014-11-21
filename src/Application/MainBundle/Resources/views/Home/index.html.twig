@@ -52,6 +52,9 @@
         <span id="messageGeolocate" class="pull-right"></span>
     </div>
 
+
+
+
     <div class="row">
         <div class="col-xs-12 col-sm-10 col-md-10">
             <input id="map-search-input" type="text" placeholder="Search a restaurant name or any address">
@@ -65,6 +68,9 @@
             </div><!-- listing on the right of the map -->
         </div>
     </div>
+
+
+
 
     <hr>
     <h2>Latest dishes</h2>
@@ -198,4 +204,11 @@
         </div>
     </div>
 
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        var route_restaurant_get = '{{ path('restaurant_get') }}';
+    </script>
 {% endblock %}

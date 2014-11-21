@@ -51,7 +51,7 @@ class Restaurant
     /**
      * @var string
      * @Gedmo\Slug(fields={"locality"}, updatable=true, separator="-")
-     * @ORM\Column(name="locality_slug", type="string", length=255)
+     * @ORM\Column(name="locality_slug", type="string", length=255, unique=false)
      */
     private $localitySlug;
 
@@ -65,7 +65,7 @@ class Restaurant
     /**
      * @var string
      * @Gedmo\Slug(fields={"country"}, updatable=true, separator="-")
-     * @ORM\Column(name="slug_slug", type="string", length=255)
+     * @ORM\Column(name="country_slug", type="string", length=255, unique=false)
      */
     private $countrySlug;
 
@@ -93,7 +93,7 @@ class Restaurant
     /**
      * @var string
      * @Gedmo\Slug(fields={"name"}, updatable=true, separator="-")
-     * @ORM\Column(name="slug", type="string", length=255)
+     * @ORM\Column(name="slug", type="string", length=255, unique=false)
      */
     private $slug;
 

@@ -1,0 +1,189 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}{{ restaurant.name }} - {{ restaurant.locality }}{% endblock %}
+
+{% block body %}
+    <ol class="breadcrumb">
+        <li><a href="#">Home</a></li>
+        <li><a href="#">{{ restaurant.country }}</a></li>
+        <li class="active"><a href="#">{{ restaurant.locality }}</a></li>
+    </ol>
+
+    <h1>
+        &ldquo;{{ restaurant.name }}&rdquo;
+    </h1>
+
+    <p class="restaurantAddress">
+        {{ restaurant.address }}<br />
+        <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+        <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+        <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+        <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
+        <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
+    </p>
+    <hr>
+
+    <div class="row">
+        <div class="col-md-6">
+            <h2><i>Voici</i> the menu</h2>
+
+            <div class="panel">
+                <div class="tabbable tabs-below">
+                    <div id="myTabContent" class="tab-content">
+                        <div class="tab-pane fade active in" id="menu1">
+                            <img src="img/samples/menu.jpg" class="img-responsive" style="width:100%">
+                        </div>
+                        <div class="tab-pane fade" id="menu2">
+                            <img src="img/samples/burger.jpg" class="img-responsive" style="width:100%">
+                        </div>
+                        <div class="tab-pane fade" id="menu3">
+                            <img src="img/samples/pizza.png" class="img-responsive" style="width:100%">
+                        </div>
+                    </div>
+
+                    <ul id="myTab1" class="nav nav-tabs nav-justified">
+                        <li class="active"><a href="#menu1" data-toggle="tab">1</a></li>
+                        <li><a href="#menu2" data-toggle="tab">2</a></li>
+                        <li><a href="#menu3" data-toggle="tab">3</a></li>
+                    </ul>
+                </div>
+            </div>
+
+
+            <div class="panel panel-danger">
+                <div class="panel-heading">
+                    <h3 class="panel-title">The menu has changed? Gimme the new menu!</h3>
+                </div>
+                <div class="panel-body">
+                    <form role="form">
+                        <div class="form-group">
+                            <label for="exampleInputFile">Take a photo with your mobile and upload it!</label>
+                            <input type="file" id="exampleInputFile">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <h2><i>Voilà</i> the dishes</h2>
+
+            <div class="well">
+                <b>Dibs!</b><br>
+                There are not yet published dish for this restaurant.<br><br>
+                <a href="#" class="btn btn-primary">Add the first dish</a>
+            </div>
+
+            <div class="well">
+                Choose one below for reviews and see photos.
+                You can also add your own review and photos.
+                Or <a href="#" class="btn btn-xs btn-primary">add a dish</a>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12 col-sm-4 col-md-4">
+                    <div class="thumbnail">
+                        <a href="#"><img class="img-rounded" src="img/samples/burger.jpg"></a>
+                        <div class="caption text-center">
+                            <h3><a href="#">Hamburgueur français</a></h3>
+                            <p>
+                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
+                                <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
+                            </p>
+
+                            <p>
+                                <a href="#"><span class="label label-success">
+                                    2 reviews, 3 photos
+                                </span></a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-4 col-md-4">
+                    <div class="thumbnail">
+                        <a href="#"><img class="img-rounded" src="img/samples/pizza.png"></a>
+                        <div class="caption text-center">
+                            <h3><a href="#">Pizza quattro formaggi</a></h3>
+                            <p>
+                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-4 col-md-4">
+                    <div class="thumbnail">
+                        <a href="#"><img class="img-rounded" src="img/samples/pizza.png"></a>
+                        <div class="caption text-center">
+                            <h3><a href="#">Pizza du chef</a></h3>
+                            <p>
+                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                            </p>
+                            <p>
+                                <a href="#"><span class="label label-success">
+                                    1 photo
+                                </span></a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xs-12 col-sm-4 col-md-4">
+                    <div class="thumbnail">
+                        <a href="#"><img class="img-rounded" src="img/samples/burger.jpg"></a>
+                        <div class="caption text-center">
+                            <h3><a href="#">Hamburgueur français</a></h3>
+                            <p>
+                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
+                                <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
+                            </p>
+
+                            <p>
+                                <a href="#"><span class="label label-success">
+                                    1 review
+                                </span></a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div><!-- /row -->
+
+
+
+        </div><!-- /col-md-6 -->
+    </div><!-- /row -->
+
+    <h2><i>Voilà</i> the address</h2>
+    <div class="well">
+        <p>
+            <b>{{ restaurant.name }}</b><br>
+            {{ restaurant.address }}<br>
+            Tel: {{ restaurant.internationalPhoneNumber }}
+        </p>
+
+        <div id="map_restaurant"></div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script>
+        var restaurantPosition = { 'lat':{{ restaurant.locationLat }}, 'lng':{{ restaurant.locationLng }} };
+    </script>
+{% endblock %}

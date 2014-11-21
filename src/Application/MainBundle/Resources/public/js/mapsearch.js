@@ -336,9 +336,29 @@ function showInfoWindow(i) {
     }
 }
 
+
+
 function getIWContent(place) {
+
+    var components={};
+    $.each(place.address_components, function(k,v1) {jQuery.each(v1.types, function(k2, v2){components[v2]=v1.long_name});})
+
+//    console.log(place);
+//    console.log(components);
+
+    var params = 'place_id=' + encodeRFC5987ValueChars(place.place_id)
+        + '&name=' + encodeRFC5987ValueChars(place.name)
+        + '&address=' + encodeRFC5987ValueChars(place.vicinity)
+        + '&locality=' + encodeRFC5987ValueChars(components.locality)
+        + '&country=' + encodeRFC5987ValueChars(components.country)
+        + '&international_phone_number=' + encodeRFC5987ValueChars(place.international_phone_number)
+        + '&location_lat=' + encodeRFC5987ValueChars(place.geometry.location.lat())
+        + '&location_lng=' + encodeRFC5987ValueChars(place.geometry.location.lng());
+
+//    console.log(params);
+
     var content = '';
-    content += '<b><a href="restaurant.html?id=' + place.id + '">' + place.name + '</a></b><br>';
+    content += '<b><a href="' + route_restaurant_get + '?' + params + '">' + place.name + '</a></b><br>';
     content += place.vicinity;
 //    content += '<table>';
 //    content += '<tr class="iw_table_row">';

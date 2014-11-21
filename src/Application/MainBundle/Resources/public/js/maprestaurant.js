@@ -1,4 +1,4 @@
-if (restaurantPosition != undefined) {
+if (typeof restaurantPosition !== 'undefined') {
     var map;
     var defaultIcon = assets_dir + '/img/mapicons/restaurant.png';
     var activeIcon = assets_dir + '/img/mapicons-active/restaurant.png';
