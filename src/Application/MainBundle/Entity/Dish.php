@@ -28,6 +28,13 @@ class Dish
     private $name;
 
     /**
+     * @var float
+     *
+     * @ORM\Column(name="price", type="float")
+     */
+    private $price;
+
+    /**
      * @var string
      * @Gedmo\Slug(fields={"name"}, updatable=true, separator="-")
      * @ORM\Column(name="slug", type="string", length=255, unique=false)
@@ -50,7 +57,7 @@ class Dish
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="restaurant", inversedBy="dishes")
+     * @ORM\ManyToOne(targetEntity="Restaurant", inversedBy="dishes")
      * @ORM\JoinColumn(name="restaurant_id", referencedColumnName="id", nullable=false)
      */
     protected $restaurant;
@@ -60,6 +67,17 @@ class Dish
      * @ORM\JoinColumn(name="dish_type_id", referencedColumnName="id", nullable=false)
      */
     protected $dishType;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
+     */
+    protected $user;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Review", mappedBy="dish")
+     */
+    protected $reviews;
 
 //    /**
 //     * @ORM\OneToMany(targetEntity="RestaurantMenuFile", mappedBy="restaurant", cascade={"persist", "remove"}, orphanRemoval=true)
@@ -222,5 +240,91 @@ class Dish
     public function getDishType()
     {
         return $this->dishType;
+    }
+
+    /**
+     * Set price
+     *
+     * @param float $price
+     * @return Dish
+     */
+    public function setPrice($price)
+    {
+        $this->price = $price;
+
+        return $this;
+    }
+
+    /**
+     * Get price
+     *
+     * @return float 
+     */
+    public function getPrice()
+    {
+        return $this->price;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->reviews = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Set user
+     *
+     * @param \Application\MainBundle\Entity\User $user
+     * @return Dish
+     */
+    public function setUser(\Application\MainBundle\Entity\User $user)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \Application\MainBundle\Entity\User 
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * Add reviews
+     *
+     * @param \Application\MainBundle\Entity\Review $reviews
+     * @return Dish
+     */
+    public function addReview(\Application\MainBundle\Entity\Review $reviews)
+    {
+        $this->reviews[] = $reviews;
+
+        return $this;
+    }
+
+    /**
+     * Remove reviews
+     *
+     * @param \Application\MainBundle\Entity\Review $reviews
+     */
+    public function removeReview(\Application\MainBundle\Entity\Review $reviews)
+    {
+        $this->reviews->removeElement($reviews);
+    }
+
+    /**
+     * Get reviews
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getReviews()
+    {
+        return $this->reviews;
     }
 }

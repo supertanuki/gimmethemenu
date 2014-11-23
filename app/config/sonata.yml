@@ -39,6 +39,8 @@ sonata_admin:
                 label: 'Contenus'
                 items:
                     - sonata.admin.restaurant
+                    - sonata.admin.dish
+                    - sonata.admin.dishtype
                     - sonata.admin.project
                     - sonata.admin.category
                     - sonata.admin.page

@@ -13,6 +13,26 @@
             </call>
         </service>
 
+        <service id="sonata.admin.dish" class="Application\MainBundle\Admin\DishAdmin">
+            <tag name="sonata.admin" manager_type="orm" group="Content" label="Dish"/>
+            <argument />
+            <argument>Application\MainBundle\Entity\Dish</argument>
+            <argument />
+            <call method="setTranslationDomain">
+                <argument>messages</argument>
+            </call>
+        </service>
+
+        <service id="sonata.admin.dishtype" class="Application\MainBundle\Admin\DishTypeAdmin">
+            <tag name="sonata.admin" manager_type="orm" group="Content" label="DishType"/>
+            <argument />
+            <argument>Application\MainBundle\Entity\DishType</argument>
+            <argument />
+            <call method="setTranslationDomain">
+                <argument>messages</argument>
+            </call>
+        </service>
+
         <service id="sonata.admin.project" class="Application\MainBundle\Admin\ProjectAdmin">
             <tag name="sonata.admin" manager_type="orm" group="Content" label="Project"/>
             <argument />
