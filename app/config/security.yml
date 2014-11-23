@@ -34,7 +34,7 @@ security:
                 check_path:  /login-verification
                 provider: fos_userbundle
                 csrf_provider: form.csrf_provider
-                default_target_path: /my-profile
+                default_target_path: /login-end
                 use_referer: true
             logout:       true
             anonymous:    true

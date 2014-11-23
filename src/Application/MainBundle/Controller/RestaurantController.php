@@ -158,7 +158,7 @@ class RestaurantController extends Controller
                 $em->persist($restaurant);
                 $em->flush();
 
-                $this->get('session')->getFlashBag()->add('info', 'Menu ajouté !');
+                $this->get('session')->getFlashBag()->add('info', 'Your photo is online. Thank you!');
 
                 // redirect
                 return $this->redirect(
