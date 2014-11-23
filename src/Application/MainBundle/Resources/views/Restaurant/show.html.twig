@@ -5,8 +5,8 @@
 {% block body %}
     <ol class="breadcrumb">
         <li><a href="#">Home</a></li>
-        <li><a href="#">{{ restaurant.country }}</a></li>
-        <li class="active"><a href="#">{{ restaurant.locality }}</a></li>
+        <li>{{ restaurant.country }}</li>
+        <li class="active">{{ restaurant.locality }}</li>
     </ol>
 
     <h1>
@@ -172,7 +172,7 @@
     <div class="well">
         <p>
             <b>{{ restaurant.name }}</b><br>
-            {{ restaurant.address }}<br>
+            {{ restaurant.fullAddress }}<br>
             Tel: {{ restaurant.internationalPhoneNumber }}
         </p>
 

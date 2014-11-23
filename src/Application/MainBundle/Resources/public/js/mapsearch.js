@@ -7,7 +7,7 @@ var typeSearch = 'restaurant'; // others types : bar, cafe
 var rankBy = 'prominence'; // other criteria : distance
 var defaultIcon = assets_dir + '/img/mapicons/restaurant.png';
 var activeIcon = assets_dir + '/img/mapicons-active/restaurant.png';
-var countryRestrict = { 'country': 'fr' };
+//var countryRestrict = { 'country': 'fr' };
 var cookieGeolocalisationName = 'geolocalisation_cache';
 
 function initialize() {
@@ -32,7 +32,7 @@ function initialize() {
 
     var autocomplete = new google.maps.places.Autocomplete(input,
         {
-            componentRestrictions: countryRestrict
+            //componentRestrictions: countryRestrict
             //bounds: hyderabadBounds,
         });
     autocomplete.bindTo('bounds', map);
@@ -349,6 +349,7 @@ function getIWContent(place) {
     var params = 'place_id=' + encodeRFC5987ValueChars(place.place_id)
         + '&name=' + encodeRFC5987ValueChars(place.name)
         + '&address=' + encodeRFC5987ValueChars(place.vicinity)
+        + '&full_address=' + encodeRFC5987ValueChars(place.formatted_address)
         + '&locality=' + encodeRFC5987ValueChars(components.locality)
         + '&country=' + encodeRFC5987ValueChars(components.country)
         + '&international_phone_number=' + encodeRFC5987ValueChars(place.international_phone_number)
@@ -360,6 +361,7 @@ function getIWContent(place) {
     var content = '';
     content += '<b><a href="' + route_restaurant_get + '?' + params + '">' + place.name + '</a></b><br>';
     content += place.vicinity;
+    content += '<br><a href="' + route_restaurant_get + '?' + params + '">Gimme the menu</a><br>';
 //    content += '<table>';
 //    content += '<tr class="iw_table_row">';
 //    content += '<td style="text-align: right"><img class="hotelIcon" src="' + place.icon + '"/></td>';

@@ -8,6 +8,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Application\MainBundle\Entity\Restaurant;
+use Application\MainBundle\Entity\Country;
+use Application\MainBundle\Entity\Locality;
 
 class RestaurantController extends Controller
 {
@@ -16,9 +18,11 @@ class RestaurantController extends Controller
      * @Method("get")
      * @Template()
      *
+     * Paramters get :
      * place_id
      * name
      * address
+     * full_address
      * locality
      * country
      * international_phone_number
@@ -30,8 +34,9 @@ class RestaurantController extends Controller
         $place_id = $request->query->get('place_id');
         $name = $request->query->get('name');
         $address = $request->query->get('address');
-        $locality = $request->query->get('locality');
-        $country = $request->query->get('country');
+        $full_address = $request->query->get('full_address');
+        $localityName = $request->query->get('locality');
+        $countryName = $request->query->get('country');
         $international_phone_number = $request->query->get('international_phone_number');
         $location_lat = $request->query->get('location_lat');
         $location_lng = $request->query->get('location_lng');
@@ -45,22 +50,49 @@ class RestaurantController extends Controller
             && $place_id
             && $name
             && $address
-            && $locality
-            && $country
+            && $full_address
+            && $localityName
+            && $countryName
             && $location_lat
             && $location_lng
         ) {
+            // get the entity manager
+            $em = $this->getDoctrine()->getManager();
+
+            // find or create the country
+            $country = $this->getDoctrine()
+                ->getRepository('ApplicationMainBundle:Country')
+                ->findOneBy(array('name' => $countryName));
+
+            if (!$country) {
+                $country = new Country();
+                $country->setName($countryName);
+                $em->persist($country);
+            }
+
+            // find or create the locality
+            $locality = $this->getDoctrine()
+                ->getRepository('ApplicationMainBundle:Locality')
+                ->findOneBy(array('name' => $localityName));
+
+            if (!$locality) {
+                $locality = new Locality();
+                $locality->setName($localityName);
+                $em->persist($locality);
+            }
+
+            // create the restaurant
             $restaurant = new Restaurant();
             $restaurant->setGgPlaceId($place_id);
             $restaurant->setName($name);
             $restaurant->setAddress($address);
+            $restaurant->setFullAddress($full_address);
             $restaurant->setLocality($locality);
             $restaurant->setCountry($country);
             $restaurant->setLocationLat($location_lat);
             $restaurant->setLocationLng($location_lng);
             $restaurant->setInternationalPhoneNumber($international_phone_number);
 
-            $em = $this->getDoctrine()->getManager();
             $em->persist($restaurant);
             $em->flush();
         }
@@ -68,8 +100,8 @@ class RestaurantController extends Controller
         // redirect to the restaurant page
         if ($restaurant) {
             return $this->redirect($this->generateUrl('restaurant_show', array(
-                'country_slug'      => $restaurant->getCountrySlug(),
-                'locality_slug'     => $restaurant->getLocalitySlug(),
+                'country_slug'      => $restaurant->getCountry()->getSlug(),
+                'locality_slug'     => $restaurant->getLocality()->getSlug(),
                 'restaurant_slug'   => $restaurant->getSlug()
             )));
         }
@@ -91,6 +123,8 @@ class RestaurantController extends Controller
         if (!$restaurant) {
             throw $this->createNotFoundException('Restaurant not found');
         }
+
+        // @todo : verify $country_slug & $locality_slug
 
         return array('restaurant' => $restaurant);
     }
