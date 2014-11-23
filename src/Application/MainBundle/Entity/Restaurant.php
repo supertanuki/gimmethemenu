@@ -44,30 +44,9 @@ class Restaurant
     /**
      * @var string
      *
-     * @ORM\Column(name="locality", type="string", length=255)
+     * @ORM\Column(name="full_address", type="string", length=255)
      */
-    private $locality;
-
-    /**
-     * @var string
-     * @Gedmo\Slug(fields={"locality"}, updatable=true, separator="-")
-     * @ORM\Column(name="locality_slug", type="string", length=255, unique=false)
-     */
-    private $localitySlug;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="country", type="string", length=255)
-     */
-    private $country;
-
-    /**
-     * @var string
-     * @Gedmo\Slug(fields={"country"}, updatable=true, separator="-")
-     * @ORM\Column(name="country_slug", type="string", length=255, unique=false)
-     */
-    private $countrySlug;
+    private $fullAddress;
 
     /**
      * @var float
@@ -111,11 +90,17 @@ class Restaurant
      */
     private $updatedAt;
 
-//    /**
-//     * @ORM\ManyToOne(targetEntity="Category", inversedBy="projects")
-//     * @ORM\JoinColumn(name="category_id", referencedColumnName="id", nullable=false)
-//     */
-//    protected $category;
+    /**
+     * @ORM\ManyToOne(targetEntity="Country", inversedBy="restaurants")
+     * @ORM\JoinColumn(name="country_id", referencedColumnName="id", nullable=false)
+     */
+    protected $country;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Locality", inversedBy="restaurants")
+     * @ORM\JoinColumn(name="locality_id", referencedColumnName="id", nullable=false)
+     */
+    protected $locality;
 
     /**
      * Get title
@@ -204,98 +189,6 @@ class Restaurant
     public function getAddress()
     {
         return $this->address;
-    }
-
-    /**
-     * Set locality
-     *
-     * @param string $locality
-     * @return Restaurant
-     */
-    public function setLocality($locality)
-    {
-        $this->locality = $locality;
-
-        return $this;
-    }
-
-    /**
-     * Get locality
-     *
-     * @return string 
-     */
-    public function getLocality()
-    {
-        return $this->locality;
-    }
-
-    /**
-     * Set localitySlug
-     *
-     * @param string $localitySlug
-     * @return Restaurant
-     */
-    public function setLocalitySlug($localitySlug)
-    {
-        $this->localitySlug = $localitySlug;
-
-        return $this;
-    }
-
-    /**
-     * Get localitySlug
-     *
-     * @return string 
-     */
-    public function getLocalitySlug()
-    {
-        return $this->localitySlug;
-    }
-
-    /**
-     * Set country
-     *
-     * @param string $country
-     * @return Restaurant
-     */
-    public function setCountry($country)
-    {
-        $this->country = $country;
-
-        return $this;
-    }
-
-    /**
-     * Get country
-     *
-     * @return string 
-     */
-    public function getCountry()
-    {
-        return $this->country;
-    }
-
-    /**
-     * Set countrySlug
-     *
-     * @param string $countrySlug
-     * @return Restaurant
-     */
-    public function setCountrySlug($countrySlug)
-    {
-        $this->countrySlug = $countrySlug;
-
-        return $this;
-    }
-
-    /**
-     * Get countrySlug
-     *
-     * @return string 
-     */
-    public function getCountrySlug()
-    {
-        return $this->countrySlug;
     }
 
     /**
@@ -434,5 +327,74 @@ class Restaurant
     public function getUpdatedAt()
     {
         return $this->updatedAt;
+    }
+
+    /**
+     * Set fullAddress
+     *
+     * @param string $fullAddress
+     * @return Restaurant
+     */
+    public function setFullAddress($fullAddress)
+    {
+        $this->fullAddress = $fullAddress;
+
+        return $this;
+    }
+
+    /**
+     * Get fullAddress
+     *
+     * @return string 
+     */
+    public function getFullAddress()
+    {
+        return $this->fullAddress;
+    }
+
+    /**
+     * Set country
+     *
+     * @param \Application\MainBundle\Entity\Country $country
+     * @return Restaurant
+     */
+    public function setCountry(\Application\MainBundle\Entity\Country $country)
+    {
+        $this->country = $country;
+
+        return $this;
+    }
+
+    /**
+     * Get country
+     *
+     * @return \Application\MainBundle\Entity\Country 
+     */
+    public function getCountry()
+    {
+        return $this->country;
+    }
+
+    /**
+     * Set locality
+     *
+     * @param \Application\MainBundle\Entity\Locality $locality
+     * @return Restaurant
+     */
+    public function setLocality(\Application\MainBundle\Entity\Locality $locality)
+    {
+        $this->locality = $locality;
+
+        return $this;
+    }
+
+    /**
+     * Get locality
+     *
+     * @return \Application\MainBundle\Entity\Locality 
+     */
+    public function getLocality()
+    {
+        return $this->locality;
     }
 }
