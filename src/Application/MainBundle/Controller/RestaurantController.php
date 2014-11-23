@@ -128,4 +128,14 @@ class RestaurantController extends Controller
 
         return array('restaurant' => $restaurant);
     }
+
+    /**
+     * @Route("/restaurant", name="restaurant_search")
+     * @Method("get")
+     * @Template()
+     */
+    public function searchAction()
+    {
+        return array();
+    }
 }

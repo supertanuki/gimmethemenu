@@ -55,10 +55,7 @@
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
 
-                <li><a href="search.html">Search a restaurant</a></li>
-                <li><a href="restaurant.html">Restaurant</a></li>
-                <li><a href="dish.html">Dish</a></li>
-                <li><a href="dish-add.html">Add a Dish</a></li>
+                <li><a href="{{ path('restaurant_search') }}">Search a restaurant</a></li>
 
                 {% if app.user %}
                     <li class="dropdown">

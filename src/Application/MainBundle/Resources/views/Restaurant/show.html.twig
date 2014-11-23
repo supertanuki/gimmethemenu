@@ -15,6 +15,7 @@
 
     <p class="restaurantAddress">
         {{ restaurant.address }}<br />
+       @todo:
         <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
         <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
         <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
@@ -25,6 +26,24 @@
 
     <div class="row">
         <div class="col-md-6">
+            <h2>The menu</h2>
+
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title">You're the first one! Gimme the menu!</h3>
+                </div>
+                <div class="panel-body">
+                    <form role="form">
+                        <div class="form-group">
+                            <label for="exampleInputFile">Take a photo the menu with your mobile and upload it!</label>
+                            <input type="file" id="exampleInputFile">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+            </div>
+
+            {#
             <h2><i>Voici</i> the menu</h2>
 
             <div class="panel">
@@ -47,10 +66,10 @@
                         <li><a href="#menu3" data-toggle="tab">3</a></li>
                     </ul>
                 </div>
-            </div>
+            </div>#}
 
 
-            <div class="panel panel-danger">
+            {#<div class="panel panel-danger">
                 <div class="panel-heading">
                     <h3 class="panel-title">The menu has changed? Gimme the new menu!</h3>
                 </div>
@@ -63,17 +82,25 @@
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
                 </div>
-            </div>
+            </div>#}
         </div>
 
         <div class="col-md-6">
-            <h2><i>Voilà</i> the dishes</h2>
 
-            <div class="well">
-                <b>Dibs!</b><br>
-                There are not yet published dish for this restaurant.<br><br>
-                <a href="#" class="btn btn-primary">Add the first dish</a>
+            <h2>The dishes</h2>
+
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Dibs!</h3>
+                </div>
+                <div class="panel-body">
+                    There are not yet published dish for this restaurant.<br><br>
+                    <a href="#" class="btn btn-primary">Add the first dish</a>
+                </div>
             </div>
+
+            {#
+            <h2><i>Voilà</i> the dishes</h2>
 
             <div class="well">
                 Choose one below for reviews and see photos.
@@ -162,13 +189,13 @@
                 </div>
 
             </div><!-- /row -->
-
+            #}
 
 
         </div><!-- /col-md-6 -->
     </div><!-- /row -->
 
-    <h2><i>Voilà</i> the address</h2>
+    <h2>The address</h2>
     <div class="well">
         <p>
             <b>{{ restaurant.name }}</b><br>
