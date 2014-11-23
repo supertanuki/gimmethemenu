@@ -108,6 +108,11 @@ class Restaurant
     private $restaurantMenuFiles;
 
     /**
+     * @ORM\OneToMany(targetEntity="Dish", mappedBy="restaurant", cascade={"persist", "remove"}, orphanRemoval=true)
+     */
+    private $dishes;
+
+    /**
      * Get title
      *
      * @return string
@@ -441,5 +446,38 @@ class Restaurant
     public function getRestaurantMenuFiles()
     {
         return $this->restaurantMenuFiles;
+    }
+
+    /**
+     * Add dishes
+     *
+     * @param \Application\MainBundle\Entity\Dish $dishes
+     * @return Restaurant
+     */
+    public function addDish(\Application\MainBundle\Entity\Dish $dishes)
+    {
+        $this->dishes[] = $dishes;
+
+        return $this;
+    }
+
+    /**
+     * Remove dishes
+     *
+     * @param \Application\MainBundle\Entity\Dish $dishes
+     */
+    public function removeDish(\Application\MainBundle\Entity\Dish $dishes)
+    {
+        $this->dishes->removeElement($dishes);
+    }
+
+    /**
+     * Get dishes
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getDishes()
+    {
+        return $this->dishes;
     }
 }

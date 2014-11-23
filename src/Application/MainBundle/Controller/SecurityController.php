@@ -23,7 +23,7 @@ class SecurityController extends Controller
      */
     public function loginEndAction()
     {
-        $this->get('session')->getFlashBag()->add('info', 'Happy to see you again ! Do you want add a new review ?');
+        $this->get('session')->getFlashBag()->add('info', 'Happy to see you again ! Do you want add a review ?');
 
         // redirect
         return $this->redirect($this->generateUrl('restaurant_search'));
