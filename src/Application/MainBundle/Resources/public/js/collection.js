@@ -9,19 +9,18 @@ $( document ).ready(function() {
 
     // gestion des collections
     // Récupère le div qui contient la collection
-    var collectionHolder = $('ul.collection');
+    var collectionHolder = $('.collection');
 
     if(collectionHolder)
     {
         // ajoute un lien de suppression à tous les éléments li des formulaires existants
-        collectionHolder.find('li').each(function() {
+        collectionHolder.find('.collection_item').each(function() {
             addFormDeleteLink(collectionHolder, $(this));
         });
 
-
         // ajoute un lien « add »
-        var $addLink = $('<a href="#" class="add_link">'+(collectionHolder.attr('data-label-add'))+'</a>');
-        var $newLinkLi = $('<li></li>').append($addLink);
+        var $addLink = $('<a href="#" class="btn btn-default btn-sm">'+(collectionHolder.attr('data-label-add'))+'</a>');
+        var $newLinkLi = $('<div></div>').append($addLink);
 
         // ajoute l'ancre « ajouter » et li à la balise ul
         collectionHolder.append($newLinkLi);
@@ -42,7 +41,7 @@ function addForm(collectionHolder, $newLinkLi) {
     var newForm = prototype.replace(/__name__/g, collectionHolder.children().length);
 
     // Affiche le formulaire dans la page dans un li, avant le lien "ajouter"
-    var $newFormLi = $('<li></li>').append(newForm);
+    var $newFormLi = $('<div class="collection_item"></div>').append(newForm);
     $newLinkLi.before($newFormLi);
 
     // ajoute un lien de suppression au nouveau formulaire
@@ -50,8 +49,8 @@ function addForm(collectionHolder, $newLinkLi) {
 }
 
 function addFormDeleteLink(collectionHolder, $FormLi) {
-    var $removeFormA = $('<a href="#">'+collectionHolder.attr('data-label-delete')+'</a>');
-    $FormLi.append($removeFormA);
+    var $removeFormA = $('<a href="#" class="btn btn-danger btn-xs pull-right">'+collectionHolder.attr('data-label-delete')+'</a>');
+    $FormLi.prepend($removeFormA);
 
     $removeFormA.on('click', function(e) {
         // empêche le lien de créer un « # » dans l'URL

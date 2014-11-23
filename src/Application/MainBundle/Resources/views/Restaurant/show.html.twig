@@ -33,13 +33,30 @@
                     <h3 class="panel-title">You're the first one! Gimme the menu!</h3>
                 </div>
                 <div class="panel-body">
-                    <form role="form">
-                        <div class="form-group">
-                            <label for="exampleInputFile">Take a photo the menu with your mobile and upload it!</label>
-                            <input type="file" id="exampleInputFile">
+                    <p>Take a photo of the menu with your mobile and upload it!</p>
+
+                    {{ form_start(form_restaurant_menu) }}
+
+                    <div
+                        class="collection"
+                        data-label-add="Add one more photo"
+                        data-label-delete="Delete"
+                        data-label-delete-confirm="Delete this field ?"
+                        data-prototype="{{ form_widget(form_restaurant_menu.restaurantMenuFiles.vars.prototype)|e }}"
+                        >
+                        {% for menuFile in form_restaurant_menu.restaurantMenuFiles %}
+                        <div class="collection_item">
+                            {{ form_widget(menuFile.fileFile) }}
                         </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </form>
+                        {% endfor %}
+                    </div>
+
+                    {{ form_rest(form_restaurant_menu) }}
+
+                    <hr>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+
+                    {{ form_end(form_restaurant_menu) }}
                 </div>
             </div>
 
@@ -89,13 +106,87 @@
 
             <h2>The dishes</h2>
 
+            <div class="alert alert-info">
+                There are not yet published dish for this restaurant.
+            </div>
+
             <div class="panel panel-info">
                 <div class="panel-heading">
                     <h3 class="panel-title">Dibs!</h3>
                 </div>
                 <div class="panel-body">
-                    There are not yet published dish for this restaurant.<br><br>
-                    <a href="#" class="btn btn-primary">Add the first dish</a>
+                    <p>Add the first dish for this restaurant</p>
+
+                    <form role="form">
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input name="name" type="text" class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Price</label>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" placeholder="0,00">
+                                        <span class="input-group-addon">€</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleInputFile">Photo</label>
+                            <input type="file" id="exampleInputFile">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Your review</label>
+                            <textarea class="form-control" rows="5"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <input type="radio" name="note" value="1">
+                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                            </label><br>
+                            <label>
+                                <input type="radio" name="note" value="2">
+                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                            </label><br>
+                            <label>
+                                <input type="radio" name="note" value="3">
+                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                            </label><br>
+                            <label>
+                                <input type="radio" name="note" value="4">
+                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                            </label><br>
+                            <label>
+                                <input type="radio" name="note" value="5">
+                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label>When?</label>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <input type="date" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
                 </div>
             </div>
 

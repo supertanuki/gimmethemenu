@@ -96,6 +96,13 @@ vich_uploader:
             inject_on_load:     false
             delete_on_update:   true
             delete_on_remove:   true
+        restaurant_menu_file:
+            uri_prefix:         /uploads/menu
+            upload_destination: %kernel.root_dir%/../web/uploads/menu
+            namer:              vich_uploader.namer_uniqid
+            inject_on_load:     false
+            delete_on_update:   true
+            delete_on_remove:   true
 
 ewz_recaptcha:
     public_key:   6LfF9_gSAAAAAE7ItE8NX5naqnEskP9jrnjrvFdP # keys for tendances-edition-qa.itnetwork.fr

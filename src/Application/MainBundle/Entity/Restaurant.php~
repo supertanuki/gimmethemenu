@@ -103,6 +103,11 @@ class Restaurant
     protected $locality;
 
     /**
+     * @ORM\OneToMany(targetEntity="RestaurantMenuFile", mappedBy="restaurant", cascade={"persist", "remove"}, orphanRemoval=true)
+     */
+    private $restaurantMenuFiles;
+
+    /**
      * Get title
      *
      * @return string
@@ -327,5 +332,74 @@ class Restaurant
     public function getUpdatedAt()
     {
         return $this->updatedAt;
+    }
+
+    /**
+     * Set fullAddress
+     *
+     * @param string $fullAddress
+     * @return Restaurant
+     */
+    public function setFullAddress($fullAddress)
+    {
+        $this->fullAddress = $fullAddress;
+
+        return $this;
+    }
+
+    /**
+     * Get fullAddress
+     *
+     * @return string 
+     */
+    public function getFullAddress()
+    {
+        return $this->fullAddress;
+    }
+
+    /**
+     * Set country
+     *
+     * @param \Application\MainBundle\Entity\Country $country
+     * @return Restaurant
+     */
+    public function setCountry(\Application\MainBundle\Entity\Country $country)
+    {
+        $this->country = $country;
+
+        return $this;
+    }
+
+    /**
+     * Get country
+     *
+     * @return \Application\MainBundle\Entity\Country 
+     */
+    public function getCountry()
+    {
+        return $this->country;
+    }
+
+    /**
+     * Set locality
+     *
+     * @param \Application\MainBundle\Entity\Locality $locality
+     * @return Restaurant
+     */
+    public function setLocality(\Application\MainBundle\Entity\Locality $locality)
+    {
+        $this->locality = $locality;
+
+        return $this;
+    }
+
+    /**
+     * Get locality
+     *
+     * @return \Application\MainBundle\Entity\Locality 
+     */
+    public function getLocality()
+    {
+        return $this->locality;
     }
 }

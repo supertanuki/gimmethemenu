@@ -103,6 +103,11 @@ class Restaurant
     protected $locality;
 
     /**
+     * @ORM\OneToMany(targetEntity="RestaurantMenuFile", mappedBy="restaurant", cascade={"persist", "remove"}, orphanRemoval=true)
+     */
+    private $restaurantMenuFiles;
+
+    /**
      * Get title
      *
      * @return string
@@ -396,5 +401,45 @@ class Restaurant
     public function getLocality()
     {
         return $this->locality;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->restaurantMenuFiles = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add restaurantMenuFiles
+     *
+     * @param \Application\MainBundle\Entity\RestaurantMenuFile $restaurantMenuFiles
+     * @return Restaurant
+     */
+    public function addRestaurantMenuFile(\Application\MainBundle\Entity\RestaurantMenuFile $restaurantMenuFiles)
+    {
+        $this->restaurantMenuFiles[] = $restaurantMenuFiles;
+
+        return $this;
+    }
+
+    /**
+     * Remove restaurantMenuFiles
+     *
+     * @param \Application\MainBundle\Entity\RestaurantMenuFile $restaurantMenuFiles
+     */
+    public function removeRestaurantMenuFile(\Application\MainBundle\Entity\RestaurantMenuFile $restaurantMenuFiles)
+    {
+        $this->restaurantMenuFiles->removeElement($restaurantMenuFiles);
+    }
+
+    /**
+     * Get restaurantMenuFiles
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getRestaurantMenuFiles()
+    {
+        return $this->restaurantMenuFiles;
     }
 }

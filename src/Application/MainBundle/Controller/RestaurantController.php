@@ -8,8 +8,11 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Application\MainBundle\Entity\Restaurant;
+use Application\MainBundle\Entity\RestaurantMenuFile;
 use Application\MainBundle\Entity\Country;
 use Application\MainBundle\Entity\Locality;
+use Application\MainBundle\Form\Type\RestaurantMenuType;
+use Application\MainBundle\Form\Type\RestaurantMenuFileType;
 
 class RestaurantController extends Controller
 {
@@ -126,7 +129,46 @@ class RestaurantController extends Controller
 
         // @todo : verify $country_slug & $locality_slug
 
-        return array('restaurant' => $restaurant);
+        // form default file
+        $restaurantMenuFile = new RestaurantMenuFile();
+        $restaurantMenuFile->setRestaurant($restaurant);
+        $restaurant->getRestaurantMenuFiles()->add($restaurantMenuFile);
+
+        $form_restaurant_menu = $this->createForm(
+            new RestaurantMenuType(),
+            $restaurant,
+            array('action' => $this->generateUrl('restaurant_show', array(
+                    'restaurant_slug' => $restaurant_slug,
+                    'locality_slug' => $locality_slug,
+                    'country_slug' => $country_slug
+                ))
+            )
+        );
+
+//        // form post
+//        $request = $this->getRequest();
+//        if ($request->getMethod() === 'POST') {
+//            $form_project_response->handleRequest($request);
+//
+//            if ($form_project_response->isValid()) {
+//                $em = $this->getDoctrine()->getManager();
+//                $projectResponse->setUser($this->getUser());
+//                $projectResponse->setProject($project);
+//                $em->persist($projectResponse);
+//                $em->flush();
+//
+//                $this->get('session')->getFlashBag()->add('info', 'Proposition ajoutée');
+//
+//                return $this->redirect(
+//                    $this->getProjectUrl($slug_category, $slug_project)
+//                );
+//            }
+//        }
+
+        return array(
+            'restaurant' => $restaurant,
+            'form_restaurant_menu' => $form_restaurant_menu->createView(),
+        );
     }
 
     /**
