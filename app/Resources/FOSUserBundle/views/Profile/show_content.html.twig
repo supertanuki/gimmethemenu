@@ -2,12 +2,8 @@
 
 <div class="fos_user_user_show">
     <ul>
-        <li>{{ 'profile.show.email'|trans }} : {{ user.email }}</li>
-        <li>Prénom et nom : {{ user }}</li>
-        <li>Adresse : {{ user.address }}</li>
-        <li>Code postal : {{ user.postalCode }}</li>
-        <li>Ville : {{ user.city }}</li>
-        <li>Pays : {{ user.country }}</li>
+        <li>{{ user.email }}</li>
+        <li>First name : {{ user.firstName }}</li>
     </ul>
     <p><a href="{{ path('fos_user_profile_edit') }}">Modifier</a></p>
 </div>

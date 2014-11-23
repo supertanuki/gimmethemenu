@@ -199,4 +199,27 @@ class RestaurantMenuFile
     {
         return $this->restaurant;
     }
+
+    /**
+     * Set user
+     *
+     * @param \Application\MainBundle\Entity\User $user
+     * @return RestaurantMenuFile
+     */
+    public function setUser(\Application\MainBundle\Entity\User $user)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \Application\MainBundle\Entity\User 
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
 }

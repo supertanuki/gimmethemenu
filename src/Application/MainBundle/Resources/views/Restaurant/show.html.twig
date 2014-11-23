@@ -22,18 +22,57 @@
         <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
         <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
     </p>
+
+    <ul class="nav nav-pills visible-xs-block">
+        <li><a href="#menu">Menu</a></li>
+        <li><a href="#dishes">Dishes</a></li>
+        <li><a href="#address">Address</a></li>
+    </ul>
+
     <hr>
 
     <div class="row">
         <div class="col-md-6">
-            <h2>The menu</h2>
+            <h2><a name="menu"></a>The menu</h2>
+
+            {% if restaurant.restaurantMenuFiles|length > 0 %}
+            <div class="panel">
+                <div class="tabbable tabs-below">
+                    <div id="myTabContent" class="tab-content">
+                        {% for key, menuFile in restaurant.restaurantMenuFiles %}
+                        <div class="tab-pane {% if key==0 %} active{% endif %}" id="menu{{ key+1 }}">
+                            <img src="{{ vich_uploader_asset(menuFile, 'restaurant_menu_file') }}" class="img-responsive" style="width:100%">
+                            <br>
+                            Added by <b>{{ menuFile.user }}</b> on {{ menuFile.createdAt|localizeddate('medium', 'none') }}
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    <ul id="myTab1" class="nav nav-tabs nav-justified">
+                        {% for key, menuFile in restaurant.restaurantMenuFiles %}
+                            <li{% if key==0 %} class="active"{% endif %}><a href="#menu{{ key+1 }}" data-toggle="tab">{{ key+1 }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            {% endif %}
 
             <div class="panel panel-info">
                 <div class="panel-heading">
-                    <h3 class="panel-title">You're the first one! Gimme the menu!</h3>
+                    <h3 class="panel-title">
+                        {% if restaurant.restaurantMenuFiles|length > 0 %}
+                            The menu has changed or is incomplete?
+                        {% else %}
+                            You're the first one!
+                        {% endif %}
+                        Gimme the menu!
+                    </h3>
                 </div>
                 <div class="panel-body">
-                    <p>Take a photo of the menu with your mobile and upload it!</p>
+                    <div class="alert alert-warning">
+                        Take a photo of the menu with your mobile and upload it!
+                    </div>
+
 
                     {{ form_start(form_restaurant_menu) }}
 
@@ -59,63 +98,24 @@
                     {{ form_end(form_restaurant_menu) }}
                 </div>
             </div>
-
-            {#
-            <h2><i>Voici</i> the menu</h2>
-
-            <div class="panel">
-                <div class="tabbable tabs-below">
-                    <div id="myTabContent" class="tab-content">
-                        <div class="tab-pane fade active in" id="menu1">
-                            <img src="img/samples/menu.jpg" class="img-responsive" style="width:100%">
-                        </div>
-                        <div class="tab-pane fade" id="menu2">
-                            <img src="img/samples/burger.jpg" class="img-responsive" style="width:100%">
-                        </div>
-                        <div class="tab-pane fade" id="menu3">
-                            <img src="img/samples/pizza.png" class="img-responsive" style="width:100%">
-                        </div>
-                    </div>
-
-                    <ul id="myTab1" class="nav nav-tabs nav-justified">
-                        <li class="active"><a href="#menu1" data-toggle="tab">1</a></li>
-                        <li><a href="#menu2" data-toggle="tab">2</a></li>
-                        <li><a href="#menu3" data-toggle="tab">3</a></li>
-                    </ul>
-                </div>
-            </div>#}
-
-
-            {#<div class="panel panel-danger">
-                <div class="panel-heading">
-                    <h3 class="panel-title">The menu has changed? Gimme the new menu!</h3>
-                </div>
-                <div class="panel-body">
-                    <form role="form">
-                        <div class="form-group">
-                            <label for="exampleInputFile">Take a photo with your mobile and upload it!</label>
-                            <input type="file" id="exampleInputFile">
-                        </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </form>
-                </div>
-            </div>#}
         </div>
 
         <div class="col-md-6">
 
-            <h2>The dishes</h2>
+            <h2><a name="dishes"></a>The dishes</h2>
 
-            <div class="alert alert-info">
-                There are not yet published dish for this restaurant.
-            </div>
+            {#<div class="alert alert-info">#}
+                {#There are not yet published dish for this restaurant.#}
+            {#</div>#}
 
             <div class="panel panel-info">
                 <div class="panel-heading">
                     <h3 class="panel-title">Dibs!</h3>
                 </div>
                 <div class="panel-body">
-                    <p>Add the first dish for this restaurant</p>
+                    <div class="alert alert-warning">
+                        Add the first dish for this restaurant
+                    </div>
 
                     <form role="form">
                         <div class="form-group">
@@ -286,7 +286,7 @@
         </div><!-- /col-md-6 -->
     </div><!-- /row -->
 
-    <h2>The address</h2>
+    <h2><a name="address"></a>The address</h2>
     <div class="well">
         <p>
             <b>{{ restaurant.name }}</b><br>

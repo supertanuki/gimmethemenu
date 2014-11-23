@@ -114,10 +114,10 @@ class RestaurantController extends Controller
 
     /**
      * @Route("/restaurant/{country_slug}/{locality_slug}/{restaurant_slug}", name="restaurant_show")
-     * @Method("get")
+     * @Method("get|post")
      * @Template()
      */
-    public function showAction($country_slug, $locality_slug, $restaurant_slug)
+    public function showAction(Request $request, $country_slug, $locality_slug, $restaurant_slug)
     {
         $restaurant = $this->getDoctrine()
             ->getRepository('ApplicationMainBundle:Restaurant')
@@ -131,12 +131,12 @@ class RestaurantController extends Controller
 
         // form default file
         $restaurantMenuFile = new RestaurantMenuFile();
-        $restaurantMenuFile->setRestaurant($restaurant);
-        $restaurant->getRestaurantMenuFiles()->add($restaurantMenuFile);
+        $restaurant_tmp = new Restaurant();
+        $restaurant_tmp->getRestaurantMenuFiles()->add($restaurantMenuFile);
 
         $form_restaurant_menu = $this->createForm(
             new RestaurantMenuType(),
-            $restaurant,
+            $restaurant_tmp,
             array('action' => $this->generateUrl('restaurant_show', array(
                     'restaurant_slug' => $restaurant_slug,
                     'locality_slug' => $locality_slug,
@@ -145,25 +145,31 @@ class RestaurantController extends Controller
             )
         );
 
-//        // form post
-//        $request = $this->getRequest();
-//        if ($request->getMethod() === 'POST') {
-//            $form_project_response->handleRequest($request);
-//
-//            if ($form_project_response->isValid()) {
-//                $em = $this->getDoctrine()->getManager();
-//                $projectResponse->setUser($this->getUser());
-//                $projectResponse->setProject($project);
-//                $em->persist($projectResponse);
-//                $em->flush();
-//
-//                $this->get('session')->getFlashBag()->add('info', 'Proposition ajoutée');
-//
-//                return $this->redirect(
-//                    $this->getProjectUrl($slug_category, $slug_project)
-//                );
-//            }
-//        }
+
+        if ($request->getMethod() === 'POST') {
+            $form_restaurant_menu->handleRequest($request);
+            if ($form_restaurant_menu->isValid()) {
+                $em = $this->getDoctrine()->getManager();
+                foreach ($restaurant_tmp->getRestaurantMenuFiles() as $menuFile) {
+                    $menuFile->setUser($this->getUser());
+                    $menuFile->setRestaurant($restaurant);
+                    $restaurant->getRestaurantMenuFiles()->add($menuFile);
+                }
+                $em->persist($restaurant);
+                $em->flush();
+
+                $this->get('session')->getFlashBag()->add('info', 'Menu ajouté !');
+
+                // redirect
+                return $this->redirect(
+                    $this->generateUrl('restaurant_show', array(
+                        'restaurant_slug' => $restaurant_slug,
+                        'locality_slug' => $locality_slug,
+                        'country_slug' => $country_slug
+                    ))
+                );
+            }
+        }
 
         return array(
             'restaurant' => $restaurant,

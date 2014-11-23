@@ -33,16 +33,22 @@ class RestaurantMenuFile
     protected $restaurant;
 
     /**
-     * @Vich\UploadableField(mapping="project_response_file", fileNameProperty="fileName")
-     * @var File $documentFile
+     * @Vich\UploadableField(mapping="restaurant_menu_file", fileNameProperty="fileName")
+     * @var File $fileFile
      */
     protected $fileFile;
 
     /**
-     * @ORM\Column(type="string", length=255, name="document_name", nullable=true)
+     * @ORM\Column(type="string", length=255, name="file_name", nullable=true)
      * @var string $fileName
      */
     protected $fileName;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
+     */
+    protected $user;
 
     /**
      * @var \DateTime
@@ -61,7 +67,7 @@ class RestaurantMenuFile
 
     public function __toString()
     {
-//        return $this->getName();
+        return $this->getId();
     }
 
     /**
@@ -71,9 +77,9 @@ class RestaurantMenuFile
      * must be able to accept an instance of 'File' as the bundle will inject one here
      * during Doctrine hydration.
      *
-     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $documentFile
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $fileFile
      */
-    public function setFileFile(File $documentFile)
+    public function setFileFile(File $fileFile)
     {
         $this->fileFile = $fileFile;
 
@@ -90,5 +96,107 @@ class RestaurantMenuFile
     public function getfileFile()
     {
         return $this->fileFile;
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set fileName
+     *
+     * @param string $fileName
+     * @return RestaurantMenuFile
+     */
+    public function setFileName($fileName)
+    {
+        $this->fileName = $fileName;
+
+        return $this;
+    }
+
+    /**
+     * Get fileName
+     *
+     * @return string 
+     */
+    public function getFileName()
+    {
+        return $this->fileName;
+    }
+
+    /**
+     * Set createdAt
+     *
+     * @param \DateTime $createdAt
+     * @return RestaurantMenuFile
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return \DateTime 
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * Set updatedAt
+     *
+     * @param \DateTime $updatedAt
+     * @return RestaurantMenuFile
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get updatedAt
+     *
+     * @return \DateTime 
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * Set restaurant
+     *
+     * @param \Application\MainBundle\Entity\restaurant $restaurant
+     * @return RestaurantMenuFile
+     */
+    public function setRestaurant(\Application\MainBundle\Entity\restaurant $restaurant)
+    {
+        $this->restaurant = $restaurant;
+
+        return $this;
+    }
+
+    /**
+     * Get restaurant
+     *
+     * @return \Application\MainBundle\Entity\restaurant 
+     */
+    public function getRestaurant()
+    {
+        return $this->restaurant;
     }
 }
