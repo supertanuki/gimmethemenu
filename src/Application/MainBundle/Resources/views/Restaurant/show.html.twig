@@ -1,6 +1,6 @@
 {% extends '::base.html.twig' %}
 
-{% block title %}{{ restaurant.name }} - {{ restaurant.locality }}{% endblock %}
+{% block title %}{{ restaurant.name }} - Restaurant - {{ restaurant.locality }}{% endblock %}
 
 {% block body %}
     <ol class="breadcrumb">
@@ -131,7 +131,17 @@
 
                     {% else %}
 
-                        <form role="form">
+                        {{ form_start(form_dish) }}
+
+                        {{ form_rest(form_dish) }}
+
+                        <hr>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+
+                        {{ form_end(form_dish) }}
+
+
+                        {#<form role="form">
                             <div class="form-group">
                                 <label>Name</label>
                                 <input name="name" type="text" class="form-control">
@@ -200,13 +210,13 @@
                             </div>
 
                             <button type="submit" class="btn btn-primary">Submit</button>
-                        </form>
+                        </form>#}
 
                     {% endif %}
                 </div>
             </div>
 
-            {#
+            {% if dishes|length > 0 %}
             <h2><i>Voilà</i> the dishes</h2>
 
             <div class="well">
@@ -216,68 +226,13 @@
             </div>
 
             <div class="row">
-                <div class="col-xs-12 col-sm-4 col-md-4">
-                    <div class="thumbnail">
-                        <a href="#"><img class="img-rounded" src="img/samples/burger.jpg"></a>
-                        <div class="caption text-center">
-                            <h3><a href="#">Hamburgueur français</a></h3>
-                            <p>
-                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
-                                <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
-                            </p>
 
-                            <p>
-                                <a href="#"><span class="label label-success">
-                                    2 reviews, 3 photos
-                                </span></a>
-                            </p>
-                        </div>
-                    </div>
-                </div>
+                {% for dish in dishes %}
                 <div class="col-xs-12 col-sm-4 col-md-4">
                     <div class="thumbnail">
-                        <a href="#"><img class="img-rounded" src="img/samples/pizza.png"></a>
+                        {#<a href="#"><img class="img-rounded" src="img/samples/burger.jpg"></a>#}
                         <div class="caption text-center">
-                            <h3><a href="#">Pizza quattro formaggi</a></h3>
-                            <p>
-                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xs-12 col-sm-4 col-md-4">
-                    <div class="thumbnail">
-                        <a href="#"><img class="img-rounded" src="img/samples/pizza.png"></a>
-                        <div class="caption text-center">
-                            <h3><a href="#">Pizza du chef</a></h3>
-                            <p>
-                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                            </p>
-                            <p>
-                                <a href="#"><span class="label label-success">
-                                    1 photo
-                                </span></a>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-xs-12 col-sm-4 col-md-4">
-                    <div class="thumbnail">
-                        <a href="#"><img class="img-rounded" src="img/samples/burger.jpg"></a>
-                        <div class="caption text-center">
-                            <h3><a href="#">Hamburgueur français</a></h3>
+                            <h3><a href="#">{{ dish.name }} <span class="label label-warning">{{ dish.price }}&nbsp;&euro;</span></a></h3>
                             <p>
                                 <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
                                 <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
@@ -294,9 +249,10 @@
                         </div>
                     </div>
                 </div>
+                {% endfor %}
 
             </div><!-- /row -->
-            #}
+            {% endif %}
 
 
         </div><!-- /col-md-6 -->

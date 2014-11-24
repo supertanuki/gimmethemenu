@@ -3,6 +3,7 @@
 namespace Application\MainBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -11,7 +12,9 @@ use Application\MainBundle\Entity\Restaurant;
 use Application\MainBundle\Entity\RestaurantMenuFile;
 use Application\MainBundle\Entity\Country;
 use Application\MainBundle\Entity\Locality;
+use Application\MainBundle\Entity\Dish;
 use Application\MainBundle\Form\Type\RestaurantMenuType;
+use Application\MainBundle\Form\Type\DishType;
 
 class RestaurantController extends Controller
 {
@@ -123,12 +126,26 @@ class RestaurantController extends Controller
 
         // @todo : verify $country_slug & $locality_slug
 
-        $form_restaurant_menu = $this->getFormRestaurantMenu($request, $restaurant);
+        $dishes = $this->getDoctrine()
+            ->getRepository('ApplicationMainBundle:Dish')
+            ->findBy(array('restaurant' => $restaurant));
+
+        $form_menu = $this->getFormRestaurantMenu($request, $restaurant);
+        if ($form_menu instanceof RedirectResponse) {
+            return $form_menu;
+        }
+
+        $form_dish = $this->getFormDish($request, $restaurant);
+        if ($form_dish instanceof RedirectResponse) {
+            return $form_dish;
+        }
 
         return array(
             'restaurant' => $restaurant,
             'restaurant_url' => $this->getRestaurantUrl($restaurant),
-            'form_restaurant_menu' => $form_restaurant_menu->createView(),
+            'dishes' => $dishes,
+            'form_restaurant_menu' => $form_menu->createView(),
+            'form_dish' => $form_dish->createView(),
         );
     }
 
@@ -187,5 +204,34 @@ class RestaurantController extends Controller
         }
 
         return $form_restaurant_menu;
+    }
+
+    private function getFormDish(Request $request, $restaurant)
+    {
+        $dish = new Dish();
+
+        $form_dish = $this->createForm(
+            new DishType(),
+            $dish,
+            array('action' => $this->getRestaurantUrl($restaurant))
+        );
+
+        if ($request->getMethod() === 'POST') {
+            $form_dish->handleRequest($request);
+            if ($form_dish->isValid()) {
+                $em = $this->getDoctrine()->getManager();
+                $dish->setUser($this->getUser());
+                $dish->setRestaurant($restaurant);
+                $em->persist($dish);
+                $em->flush();
+
+                $this->get('session')->getFlashBag()->add('info', 'The dish is created. Thank you!');
+
+                // redirect
+                return $this->redirect($this->getRestaurantUrl($restaurant));
+            }
+        }
+
+        return $form_dish;
     }
 }
