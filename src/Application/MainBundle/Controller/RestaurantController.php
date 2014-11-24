@@ -212,6 +212,7 @@ class RestaurantController extends Controller
         $dish = new Dish();
         $review = new Review();
         $review->setDish($dish);
+        $review->setWhen(new \DateTime("now"));
         $dish->getReviews()->add($review);
 
         $form_dish = $this->createForm(

@@ -13,7 +13,10 @@ class ReviewType extends AbstractType
         $builder
             ->add('review')
             ->add('rank')
-            ->add('when', null, array('widget' => 'single_text'))
+            ->add('when', null, array(
+                'widget' => 'single_text',
+                'label' => 'When did you eat this dish?'
+            ))
 //            ->add('photoFile', 'vich_file', array(
 //                'required'      => false,
 //                'mapping'       => 'dish_photo',

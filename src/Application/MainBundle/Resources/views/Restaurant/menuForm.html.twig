@@ -1,0 +1,22 @@
+{{ form_start(form_restaurant_menu) }}
+
+<div
+        class="collection"
+        data-label-add="Add a photo"
+        data-label-delete="Delete"
+        data-label-delete-confirm="Delete this field ?"
+        data-prototype="{{ form_widget(form_restaurant_menu.restaurantMenuFiles.vars.prototype)|e }}"
+        >
+    {% for menuFile in form_restaurant_menu.restaurantMenuFiles %}
+        <div class="collection_item">
+            {{ form_widget(menuFile.fileFile) }}
+        </div>
+    {% endfor %}
+</div>
+
+{{ form_rest(form_restaurant_menu) }}
+
+<hr>
+<button type="submit" class="btn btn-primary">Submit</button>
+
+{{ form_end(form_restaurant_menu) }}

@@ -1,0 +1,87 @@
+{{ form_start(form_dish) }}
+    <div class="form-group">
+        {{ form_label(form_dish.name) }}
+        {{ form_widget(form_dish.name, {'attr': {'class': 'form-control'}}) }}
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form_dish.dishType) }}
+        {{ form_widget(form_dish.dishType, {'attr': {'class': 'form-control'}}) }}
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form_dish.price) }}
+        <div class="row">
+            <div class="col-md-3">
+                <div class="input-group">
+                    {{ form_widget(form_dish.price, {'attr': {'class': 'form-control', 'placeholder': '0.00'}}) }}
+                    <span class="input-group-addon">€</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% for review in form_dish.reviews %}
+        <div class="form-group">
+            {{ form_label(review.review) }}
+            {{ form_widget(review.review, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(review.rank) }}
+            {{ form_widget(review.rank, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(review.photoFile) }}
+            {{ form_widget(review.photoFile, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(review.when) }}
+            <div class="row">
+                <div class="col-md-4">
+                    {{ form_widget(review.when, {'attr': {'class': 'form-control'}}) }}
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+
+    {#<div class="form-group">#}
+        {#<label>#}
+            {#<input type="radio" name="note" value="1">#}
+            {#<span class="glyphicon glyphicon-star" aria-hidden="true"></span>#}
+        {#</label><br>#}
+        {#<label>#}
+            {#<input type="radio" name="note" value="2">#}
+            {#<span class="glyphicon glyphicon-star" aria-hidden="true"></span>#}
+            {#<span class="glyphicon glyphicon-star" aria-hidden="true"></span>#}
+        {#</label><br>#}
+        {#<label>#}
+            {#<input type="radio" name="note" value="3">#}
+            {#<span class="glyphicon glyphicon-star" aria-hidden="true"></span>#}
+            {#<span class="glyphicon glyphicon-star" aria-hidden="true"></span>#}
+            {#<span class="glyphicon glyphicon-star" aria-hidden="true"></span>#}
+        {#</label><br>#}
+        {#<label>#}
+            {#<input type="radio" name="note" value="4">#}
+            {#<span class="glyphicon glyphicon-star" aria-hidden="true"></span>#}
+            {#<span class="glyphicon glyphicon-star" aria-hidden="true"></span>#}
+            {#<span class="glyphicon glyphicon-star" aria-hidden="true"></span>#}
+            {#<span class="glyphicon glyphicon-star" aria-hidden="true"></span>#}
+        {#</label><br>#}
+        {#<label>#}
+            {#<input type="radio" name="note" value="5">#}
+            {#<span class="glyphicon glyphicon-star" aria-hidden="true"></span>#}
+            {#<span class="glyphicon glyphicon-star" aria-hidden="true"></span>#}
+            {#<span class="glyphicon glyphicon-star" aria-hidden="true"></span>#}
+            {#<span class="glyphicon glyphicon-star" aria-hidden="true"></span>#}
+            {#<span class="glyphicon glyphicon-star" aria-hidden="true"></span>#}
+        {#</label>#}
+    {#</div>#}
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+
+
+{{ form_rest(form_dish) }}
+{{ form_end(form_dish) }}
