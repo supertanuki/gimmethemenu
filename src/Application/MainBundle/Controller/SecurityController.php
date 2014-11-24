@@ -17,6 +17,8 @@ class SecurityController extends Controller
     public function loginAction(Request $request)
     {
         if ($this->getUser()) {
+            $this->setWelcomeMessage();
+
             $redirect = $request->query->get('redirect');
 
             if (!$redirect) {
@@ -34,9 +36,14 @@ class SecurityController extends Controller
      */
     public function loginEndAction()
     {
-        $this->get('session')->getFlashBag()->add('info', 'Happy to see you again ! Do you want add a review ?');
+        $this->setWelcomeMessage();
 
         // redirect
         return $this->redirect($this->generateUrl('restaurant_search'));
+    }
+
+    private function setWelcomeMessage()
+    {
+        $this->get('session')->getFlashBag()->add('info', sprintf('Hi %s, happy to see you again !', $this->getUser()->getFirstName()));
     }
 }
