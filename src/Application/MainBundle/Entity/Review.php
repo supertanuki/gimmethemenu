@@ -44,7 +44,7 @@ class Review
 
     /**
      * @var \DateTime
-     * @ORM\Column(name="when", type="datetime")
+     * @ORM\Column(name="visited_at", type="date")
      */
     private $when;
 
@@ -81,30 +81,10 @@ class Review
     protected $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Dish", inversedBy="reviews")
+     * @ORM\ManyToOne(targetEntity="Dish", inversedBy="reviews", cascade={"persist"})
      * @ORM\JoinColumn(name="dish_id", referencedColumnName="id", nullable=false)
      */
     protected $dish;
-
-    /**
-     * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
-     * of 'UploadedFile' is injected into this setter to trigger the  update. If this
-     * bundle's configuration parameter 'inject_on_load' is set to 'true' this setter
-     * must be able to accept an instance of 'File' as the bundle will inject one here
-     * during Doctrine hydration.
-     *
-     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $photoFile
-     */
-    public function setFileFile(File $photoFile)
-    {
-        $this->photoFile = $photoFile;
-
-        if ($photoFile) {
-            // It is required that at least one field changes if you are using doctrine
-            // otherwise the event listeners won't be called and the file is lost
-            $this->setUpdatedAt(new \DateTime('now'));
-        }
-    }
 
     /**
      * Get id
@@ -321,5 +301,33 @@ class Review
     public function getDish()
     {
         return $this->dish;
+    }
+
+    /**
+     * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
+     * of 'UploadedFile' is injected into this setter to trigger the  update. If this
+     * bundle's configuration parameter 'inject_on_load' is set to 'true' this setter
+     * must be able to accept an instance of 'File' as the bundle will inject one here
+     * during Doctrine hydration.
+     *
+     * @param \Symfony\Component\HttpFoundation\File\File $photoFile
+     */
+    public function setPhotoFile(\Symfony\Component\HttpFoundation\File\File $photoFile)
+    {
+        $this->photoFile = $photoFile;
+
+        if ($photoFile) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->setUpdatedAt(new \DateTime('now'));
+        }
+    }
+
+    /**
+     * @return File
+     */
+    public function getPhotoFile()
+    {
+        return $this->photoFile;
     }
 }

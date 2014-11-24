@@ -93,7 +93,7 @@ class RestaurantMenuFile
     /**
      * @return File
      */
-    public function getfileFile()
+    public function getFileFile()
     {
         return $this->fileFile;
     }

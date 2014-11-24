@@ -84,7 +84,7 @@
 
                         <div
                             class="collection"
-                            data-label-add="Add one more photo"
+                            data-label-add="Add a photo"
                             data-label-delete="Delete"
                             data-label-delete-confirm="Delete this field ?"
                             data-prototype="{{ form_widget(form_restaurant_menu.restaurantMenuFiles.vars.prototype)|e }}"
@@ -112,9 +112,7 @@
 
             <h2><a name="dishes"></a>The dishes</h2>
 
-            {#<div class="alert alert-info">#}
-                {#There are not yet published dish for this restaurant.#}
-            {#</div>#}
+        {% if dishes|length == 0 %}
 
             <div class="panel panel-info">
                 <div class="panel-heading">
@@ -216,13 +214,12 @@
                 </div>
             </div>
 
-            {% if dishes|length > 0 %}
-            <h2><i>Voilà</i> the dishes</h2>
+        {% else %}
 
             <div class="well">
                 Choose one below for reviews and see photos.
                 You can also add your own review and photos.
-                Or <a href="#" class="btn btn-xs btn-primary">add a dish</a>
+                Or <a href="#" class="btn btn-primary">add a dish</a>
             </div>
 
             <div class="row">
@@ -230,9 +227,13 @@
                 {% for dish in dishes %}
                 <div class="col-xs-12 col-sm-4 col-md-4">
                     <div class="thumbnail">
-                        {#<a href="#"><img class="img-rounded" src="img/samples/burger.jpg"></a>#}
+
+                    {% if dish.reviews[0].photoName %}
+                        <a href="#"><img class="img-rounded" src="{{ vich_uploader_asset(dish.reviews[0], 'dish_photo') }}"></a>
+                    {% endif %}
+
                         <div class="caption text-center">
-                            <h3><a href="#">{{ dish.name }} <span class="label label-warning">{{ dish.price }}&nbsp;&euro;</span></a></h3>
+                            <h3><a href="#">{{ dish.name }}</a></h3>
                             <p>
                                 <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
                                 <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
@@ -242,9 +243,12 @@
                             </p>
 
                             <p>
-                                <a href="#"><span class="label label-success">
-                                    1 review
-                                </span></a>
+                                <a href="#">
+                                    <span class="label label-warning">{{ dish.price }}&nbsp;&euro;</span>
+                                    <span class="label label-success">
+                                        {{ dish.reviews|length }} review
+                                    </span>
+                                </a>
                             </p>
                         </div>
                     </div>
@@ -252,7 +256,7 @@
                 {% endfor %}
 
             </div><!-- /row -->
-            {% endif %}
+        {% endif %}
 
 
         </div><!-- /col-md-6 -->

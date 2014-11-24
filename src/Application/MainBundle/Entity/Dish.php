@@ -74,7 +74,7 @@ class Dish
     protected $user;
 
     /**
-     * @ORM\OneToMany(targetEntity="Review", mappedBy="dish")
+     * @ORM\OneToMany(targetEntity="Review", mappedBy="dish", cascade={"persist"})
      */
     protected $reviews;
 

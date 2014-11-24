@@ -2,6 +2,7 @@
 
 namespace Application\MainBundle\Controller;
 
+use Application\MainBundle\Entity\Review;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -209,6 +210,9 @@ class RestaurantController extends Controller
     private function getFormDish(Request $request, $restaurant)
     {
         $dish = new Dish();
+        $review = new Review();
+        $review->setDish($dish);
+        $dish->getReviews()->add($review);
 
         $form_dish = $this->createForm(
             new DishType(),
@@ -222,6 +226,7 @@ class RestaurantController extends Controller
                 $em = $this->getDoctrine()->getManager();
                 $dish->setUser($this->getUser());
                 $dish->setRestaurant($restaurant);
+                $review->setUser($this->getUser());
                 $em->persist($dish);
                 $em->flush();
 

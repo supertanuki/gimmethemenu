@@ -6,34 +6,33 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class DishType extends AbstractType
+class ReviewType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
-            ->add('price')
-            ->add('dishType')
-            ->add('reviews', 'collection', array(
-                'label' => false,
-                'type' => new ReviewType(),
-                'allow_add' => false,
-                'allow_delete' => false,
-                'by_reference' => false,
+            ->add('review')
+            ->add('rank')
+            ->add('when')
+            ->add('photoFile', 'vich_file', array(
+                'required'      => false,
+                'mapping'       => 'dish_photo',
+                'allow_delete'  => false,
+                'download_link' => false,
             ))
+//            ->add('photoFile', 'file', array('label' => 'Photo'))
         ;
     }
 
     public function getName()
     {
-        return 'application_main_dish';
+        return 'application_main_review';
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-                'data_class' => 'Application\MainBundle\Entity\Dish',
-                'cascade_validation' => true,
+                'data_class' => 'Application\MainBundle\Entity\Review',
             ));
     }
 }
