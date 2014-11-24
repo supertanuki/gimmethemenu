@@ -68,34 +68,42 @@
                         Gimme the menu!
                     </h3>
                 </div>
+
                 <div class="panel-body">
                     <div class="alert alert-warning">
                         Take a photo of the menu with your mobile and upload it!
                     </div>
 
+                    {% if not app.user %}
 
-                    {{ form_start(form_restaurant_menu) }}
+                        {% include 'ApplicationMainBundle:Security:loginOrSigninLinks.html.twig' with {'redirect': restaurant_url} %}
 
-                    <div
-                        class="collection"
-                        data-label-add="Add one more photo"
-                        data-label-delete="Delete"
-                        data-label-delete-confirm="Delete this field ?"
-                        data-prototype="{{ form_widget(form_restaurant_menu.restaurantMenuFiles.vars.prototype)|e }}"
-                        >
-                        {% for menuFile in form_restaurant_menu.restaurantMenuFiles %}
-                        <div class="collection_item">
-                            {{ form_widget(menuFile.fileFile) }}
+                    {% else %}
+
+                        {{ form_start(form_restaurant_menu) }}
+
+                        <div
+                            class="collection"
+                            data-label-add="Add one more photo"
+                            data-label-delete="Delete"
+                            data-label-delete-confirm="Delete this field ?"
+                            data-prototype="{{ form_widget(form_restaurant_menu.restaurantMenuFiles.vars.prototype)|e }}"
+                            >
+                            {% for menuFile in form_restaurant_menu.restaurantMenuFiles %}
+                            <div class="collection_item">
+                                {{ form_widget(menuFile.fileFile) }}
+                            </div>
+                            {% endfor %}
                         </div>
-                        {% endfor %}
-                    </div>
 
-                    {{ form_rest(form_restaurant_menu) }}
+                        {{ form_rest(form_restaurant_menu) }}
 
-                    <hr>
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                        <hr>
+                        <button type="submit" class="btn btn-primary">Submit</button>
 
-                    {{ form_end(form_restaurant_menu) }}
+                        {{ form_end(form_restaurant_menu) }}
+
+                    {% endif %}
                 </div>
             </div>
         </div>

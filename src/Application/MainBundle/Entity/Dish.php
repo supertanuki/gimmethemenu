@@ -55,7 +55,6 @@ class Dish
      */
     private $updatedAt;
 
-
     /**
      * @ORM\ManyToOne(targetEntity="Restaurant", inversedBy="dishes")
      * @ORM\JoinColumn(name="restaurant_id", referencedColumnName="id", nullable=false)
@@ -78,11 +77,6 @@ class Dish
      * @ORM\OneToMany(targetEntity="Review", mappedBy="dish")
      */
     protected $reviews;
-
-//    /**
-//     * @ORM\OneToMany(targetEntity="RestaurantMenuFile", mappedBy="restaurant", cascade={"persist", "remove"}, orphanRemoval=true)
-//     */
-//    private $restaurantMenuFiles;
 
     /**
      * Get title

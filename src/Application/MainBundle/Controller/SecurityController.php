@@ -2,6 +2,7 @@
 
 namespace Application\MainBundle\Controller;
 
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -13,8 +14,18 @@ class SecurityController extends Controller
      * Route "fos_user_security_login" defined in app/config/routing.yml
      * @Template()
      */
-    public function loginAction()
+    public function loginAction(Request $request)
     {
+        if ($this->getUser()) {
+            $redirect = $request->query->get('redirect');
+
+            if (!$redirect) {
+                $redirect = $this->generateUrl('restaurant_search');
+            }
+
+            return $this->redirect($redirect);
+        }
+
         return array();
     }
 

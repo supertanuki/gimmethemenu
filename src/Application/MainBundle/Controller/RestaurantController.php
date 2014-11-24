@@ -12,14 +12,12 @@ use Application\MainBundle\Entity\RestaurantMenuFile;
 use Application\MainBundle\Entity\Country;
 use Application\MainBundle\Entity\Locality;
 use Application\MainBundle\Form\Type\RestaurantMenuType;
-use Application\MainBundle\Form\Type\RestaurantMenuFileType;
 
 class RestaurantController extends Controller
 {
     /**
      * @Route("/restaurant/get", name="restaurant_get")
      * @Method("get")
-     * @Template()
      *
      * Paramters get :
      * place_id
@@ -102,11 +100,7 @@ class RestaurantController extends Controller
 
         // redirect to the restaurant page
         if ($restaurant) {
-            return $this->redirect($this->generateUrl('restaurant_show', array(
-                'country_slug'      => $restaurant->getCountry()->getSlug(),
-                'locality_slug'     => $restaurant->getLocality()->getSlug(),
-                'restaurant_slug'   => $restaurant->getSlug()
-            )));
+            return $this->redirect($this->getRestaurantUrl($restaurant));
         }
 
         throw $this->createNotFoundException('Nothing to do !');
@@ -129,6 +123,39 @@ class RestaurantController extends Controller
 
         // @todo : verify $country_slug & $locality_slug
 
+        $form_restaurant_menu = $this->getFormRestaurantMenu($request, $restaurant);
+
+        return array(
+            'restaurant' => $restaurant,
+            'restaurant_url' => $this->getRestaurantUrl($restaurant),
+            'form_restaurant_menu' => $form_restaurant_menu->createView(),
+        );
+    }
+
+    /**
+     * @Route("/restaurant", name="restaurant_search")
+     * @Method("get")
+     * @Template()
+     */
+    public function searchAction()
+    {
+        return array();
+    }
+
+    /*
+     * return the route for restaurant_show
+     */
+    private function getRestaurantUrl($restaurant)
+    {
+        return $this->generateUrl('restaurant_show', array(
+            'restaurant_slug' => $restaurant->getSlug(),
+            'locality_slug' => $restaurant->getLocality()->getSlug(),
+            'country_slug' => $restaurant->getCountry()->getSlug()
+        ));
+    }
+
+    private function getFormRestaurantMenu(Request $request, $restaurant)
+    {
         // form default file
         $restaurantMenuFile = new RestaurantMenuFile();
         $restaurant_tmp = new Restaurant();
@@ -137,14 +164,8 @@ class RestaurantController extends Controller
         $form_restaurant_menu = $this->createForm(
             new RestaurantMenuType(),
             $restaurant_tmp,
-            array('action' => $this->generateUrl('restaurant_show', array(
-                    'restaurant_slug' => $restaurant_slug,
-                    'locality_slug' => $locality_slug,
-                    'country_slug' => $country_slug
-                ))
-            )
+            array('action' => $this->getRestaurantUrl($restaurant))
         );
-
 
         if ($request->getMethod() === 'POST') {
             $form_restaurant_menu->handleRequest($request);
@@ -161,29 +182,10 @@ class RestaurantController extends Controller
                 $this->get('session')->getFlashBag()->add('info', 'Your photo is online. Thank you!');
 
                 // redirect
-                return $this->redirect(
-                    $this->generateUrl('restaurant_show', array(
-                        'restaurant_slug' => $restaurant_slug,
-                        'locality_slug' => $locality_slug,
-                        'country_slug' => $country_slug
-                    ))
-                );
+                return $this->redirect($this->getRestaurantUrl($restaurant));
             }
         }
 
-        return array(
-            'restaurant' => $restaurant,
-            'form_restaurant_menu' => $form_restaurant_menu->createView(),
-        );
-    }
-
-    /**
-     * @Route("/restaurant", name="restaurant_search")
-     * @Method("get")
-     * @Template()
-     */
-    public function searchAction()
-    {
-        return array();
+        return $form_restaurant_menu;
     }
 }
