@@ -14,13 +14,16 @@
     </h1>
 
     <p class="restaurantAddress">
-        {{ restaurant.address }}<br />
-       @todo:
+        {{ restaurant.address }}
+
+        {#
+        <br />@todo:
         <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
         <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
         <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
         <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
         <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
+        #}
     </p>
 
     <ul class="nav nav-pills visible-xs-block">
@@ -219,7 +222,23 @@
             <div class="well">
                 Choose one below for reviews and see photos.
                 You can also add your own review and photos.
-                Or <a href="#" class="btn btn-primary">add a dish</a>
+                Or <a href="#" class="btn btn-primary" onclick="$('#addDishForm').toggle(); return false">add a dish</a>
+            </div>
+
+            <div id="addDishForm" class="panel panel-info collapse">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Add a dish</h3>
+                </div>
+                <div class="panel-body">
+                    {{ form_start(form_dish) }}
+
+                    {{ form_rest(form_dish) }}
+
+                    <hr>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+
+                    {{ form_end(form_dish) }}
+                </div>
             </div>
 
             <div class="row">
@@ -244,6 +263,7 @@
 
                             <p>
                                 <a href="#">
+                                    <span class="label label-info">{{ dish.dishType }}</span>
                                     <span class="label label-warning">{{ dish.price }}&nbsp;&euro;</span>
                                     <span class="label label-success">
                                         {{ dish.reviews|length }} review
