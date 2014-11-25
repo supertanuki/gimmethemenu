@@ -41,7 +41,7 @@
             {% if restaurant.restaurantMenuFiles|length > 0 %}
             <div class="panel">
                 <div class="tabbable tabs-below">
-                    <div id="myTabContent" class="tab-content">
+                    <div class="tab-content">
                         {% for key, menuFile in restaurant.restaurantMenuFiles %}
                         <div class="tab-pane {% if key==0 %} active{% endif %}" id="menu{{ key+1 }}">
                             <img src="{{ vich_uploader_asset(menuFile, 'restaurant_menu_file') }}" class="img-responsive" style="width:100%">
@@ -51,7 +51,13 @@
                         {% endfor %}
                     </div>
 
-                    <ul id="myTab1" class="nav nav-tabs nav-justified">
+                    {#<div class="text-center">
+                        <ul class="sync-pagination pagination-sm"></ul>
+                        <div id="sync-example-page-content" class="well">Page 1</div>
+                        <ul class="sync-pagination pagination-sm"></ul>
+                    </div>#}
+
+                    <ul class="nav nav-tabs">
                         {% for key, menuFile in restaurant.restaurantMenuFiles %}
                             <li{% if key==0 %} class="active"{% endif %}><a href="#menu{{ key+1 }}" data-toggle="tab">{{ key+1 }}</a></li>
                         {% endfor %}
@@ -148,13 +154,13 @@
 
                         <div class="caption text-center">
                             <h3><a href="#">{{ dish.name }}</a></h3>
-                            <p>
+                            {#<p>
                                 <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
                                 <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
                                 <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
                                 <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
                                 <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
-                            </p>
+                            </p>#}
 
                             <p>
                                 <a href="#">
