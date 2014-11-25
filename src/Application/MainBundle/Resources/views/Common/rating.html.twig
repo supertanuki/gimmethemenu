@@ -1,0 +1,11 @@
+{% if rating is not null %}
+    {% for i in 1..rating %}
+        <span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
+    {% endfor %}
+
+    {% if rating<5 %}
+        {% for i in (rating+1)..5 %}
+            <span class="glyphicon glyphicon-heart-empty" aria-hidden="true"></span>
+        {% endfor %}
+    {% endif %}
+{% endif %}

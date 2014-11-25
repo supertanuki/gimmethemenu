@@ -4,7 +4,7 @@
 
 {% block body %}
     <ol class="breadcrumb">
-        <li><a href="#">Home</a></li>
+        <li><a href="{{ path('homepage') }}">Home</a></li>
         <li>{{ restaurant.country }}</li>
         <li class="active">{{ restaurant.locality }}</li>
     </ol>
@@ -133,11 +133,11 @@
 
             <div id="addDishForm" class="panel panel-info collapse">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Add a dish</h3>
+                    <h3 class="panel-title">Add a dish or a drink</h3>
                 </div>
                 <div class="panel-body">
 
-                    {% include 'ApplicationMainBundle:Restaurant:dishForm.html.twig' with {'form_dish': form_dish} %}
+                    {% include 'ApplicationMainBundle:Dish:dishForm.html.twig' with {'form_dish': form_dish} %}
 
                 </div>
             </div>
@@ -145,31 +145,28 @@
             <div class="row">
 
                 {% for dish in dishes %}
+
+                    {% set dish_url = path('dish_show', {
+                        'country_slug': dish.restaurant.country.slug,
+                        'locality_slug': dish.restaurant.locality.slug,
+                        'restaurant_slug': dish.restaurant.slug,
+                        'dish_slug': dish.slug
+                    }) %}
+
                 <div class="col-xs-6 col-sm-4 col-md-4">
                     <div class="thumbnail">
 
                     {% if dish.reviews[0].photoName %}
-                        <a href="#"><img class="img-rounded" src="{{ vich_uploader_asset(dish.reviews[0], 'dish_photo') }}"></a>
+                        <a href="{{ dish_url }}"><img class="img-rounded" src="{{ vich_uploader_asset(dish.reviews[0], 'dish_photo') }}"></a>
                     {% endif %}
 
                         <div class="caption text-center">
-                            <h3><a href="#">{{ dish.name }}</a></h3>
-                            <p>
-                            {% if dish.averageRating is not null %}
-                                {% for i in 1..dish.averageRating %}
-                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                {% endfor %}
+                            <h3><a href="{{ dish_url }}">{{ dish.name }}</a></h3>
 
-                                {% if dish.averageRating<5 %}
-                                    {% for i in (dish.averageRating+1)..5 %}
-                                    <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
-                                    {% endfor %}
-                                {% endif %}
-                            {% endif %}
-                            </p>
+                            {% include 'ApplicationMainBundle:Common:rating.html.twig' with {'rating': dish.averageRating} %}
 
                             <p>
-                                <a href="#">
+                                <a href="{{ dish_url }}">
                                     <span class="label label-info">{{ dish.dishType }}</span>
                                     <span class="label label-warning">{{ dish.price }}&nbsp;&euro;</span>
                                     <span class="label label-success">

@@ -1,0 +1,151 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}{{ dish.name }} - {{ dish.restaurant.name }} - Restaurant - {{ dish.restaurant.locality }}{% endblock %}
+
+{% block body %}
+    {% set restaurant_url = path('restaurant_show', {
+        'country_slug': dish.restaurant.country.slug,
+        'locality_slug': dish.restaurant.locality.slug,
+        'restaurant_slug': dish.restaurant.slug
+    }) %}
+    <ol class="breadcrumb">
+        <li><a href="{{ path('homepage') }}">Home</a></li>
+        <li>{{ dish.restaurant.country }}</li>
+        <li>{{ dish.restaurant.locality }}</li>
+        <li class="active"><a href="{{ restaurant_url }}">{{ dish.restaurant }}</a></li>
+    </ol>
+
+    <h1>
+        &ldquo;{{ dish.name }}&rdquo;
+    </h1>
+
+    {#
+        Last 10:
+        <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+        <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+        <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+        <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+        <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
+        <br>
+    #}
+
+    <p class="restaurantAddress">
+        All time:
+        {% include 'ApplicationMainBundle:Common:rating.html.twig' with {'rating': dish.averageRating} %}
+        <br>
+
+        <a href="{{ restaurant_url }}">{{ dish.restaurant.name }}</a>, {{ dish.restaurant.address }}
+    </p>
+    <hr>
+
+    <div class="row">
+        <div class="col-xs-12 col-md-6 col-md-offset-3">
+            <p class="text-center">
+                <a href="#" class="btn btn-primary"
+                   onclick="$('#reviewForm').show(); $(this).hide(); return false">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                    Add my review
+                </a>
+            </p>
+
+            <div class="panel panel-primary collapse" id="reviewForm">
+                <div class="panel-heading">
+                    <h3 class="panel-title">My review</h3>
+                </div>
+                <div class="panel-body">
+                    {% include 'ApplicationMainBundle:Dish:reviewForm.html.twig' with {'form_review': form_review} %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-6">
+            <h2>Photos</h2>
+
+            <div class="well">
+                <p>The dish! Say &ldquo;sheeez&rdquo;!</p>
+
+                {% if dish.reviews|length == 1 %}
+
+                    {% for review in dish.reviews if review.photoName %}
+                        <img src="{{ vich_uploader_asset(review, 'dish_photo') }}" style="width: 100%" alt="">
+                        <p>Added by <b>{{ review.user }}</b> on {{ review.createdAt|localizeddate('medium', 'none') }}</p>
+                    {% endfor %}
+
+                {% else %}
+
+                <div id="dish-photos" class="carousel slide" data-ride="carousel">
+
+                    <ol class="carousel-indicators">
+                    {% for key, review in dish.reviews if review.photoName %}
+                        <li data-target="#dish-photos" data-slide-to="{{ key }}" {% if key == 0 %}class="active"{% endif %}></li>
+                    {% endfor %}
+                    </ol>
+
+                    <div class="carousel-inner" role="listbox">
+                    {% for key, review in dish.reviews if review.photoName %}
+                        <div class="item {% if key == 0 %}active{% endif %}">
+                            <img src="{{ vich_uploader_asset(review, 'dish_photo') }}" style="width: 100%" alt="">
+
+                            <div class="carousel-caption">
+                                Added by <b>{{ review.user }}</b> on {{ review.createdAt|localizeddate('medium', 'none') }}</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    </div>
+
+                    <!-- Controls -->
+                    <a class="left carousel-control" href="#dish-photos" role="button" data-slide="prev">
+                        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="right carousel-control" href="#dish-photos" role="button" data-slide="next">
+                        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+
+                {% endif %}
+            </div>
+        </div>
+
+
+        <div class="col-md-6">
+            <h2>Reviews</h2>
+
+            <div class="timeline reviews">
+                <dl>
+                    {% for review in dish.reviews %}
+                    <dd class="pos-right clearfix">
+                        <div class="circ"></div>
+                        <div class="time">{{ review.when|localizeddate('medium', 'none') }}</div>
+                        <div class="events">
+                            {% if review.photoName %}
+                                <div class="pull-left">
+                                    <img class="events-object img-rounded" src="{{ vich_uploader_asset(review, 'dish_photo') }}" width="60">
+                                </div>
+                            {% endif %}
+
+                            <div class="events-body">
+                                <h4 class="events-heading">
+                                    <a href="#">{{ review.user }}</a>
+                                </h4>
+
+                                {% include 'ApplicationMainBundle:Common:rating.html.twig' with {'rating': review.rank} %}
+
+                                <p>
+                                    {{ review.review }}
+                                </p>
+                            </div>
+                        </div>
+                    </dd>
+                    {% endfor %}
+
+                </dl>
+            </div><!-- reviews -->
+
+        </div><!-- /col-md-6 -->
+    </div><!-- /row -->
+{% endblock %}
