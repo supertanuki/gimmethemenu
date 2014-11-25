@@ -321,4 +321,25 @@ class Dish
     {
         return $this->reviews;
     }
+
+    /**
+     * Get average rating
+     *
+     * @return integer
+     */
+    public function getAverageRating()
+    {
+        $reviews = $this->getReviews();
+
+        if (!count($reviews)) {
+            return null;
+        }
+
+        $total = 0;
+        foreach ($reviews as $review) {
+            $total += $review->getRank();
+        }
+
+        return round($total / count($reviews));
+    }
 }

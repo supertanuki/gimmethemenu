@@ -1,8 +1,6 @@
 $(document).ready(function() {
 //    $('input').iCheck();
 
-    // active rating fields
-//    $('input.rating').rating();
 });
 
 function showMyAlertModal(content, title) {

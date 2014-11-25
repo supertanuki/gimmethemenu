@@ -87,16 +87,18 @@
 
 <div class="site-footer">
     <div class="container">
+        {#
         <hr class="dashed">
         <div class="row">
             <div class="col-md-6">
                 <h4>Talk to us</h4>
                 <ul>
-                    <li>Twitter</li>
-                    <li>Facebook</li>
+                    <li><a href="//twitter.com/GimmeTheMenu">Twitter</a></li>
+                    <li><a href="//www.facebook.com/gimmethemenu">Facebook</a></li>
                 </ul>
             </div>
             <div class="col-md-6">
+
                 <!-- Begin MailChimp Signup Form -->
                 <div>
                     <h4>Newsletter</h4>
@@ -111,10 +113,14 @@
                     </form>
                 </div>
                 <!--End mc_embed_signup-->
+
             </div>
         </div>
-        <hr class="dashed">
+        #}
+        <hr>
         <div class="copyright clearfix">
+            Talk to us : <a href="//twitter.com/GimmeTheMenu">Twitter</a> or <a href="//www.facebook.com/gimmethemenu">Facebook</a>
+            <br>
             {{ render(controller('ApplicationPageBundle:Page:list')) }}
             <p>© 2014 GimmeTheMenu</p>
         </div>
