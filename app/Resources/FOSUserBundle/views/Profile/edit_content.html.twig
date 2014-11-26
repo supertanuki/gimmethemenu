@@ -1,10 +1,20 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
-<form action="{{ path('fos_user_profile_edit') }}" {{ form_enctype(form) }} method="POST" class="fos_user_profile_edit">
-    {{ form_widget(form) }}
-    <div>
-        <input type="submit" value="{{ 'profile.edit.submit'|trans }}" />
-    </div>
-</form>
+<div class="well">
+    <form action="{{ path('fos_user_profile_edit') }}" {{ form_enctype(form) }} method="POST">
 
-<p><a href="{{ path('fos_user_change_password') }}">Changer de mot de passe</a></p>
+        <div class="form-group">
+            {{ form_label(form.firstName, 'Your first name') }}
+            {{ form_errors(form.firstName) }}
+            {{ form_widget(form.firstName, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
+        {{ form_rest(form) }}
+
+        <input type="submit" value="{{ 'profile.edit.submit'|trans }}" class="btn btn-primary" />
+    </form>
+</div>
+
+<div class="well">
+    <a href="{{ path('fos_user_change_password') }}">Change my password</a>
+</div>

@@ -1,9 +1,9 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
-<div class="fos_user_user_show">
+<div class="well">
     <ul>
         <li>{{ user.email }}</li>
         <li>First name : {{ user.firstName }}</li>
     </ul>
-    <p><a href="{{ path('fos_user_profile_edit') }}">Modifier</a></p>
+    <p><a href="{{ path('fos_user_profile_edit') }}">Update</a></p>
 </div>
