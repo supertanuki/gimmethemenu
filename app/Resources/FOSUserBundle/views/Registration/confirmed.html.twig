@@ -3,9 +3,28 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
 {% block fos_user_content %}
-    <p>{{ 'registration.confirmed'|trans({'%username%': user.username}) }}</p>
-    {% if app.session is not empty %}
-        {% set targetUrl = app.session.get('_security.' ~ app.security.token.providerKey ~ '.target_path') %}
-        {% if targetUrl is not empty %}<p><a href="{{ targetUrl }}">{{ 'registration.back'|trans }}</a></p>{% endif %}
-    {% endif %}
+    <div class="alert alert-info">
+        {{ 'registration.confirmed'|trans({'%username%': user.username}) }}
+    </div>
+
+    <div class="well">
+        {% if app.session is not empty %}
+            {% set lastVisitedRestaurantUrl = app.session.get('last_visited_restaurant_url') %}
+            {% set lastVisitedRestaurantName = app.session.get('last_visited_restaurant_name') %}
+
+            {% if lastVisitedRestaurantUrl is not empty and lastVisitedRestaurantName is not empty %}
+                Return to this restaurant? <a href="{{ lastVisitedRestaurantUrl }}">{{ lastVisitedRestaurantName }}</a>
+            {% else %}
+
+                {% set targetUrl = app.session.get('_security.' ~ app.security.token.providerKey ~ '.target_path') %}
+                {% if targetUrl is not empty %}
+                    <a href="{{ targetUrl }}">{{ 'registration.back'|trans }}</a>
+                {% endif %}
+            {% endif %}
+
+        {% else %}
+            Now, <a href="{{ path('restaurant_search') }}">search a restaurant</a> and add your first dish review!
+
+        {% endif %}
+    </div>
 {% endblock fos_user_content %}

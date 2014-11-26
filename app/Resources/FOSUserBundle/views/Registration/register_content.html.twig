@@ -14,20 +14,44 @@
 
                 <form action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="POST">
 
-                    {{ form_widget(form) }}
+                    <div class="form-group">
+                        {{ form_label(form.firstName, 'Your first name') }}
+                        {{ form_errors(form.firstName) }}
+                        {{ form_widget(form.firstName, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form_label(form.email, 'Your email') }}
+                        {{ form_errors(form.email) }}
+                        {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form_label(form.plainPassword.first, 'Your password') }}
+                        {{ form_errors(form.plainPassword) }}
+                        {{ form_widget(form.plainPassword.first, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form_label(form.plainPassword.second, 'Retype your password') }}
+                        {{ form_errors(form.plainPassword.second) }}
+                        {{ form_widget(form.plainPassword.second, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form_label(form.recaptcha, 'Are you a human? Please retype this:') }}
+                        {{ form_errors(form.recaptcha) }}
+                        {{ form_widget(form.recaptcha, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+
+                    {{ form_rest(form) }}
 
                     <button type="submit" id="_submit" name="_submit" class="btn btn-primary">Submit</button>
+
 
                 {{ form_end(form) }}
             </div>
         </div>
-
-        {#<div>#}
-            {#{{ form_label(form.task) }}#}
-            {#{{ form_errors(form.task) }}#}
-            {#{{ form_widget(form.task) }}#}
-        {#</div>#}
-
 
 
         <div class="well">

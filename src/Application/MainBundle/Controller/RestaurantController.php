@@ -141,6 +141,10 @@ class RestaurantController extends Controller
             return $form_dish;
         }
 
+        // set this restaurant in session
+        $this->get('session')->set('last_visited_restaurant_url', $this->getRestaurantUrl($restaurant));
+        $this->get('session')->set('last_visited_restaurant_name', $restaurant->getName());
+
         return array(
             'restaurant' => $restaurant,
             'restaurant_url' => $this->getRestaurantUrl($restaurant),
