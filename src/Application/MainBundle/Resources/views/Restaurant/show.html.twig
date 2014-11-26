@@ -117,7 +117,7 @@
 
                     {% else %}
 
-                        {% include 'ApplicationMainBundle:Restaurant:dishForm.html.twig' with {'form_dish': form_dish} %}
+                        {% include 'ApplicationMainBundle:Dish:dishForm.html.twig' with {'form_dish': form_dish} %}
 
                     {% endif %}
                 </div>
@@ -126,8 +126,7 @@
         {% else %}
 
             <div class="well">
-                Choose one below for reviews and see photos.
-                You can also add your own review and photos.
+                Choose one below to see reviews and photos.
                 Or <a href="#" class="btn btn-primary" onclick="$('#addDishForm').toggle(); return false">add a dish</a>
             </div>
 
