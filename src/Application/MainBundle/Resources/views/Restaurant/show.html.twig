@@ -125,11 +125,21 @@
 
         {% else %}
 
+
+
+
+
             <div class="well">
                 Choose one below to see reviews and photos.
+
+            {% if app.user %}
                 Or <a href="#" class="btn btn-primary" onclick="$('#addDishForm').toggle(); return false">add a dish</a>
+            {% else %}
+                Or you can add a dish if you're logged. {% include 'ApplicationMainBundle:Security:loginOrSigninLinks.html.twig' with {'redirect': restaurant_url} %}
+            {% endif %}
             </div>
 
+            {% if app.user %}
             <div id="addDishForm" class="panel panel-info collapse">
                 <div class="panel-heading">
                     <h3 class="panel-title">Add a dish or a drink</h3>
@@ -140,6 +150,7 @@
 
                 </div>
             </div>
+            {% endif %}
 
             <div class="row">
 
