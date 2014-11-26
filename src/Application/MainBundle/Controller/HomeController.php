@@ -14,15 +14,16 @@ class HomeController extends Controller
      */
     public function indexAction()
     {
-//        $projects = $this->getDoctrine()
-//            ->getRepository('ApplicationMainBundle:Project')
-//            ->findBy(
-//                array('status' => \Application\MainBundle\Entity\Project::STATUS_PUBLISHED),
-//                array('createdAt' => 'DESC')
-//            );
+        $lastReviews = $this->getDoctrine()
+            ->getRepository('ApplicationMainBundle:Review')
+            ->findBy(
+                array(),
+                array('createdAt' => 'DESC'),
+                6
+            );
 
         return array(
-//            'projects' => $projects
+            'lastReviews' => $lastReviews
         );
     }
 }

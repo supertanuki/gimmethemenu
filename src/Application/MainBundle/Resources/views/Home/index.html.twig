@@ -56,30 +56,49 @@
     </div>
 
 
-    {#
     <div class="hidden-xs">
         <hr>
         <h2>Latest reviews</h2>
+
         <div class="row">
+            {% for review in lastReviews %}
+
+                {% set dish_url = path('dish_show', {
+                    'country_slug': review.dish.restaurant.country.slug,
+                    'locality_slug': review.dish.restaurant.locality.slug,
+                    'restaurant_slug': review.dish.restaurant.slug,
+                    'dish_slug': review.dish.slug
+                }) %}
+
+                {% set restaurant_url = path('restaurant_show', {
+                    'country_slug': review.dish.restaurant.country.slug,
+                    'locality_slug': review.dish.restaurant.locality.slug,
+                    'restaurant_slug': review.dish.restaurant.slug
+                }) %}
+
             <div class="col-xs-6 col-sm-3 col-md-2">
                 <div class="thumbnail">
-                    <a href="#"><img class="img-rounded" src="img/samples/burger.jpg"></a>
+
+                    {% if review.photoName %}
+                        <a href="{{ dish_url }}">
+                            <img class="img-rounded" src="{{ vich_uploader_asset(review, 'dish_photo') }}">
+                        </a>
+                    {% endif %}
+
                     <div class="caption text-center">
-                        <h3><a href="#">CheezeBurger</a></h3>
-                        <p>@ <a href="#">The place2bee</a>, Paris</p>
+                        <h3><a href="{{ dish_url }}">{{ review.dish.name }}</a></h3>
+                        <p>@ <a href="{{ restaurant_url }}">{{ review.dish.restaurant.name }}</a>, {{ review.dish.restaurant.locality }}</p>
+                        <p>by <b>{{ review.user }}</b></p>
                         <p>
-                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                            <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
-                            <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
+                            {% include 'ApplicationMainBundle:Common:rating.html.twig' with {'rating': review.rank} %}
                         </p>
                     </div>
                 </div>
             </div>
-
+            {% endfor %}
         </div>
 
+        {#
         <hr>
         <h2>Latest menus</h2>
         <div class="row">
@@ -94,8 +113,8 @@
             </div>
 
         </div>
-    </div>
-    #}
+        #}
+
 {% endblock %}
 
 {% block javascripts %}

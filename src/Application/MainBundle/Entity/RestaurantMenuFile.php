@@ -39,7 +39,7 @@ class RestaurantMenuFile
     protected $fileFile;
 
     /**
-     * @ORM\Column(type="string", length=255, name="file_name", nullable=true)
+     * @ORM\Column(type="string", length=255, name="file_name", nullable=false)
      * @var string $fileName
      */
     protected $fileName;
