@@ -120,7 +120,7 @@
                     {% for review in dish.reviews %}
                     <dd class="pos-right clearfix">
                         <div class="circ"></div>
-                        <div class="time">{{ review.when|localizeddate('medium', 'none') }}</div>
+                        <div class="time hidden-xs">{{ review.when|localizeddate('medium', 'none') }}</div>
                         <div class="events">
                             {% if review.photoName %}
                                 <div class="pull-left">
@@ -132,6 +132,8 @@
                                 <h4 class="events-heading">
                                     <a href="#">{{ review.user }}</a>
                                 </h4>
+
+                                <div class="visible-xs-block">on {{ review.when|localizeddate('medium', 'none') }}</div>
 
                                 {% include 'ApplicationMainBundle:Common:rating.html.twig' with {'rating': review.rank} %}
 
