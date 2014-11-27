@@ -33,14 +33,19 @@ sonata_admin:
                 class: col-md-12
                 type: sonata.admin.block.admin_list
                 settings:
-                    groups: [contents, users]
+                    groups: [contents, pages, users]
         groups:
             contents:
                 label: 'Contenus'
                 items:
                     - sonata.admin.restaurant
-                    - sonata.admin.dish
+                    - sonata.admin.restaurantmenufile
                     - sonata.admin.dishtype
+                    - sonata.admin.dish
+                    - sonata.admin.review
+            pages:
+                label: 'Pages'
+                items:
                     - sonata.admin.page
             users:
                 label: 'Utilisateurs'

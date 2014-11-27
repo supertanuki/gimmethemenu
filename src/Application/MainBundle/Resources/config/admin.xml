@@ -33,6 +33,26 @@
             </call>
         </service>
 
+        <service id="sonata.admin.review" class="Application\MainBundle\Admin\ReviewAdmin">
+            <tag name="sonata.admin" manager_type="orm" group="Content" label="Review"/>
+            <argument />
+            <argument>Application\MainBundle\Entity\Review</argument>
+            <argument />
+            <call method="setTranslationDomain">
+                <argument>messages</argument>
+            </call>
+        </service>
+
+        <service id="sonata.admin.restaurantmenufile" class="Application\MainBundle\Admin\RestaurantMenuFileAdmin">
+            <tag name="sonata.admin" manager_type="orm" group="Content" label="MenuFile"/>
+            <argument />
+            <argument>Application\MainBundle\Entity\RestaurantMenuFile</argument>
+            <argument />
+            <call method="setTranslationDomain">
+                <argument>messages</argument>
+            </call>
+        </service>
+
         <service id="sonata.admin.user" class="Application\MainBundle\Admin\UserAdmin">
             <tag name="sonata.admin" manager_type="orm" group="Users" label="User"/>
             <argument />

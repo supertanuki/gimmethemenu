@@ -12,7 +12,7 @@ class RestaurantMenuFileType extends AbstractType
     {
         $builder
             ->add('fileFile', 'file', array('label' => false))
-            ;
+        ;
     }
 
     public function getName()

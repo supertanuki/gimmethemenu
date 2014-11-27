@@ -7,7 +7,7 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 
-class RestaurantAdmin extends Admin
+class RestaurantMenuFileAdmin extends Admin
 {
     protected $datagridValues = array(
         '_sort_order' => 'DESC', // reverse order (default = 'ASC')
@@ -17,25 +17,14 @@ class RestaurantAdmin extends Admin
     // Fields to be shown on create/edit forms
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $formMapper
-            ->add('name')
-            ->add('ggPlaceId')
-            ->add('address')
-            ->add('locality')
-            ->add('country')
-            ->add('locationLat')
-            ->add('locationLng')
-            ->add('internationalPhoneNumber')
-        ;
     }
 
     // Fields to be shown on filter forms
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
-            ->add('name')
-            ->add('locality')
-            ->add('country')
+            ->add('user')
+            ->add('restaurant')
         ;
     }
 
@@ -43,12 +32,10 @@ class RestaurantAdmin extends Admin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->addIdentifier('name')
-            ->add('address')
-            ->add('locality')
-            ->add('country')
+            ->add('id')
+            ->add('restaurant')
+            ->add('user')
             ->add('createdAt')
-            ->add('updatedAt')
         ;
     }
 }

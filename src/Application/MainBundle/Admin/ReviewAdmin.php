@@ -7,7 +7,7 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 
-class RestaurantAdmin extends Admin
+class ReviewAdmin extends Admin
 {
     protected $datagridValues = array(
         '_sort_order' => 'DESC', // reverse order (default = 'ASC')
@@ -18,14 +18,10 @@ class RestaurantAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('name')
-            ->add('ggPlaceId')
-            ->add('address')
-            ->add('locality')
-            ->add('country')
-            ->add('locationLat')
-            ->add('locationLng')
-            ->add('internationalPhoneNumber')
+            ->add('review')
+            ->add('price')
+            ->add('rank')
+            ->add('when')
         ;
     }
 
@@ -33,9 +29,9 @@ class RestaurantAdmin extends Admin
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
-            ->add('name')
-            ->add('locality')
-            ->add('country')
+            ->add('dish.restaurant')
+            ->add('dish')
+            ->add('user')
         ;
     }
 
@@ -43,12 +39,15 @@ class RestaurantAdmin extends Admin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->addIdentifier('name')
-            ->add('address')
-            ->add('locality')
-            ->add('country')
+            ->addIdentifier('id')
+            ->add('dish.restaurant')
+            ->add('dish')
+            ->add('review')
+            ->add('price')
+            ->add('rank')
+            ->add('photoName')
+            ->add('user')
             ->add('createdAt')
-            ->add('updatedAt')
         ;
     }
 }

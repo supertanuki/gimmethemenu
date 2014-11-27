@@ -27,7 +27,7 @@ class RestaurantMenuFile
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="restaurant", inversedBy="restaurantMenuFiles")
+     * @ORM\ManyToOne(targetEntity="Restaurant", inversedBy="restaurantMenuFiles")
      * @ORM\JoinColumn(name="restaurant_id", referencedColumnName="id", nullable=false)
      */
     protected $restaurant;
