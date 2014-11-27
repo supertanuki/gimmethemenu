@@ -41,7 +41,7 @@
     <div class="row">
         <div class="col-xs-12 col-md-6 col-md-offset-3">
             <p class="text-center">
-                <a href="#" class="btn btn-primary"
+                <a href="#" class="btn btn-primary btn-lg"
                    onclick="$('#reviewForm').show(); $(this).hide(); return false">
                     <span class="glyphicon glyphicon-pencil"></span>
                     Add my review
@@ -65,8 +65,6 @@
             <h2>Photos</h2>
 
             <div class="well">
-                <p>The dish! Say &ldquo;sheeez&rdquo;!</p>
-
                 {% if dish.reviews|length == 1 %}
 
                     {% for review in dish.reviews if review.photoName %}
@@ -79,20 +77,24 @@
                 <div id="dish-photos" class="carousel slide" data-ride="carousel">
 
                     <ol class="carousel-indicators">
-                    {% for key, review in dish.reviews if review.photoName %}
-                        <li data-target="#dish-photos" data-slide-to="{{ key }}" {% if key == 0 %}class="active"{% endif %}></li>
+                    {% set iterator = 0 %}
+                    {% for review in dish.reviews if review.photoName %}
+                        <li data-target="#dish-photos" data-slide-to="{{ iterator }}" {% if iterator == 0 %}class="active"{% endif %}></li>
+                        {% set iterator = iterator+1 %}
                     {% endfor %}
                     </ol>
 
                     <div class="carousel-inner" role="listbox">
-                    {% for key, review in dish.reviews if review.photoName %}
-                        <div class="item {% if key == 0 %}active{% endif %}">
+                    {% set iterator = 0 %}
+                    {% for review in dish.reviews if review.photoName %}
+                        <div class="item {% if iterator == 0 %}active{% endif %}">
                             <img src="{{ vich_uploader_asset(review, 'dish_photo') }}" style="width: 100%" alt="">
 
                             <div class="carousel-caption">
                                 Added by <b>{{ review.user }}</b> on {{ review.createdAt|localizeddate('medium', 'none') }}</p>
                             </div>
                         </div>
+                        {% set iterator = iterator+1 %}
                     {% endfor %}
                     </div>
 
