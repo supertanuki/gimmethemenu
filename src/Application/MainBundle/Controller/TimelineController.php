@@ -24,9 +24,9 @@ class TimelineController extends Controller
             throw $this->createNotFoundException('User not found');
         }
 
-        $logs = $this->getDoctrine()
-            ->getRepository('ApplicationMainBundle:User')
-            ->getLogs($user);
+//        $logs = $this->getDoctrine()
+//            ->getRepository('ApplicationMainBundle:User')
+//            ->getLogs($user);
 
         return array(
             'user' => $user,

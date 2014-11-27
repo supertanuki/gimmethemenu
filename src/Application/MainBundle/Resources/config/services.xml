@@ -6,11 +6,6 @@
 
     <services>
 
-        <service id="application_main.project_close_ended" class="Application\MainBundle\Service\ProjectCloseEnded">
-            <argument type="service" id="doctrine.orm.entity_manager"/>
-            <argument type="service" id="logger" />
-        </service>
-
         <service id="application_main.registration.form.type" class="Application\MainBundle\Form\Type\RegistrationFormType">
             <tag name="form.type" alias="application_main_user_registration" />
             <argument>%fos_user.model.user.class%</argument>
@@ -19,17 +14,6 @@
         <service id="application_main.profile.form.type" class="Application\MainBundle\Form\Type\ProfileFormType">
             <tag name="form.type" alias="application_main_user_profile" />
             <argument>%fos_user.model.user.class%</argument>
-        </service>
-
-        <service id="application_main.project_response_file.listener" class="Application\MainBundle\Listener\ProjectResponseFileListener">
-            <tag name="doctrine.event_listener" event="postPersist" />
-            <tag name="doctrine.event_listener" event="postUpdate" />
-            <tag name="doctrine.event_listener" event="postRemove" />
-        </service>
-
-        <service id="application_main.project_response.listener" class="Application\MainBundle\Listener\ProjectResponseListener">
-            <tag name="doctrine.event_listener" event="preUpdate" />
-            <argument type="service" id="session"/>
         </service>
 
     </services>

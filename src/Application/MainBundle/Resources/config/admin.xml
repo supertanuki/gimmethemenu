@@ -33,53 +33,6 @@
             </call>
         </service>
 
-        <service id="sonata.admin.project" class="Application\MainBundle\Admin\ProjectAdmin">
-            <tag name="sonata.admin" manager_type="orm" group="Content" label="Project"/>
-            <argument />
-            <argument>Application\MainBundle\Entity\Project</argument>
-            <argument />
-            <call method="setTranslationDomain">
-                <argument>messages</argument>
-            </call>
-            <call method="addChild">
-                <argument type="service" id="sonata.admin.project.response" />
-            </call>
-        </service>
-
-        <service id="sonata.admin.project.file" class="Application\MainBundle\Admin\ProjectFileAdmin">
-            <tag name="sonata.admin" manager_type="orm"/>
-            <argument />
-            <argument>Application\MainBundle\Entity\ProjectFile</argument>
-            <argument />
-            <call method="setTranslationDomain">
-                <argument>messages</argument>
-            </call>
-        </service>
-
-        <service id="sonata.admin.project.response" class="Application\MainBundle\Admin\ProjectResponseAdmin">
-            <tag name="sonata.admin" manager_type="orm" label="Response" />
-            <argument />
-            <argument>Application\MainBundle\Entity\ProjectResponse</argument>
-            <argument />
-            <call method="setTranslationDomain">
-                <argument>messages</argument>
-            </call>
-            <call method="setTemplate">
-                <argument>edit</argument>
-                <argument>ApplicationMainBundle:Admin:project_response_edit.html.twig</argument>
-            </call>
-        </service>
-
-        <service id="sonata.admin.category" class="Application\MainBundle\Admin\CategoryAdmin">
-            <tag name="sonata.admin" manager_type="orm" group="Content" label="Category"/>
-            <argument />
-            <argument>Application\MainBundle\Entity\Category</argument>
-            <argument />
-            <call method="setTranslationDomain">
-                <argument>messages</argument>
-            </call>
-        </service>
-
         <service id="sonata.admin.user" class="Application\MainBundle\Admin\UserAdmin">
             <tag name="sonata.admin" manager_type="orm" group="Users" label="User"/>
             <argument />
