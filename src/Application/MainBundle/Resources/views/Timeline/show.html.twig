@@ -78,7 +78,7 @@
                             <div class="events">
 
                                 {% if log['review'].photoName %}
-                                <div class="{% if iterator is odd %}pull-right{% else %}pull-left{% endif %}">
+                                <div class="pull-left">
                                     <a href="{{ dish_url }}"><img class="events-object img-rounded" src="{{ vich_uploader_asset(log['review'], 'dish_photo') }}" width="96"></a>
                                 </div>
                                 {% endif %}
