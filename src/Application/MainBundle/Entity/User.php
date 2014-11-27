@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Application\MainBundle\Repository\UserRepository")
  * @ORM\Table(name="user")
  */
 class User extends BaseUser
@@ -25,6 +25,36 @@ class User extends BaseUser
      * @ORM\Column(name="first_name", type="string", length=255)
      */
     private $firstName;
+
+    /**
+     * @var string
+     * @Gedmo\Slug(fields={"firstName"}, updatable=true, separator="-")
+     * @ORM\Column(name="slug", type="string", length=255, unique=false)
+     */
+    private $slug;
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     * @return Restaurant
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
 
 //    /**
 //     * @var string

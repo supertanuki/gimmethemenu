@@ -57,7 +57,7 @@
                             {{ app.user }} <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="timeline.html">My timeline</a></li>
+                            <li><a href="{{ path('user_timeline', { 'slug': app.user.slug }) }}">My timeline</a></li>
                             <li><a href="{{ path('fos_user_profile_edit') }}">Edit my profile</a></li>
                             <li class="divider"></li>
                             <li><a href="{{ path('fos_user_security_logout') }}">Logout</a></li>

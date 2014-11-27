@@ -1,5 +1,4 @@
 <?php
-
 namespace Application\MainBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
@@ -14,10 +13,6 @@ use Application\MainBundle\Entity\ProjectResponseFile;
 
 class ProjectController extends Controller
 {
-    /**
-     * @Route("/projets", name="project_index")
-     * @Template()
-     */
     public function indexAction()
     {
         $projects = $this->getDoctrine()
@@ -32,10 +27,6 @@ class ProjectController extends Controller
         );
     }
 
-    /**
-     * @Route("/mon-profil/mes-projets", name="profile_project_index")
-     * @Template()
-     */
     public function myProjectsAction()
     {
         if (!$this->getUser()) {
@@ -52,10 +43,7 @@ class ProjectController extends Controller
         );
     }
 
-    /**
-     * @Route("/projets/{slug}", name="project_category")
-     * @Template()
-     */
+
     public function categoryAction($slug)
     {
         $category = $this->getCategoryBySlug($slug);
@@ -80,11 +68,7 @@ class ProjectController extends Controller
             ->findBy(array(), array('rank' => 'ASC'));
     }
 
-    /**
-     * @Route("/projets/{slug_category}/{slug_project}", name="project_show")
-     * @Method("get|post")
-     * @Template()
-     */
+
     public function showAction($slug_category, $slug_project)
     {
         $category = $this->getCategoryBySlug($slug_category);
@@ -167,13 +151,6 @@ class ProjectController extends Controller
         );
     }
 
-    /**
-     * Displays a form to edit an existing ProjectResponse entity.
-     *
-     * @Route("/projets/reponse/{id}/edit", name="projectresponse_edit")
-     * @Method("GET")
-     * @Template("ApplicationMainBundle:ProjectResponse:edit.html.twig")
-     */
     public function editAction($id)
     {
         if (!$this->getUser()) {
@@ -201,13 +178,6 @@ class ProjectController extends Controller
         );
     }
 
-    /**
-     * Edits an existing ProjectResponse entity.
-     *
-     * @Route("/projets/reponse/{id}/update", name="projectresponse_update")
-     * @Method("PUT")
-     * @Template("ApplicationMainBundle:ProjectResponse:edit.html.twig")
-     */
     public function updateAction(Request $request, $id)
     {
         if (!$this->getUser()) {
@@ -256,12 +226,6 @@ class ProjectController extends Controller
         );
     }
 
-    /**
-     * Deletes a ProjectResponse entity.
-     *
-     * @Route("/projets/reponse/{id}/delete", name="projectresponse_delete")
-     * @Method("DELETE")
-     */
     public function deleteAction(Request $request, $id)
     {
         if (!$this->getUser()) {
@@ -298,13 +262,6 @@ class ProjectController extends Controller
         );
     }
 
-    /**
-     * Creates a form to edit a ProjectResponse entity.
-     *
-     * @param ProjectResponse $entity The entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
     private function createEditForm(ProjectResponse $entity)
     {
         $form = $this->createForm(new ProjectResponseType(), $entity, array(

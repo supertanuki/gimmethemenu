@@ -10,18 +10,26 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class TimelineController extends Controller
 {
     /**
-     * @Route("/my-timeline", name="my_timeline")
+     * @Route("/user/{slug}/timeline", name="user_timeline")
      * @Method("get")
      * @Template()
      */
-    public function showAction()
+    public function showAction($slug)
     {
-        if (!$this->getUser()) {
-            return $this->redirect($this->generateUrl('fos_user_security_login'));
+        $user = $this->getDoctrine()
+            ->getRepository('ApplicationMainBundle:User')
+            ->findOneBy(array('slug' => $slug));
+
+        if (!$user) {
+            throw $this->createNotFoundException('User not found');
         }
 
+        $logs = $this->getDoctrine()
+            ->getRepository('ApplicationMainBundle:User')
+            ->getLogs($user);
+
         return array(
-            'register_date' => $this->getUser()->getCreatedAt(),
+            'user' => $user,
         );
     }
 }

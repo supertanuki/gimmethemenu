@@ -1,0 +1,107 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}{{ user.firstName }}'s timeline{% endblock %}
+
+{% block body %}
+
+    <h1>
+        {{ user.firstName }}'s timeline
+    </h1>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="timeline">
+                <dl>
+                    <dt>Apr 2014</dt>
+
+                    <dd class="pos-left clearfix">
+                        <div class="circ"></div>
+                        <div class="time">Apr 10</div>
+                        <div class="events">
+                            <div class="pull-left">
+                                <img class="events-object img-rounded" src="img/samples/pizza.png" width="96" height="96">
+                            </div>
+                            <div class="events-body">
+                                <h4 class="events-heading"><a href="#">Pizza napolitana</a><br>@ <a href="#">Pizz'ahoolic</a></h4>
+
+                                <p>
+                                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                    <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
+                                </p>
+                                <p>Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica.</p>
+                            </div>
+                        </div>
+                    </dd>
+
+                    <dd class="pos-right clearfix">
+                        <div class="circ"></div>
+                        <div class="time">Apr 14</div>
+                        <div class="events">
+                            <div class="pull-left">
+                                <img class="events-object img-rounded" src="img/samples/burger.jpg" width="96" height="96">
+                            </div>
+                            <div class="events-body">
+                                <h4 class="events-heading"><a href="#">Cheeze Burger</a><br>@ <a href="#">Burger Queen</a></h4>
+                                <p>
+                                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                    <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
+                                    <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
+                                </p>
+                                <p>Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica.</p>
+                            </div>
+                        </div>
+                    </dd>
+
+                    <dd class="pos-right clearfix">
+                        <div class="circ"></div>
+                        <div class="time">{{ user.createdAt|localizeddate('medium', 'none') }}</div>
+                        <div class="events">
+                            <div class="events-body">
+                                <p>Registration on GimmeTheMenu</p>
+                            </div>
+                        </div>
+                    </dd>
+
+                </dl>
+            </div>
+        </div>
+    </div>
+
+                    {#{% set dish_url = path('dish_show', {#}
+                        {#'country_slug': dish.restaurant.country.slug,#}
+                        {#'locality_slug': dish.restaurant.locality.slug,#}
+                        {#'restaurant_slug': dish.restaurant.slug,#}
+                        {#'dish_slug': dish.slug#}
+                    {#}) %}#}
+
+                {#<div class="col-xs-6 col-sm-4 col-md-4">#}
+                    {#<div class="thumbnail">#}
+
+                    {#{% if dish.reviews[0].photoName %}#}
+                        {#<a href="{{ dish_url }}"><img class="img-rounded" src="{{ vich_uploader_asset(dish.reviews[0], 'dish_photo') }}"></a>#}
+                    {#{% endif %}#}
+
+                        {#<div class="caption text-center">#}
+                            {#<h3><a href="{{ dish_url }}">{{ dish.name }}</a></h3>#}
+
+                            {#{% include 'ApplicationMainBundle:Common:rating.html.twig' with {'rating': dish.averageRating} %}#}
+
+                            {#<p>#}
+                                {#<a href="{{ dish_url }}">#}
+                                    {#<span class="label label-info">{{ dish.dishType }}</span>#}
+                                    {#<span class="label label-warning">{{ dish.price }}&nbsp;&euro;</span>#}
+                                    {#<span class="label label-success">#}
+                                        {#{{ dish.reviews|length }} review#}
+                                    {#</span>#}
+                                {#</a>#}
+                            {#</p>#}
+                        {#</div>#}
+                    {#</div>#}
+                {#</div>#}
+                {#{% endfor %}#}
+{% endblock %}

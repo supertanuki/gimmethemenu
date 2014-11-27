@@ -4,27 +4,31 @@
 
 {% block fos_user_content %}
     <div class="alert alert-info">
-        {{ 'registration.confirmed'|trans({'%username%': user.username}) }}
+        {{ 'registration.confirmed'|trans({'%username%': user.firstName}) }}
     </div>
 
-    <div class="well">
-        {% if app.session is not empty %}
-            {% set lastVisitedRestaurantUrl = app.session.get('last_visited_restaurant_url') %}
-            {% set lastVisitedRestaurantName = app.session.get('last_visited_restaurant_name') %}
 
-            {% if lastVisitedRestaurantUrl is not empty and lastVisitedRestaurantName is not empty %}
+    {% if app.session is not empty %}
+        {% set lastVisitedRestaurantUrl = app.session.get('last_visited_restaurant_url') %}
+        {% set lastVisitedRestaurantName = app.session.get('last_visited_restaurant_name') %}
+
+        {% if lastVisitedRestaurantUrl is not empty and lastVisitedRestaurantName is not empty %}
+            <div class="well">
                 Return to this restaurant? <a href="{{ lastVisitedRestaurantUrl }}">{{ lastVisitedRestaurantName }}</a>
-            {% else %}
-
-                {% set targetUrl = app.session.get('_security.' ~ app.security.token.providerKey ~ '.target_path') %}
-                {% if targetUrl is not empty %}
-                    <a href="{{ targetUrl }}">{{ 'registration.back'|trans }}</a>
-                {% endif %}
-            {% endif %}
-
+            </div>
         {% else %}
-            Now, <a href="{{ path('restaurant_search') }}">search a restaurant</a> and add your first dish review!
 
+            {% set targetUrl = app.session.get('_security.' ~ app.security.token.providerKey ~ '.target_path') %}
+            {% if targetUrl is not empty %}
+                <div class="well">
+                    <a href="{{ targetUrl }}">{{ 'registration.back'|trans }}</a>
+                </div>
+            {% endif %}
         {% endif %}
+
+    {% endif %}
+
+    <div class="well">
+        Now, <a href="{{ path('restaurant_search') }}">Search a restaurant</a> and add your first dish review!
     </div>
 {% endblock fos_user_content %}
