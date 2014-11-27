@@ -14,55 +14,97 @@
                 <dl>
                     <dt>Apr 2014</dt>
 
-                    <dd class="pos-left clearfix">
-                        <div class="circ"></div>
-                        <div class="time">Apr 10</div>
-                        <div class="events">
-                            <div class="pull-left">
-                                <img class="events-object img-rounded" src="img/samples/pizza.png" width="96" height="96">
-                            </div>
-                            <div class="events-body">
-                                <h4 class="events-heading"><a href="#">Pizza napolitana</a><br>@ <a href="#">Pizz'ahoolic</a></h4>
+                    {% set iterator = 0 %}
+                    {% for log in logs %}
+                        {% set iterator = iterator+1 %}
 
-                                <p>
-                                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                    <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
-                                </p>
-                                <p>Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica.</p>
-                            </div>
-                        </div>
-                    </dd>
+                        <dd class="{% if iterator is odd %}pos-left{% else %}pos-right{% endif %} clearfix">
+                            <div class="circ"></div>
 
-                    <dd class="pos-right clearfix">
-                        <div class="circ"></div>
-                        <div class="time">Apr 14</div>
-                        <div class="events">
-                            <div class="pull-left">
-                                <img class="events-object img-rounded" src="img/samples/burger.jpg" width="96" height="96">
-                            </div>
-                            <div class="events-body">
-                                <h4 class="events-heading"><a href="#">Cheeze Burger</a><br>@ <a href="#">Burger Queen</a></h4>
-                                <p>
-                                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                    <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
-                                    <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
-                                </p>
-                                <p>Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica.</p>
-                            </div>
-                        </div>
-                    </dd>
+                        {% if log['menuFile'] is defined %}
 
-                    <dd class="pos-right clearfix">
+                            <div class="time">{{ log['menuFile'].createdAt|localizeddate('medium', 'none') }}</div>
+                            <div class="events">
+                                <div class="events-body">
+                                    <p>
+                                        <span class="label label-info">Added menu</span>
+                                        <a href="#">{{ log['menuFile'].restaurant.name }}</a>
+                                    </p>
+                                </div>
+                            </div>
+
+                        {% elseif log['dish'] is defined %}
+
+                            {% set dish_url = path('dish_show', {
+                                'country_slug': log['dish'].restaurant.country.slug,
+                                'locality_slug': log['dish'].restaurant.locality.slug,
+                                'restaurant_slug': log['dish'].restaurant.slug,
+                                'dish_slug': log['dish'].slug
+                            }) %}
+
+                            {% set restaurant_url = path('restaurant_show', {
+                                'country_slug': log['dish'].restaurant.country.slug,
+                                'locality_slug': log['dish'].restaurant.locality.slug,
+                                'restaurant_slug': log['dish'].restaurant.slug
+                            }) %}
+
+                            <div class="time">{{ log['dish'].createdAt|localizeddate('medium', 'none') }}</div>
+                            <div class="events">
+                                <div class="events-body">
+                                    <p>
+                                        <span class="label label-info">Added dish</span>
+                                        <a href="{{ dish_url }}">{{ log['dish'].name }}</a>
+                                        @ <a href="{{ restaurant_url }}">{{ log['dish'].restaurant.name }}</a>
+                                    </p>
+                                </div>
+                            </div>
+
+                        {% elseif log['review'] is defined %}
+
+                            {% set dish_url = path('dish_show', {
+                                'country_slug': log['review'].dish.restaurant.country.slug,
+                                'locality_slug': log['review'].dish.restaurant.locality.slug,
+                                'restaurant_slug': log['review'].dish.restaurant.slug,
+                                'dish_slug': log['review'].dish.slug
+                            }) %}
+
+                            {% set restaurant_url = path('restaurant_show', {
+                                'country_slug': log['review'].dish.restaurant.country.slug,
+                                'locality_slug': log['review'].dish.restaurant.locality.slug,
+                                'restaurant_slug': log['review'].dish.restaurant.slug
+                            }) %}
+
+                            <div class="time">{{ log['review'].when|localizeddate('medium', 'none') }}</div>
+                            <div class="events">
+
+                                {% if log['review'].photoName %}
+                                <div class="{% if iterator is odd %}pull-right{% else %}pull-left{% endif %}">
+                                    <a href="{{ dish_url }}"><img class="events-object img-rounded" src="{{ vich_uploader_asset(log['review'], 'dish_photo') }}" width="96"></a>
+                                </div>
+                                {% endif %}
+
+                                <div class="events-body">
+                                    <h4 class="events-heading">
+                                        <a href="{{ dish_url }}">{{ log['review'].dish.name }}</a>
+                                        <br>@ <a href="{{ restaurant_url }}">{{ log['review'].dish.restaurant.name }}</a>
+                                    </h4>
+                                    <p>{{ log['review'].review }}</p>
+                                    <p>{% include 'ApplicationMainBundle:Common:rating.html.twig' with {'rating': log['review'].rank} %}</p>
+                                </div>
+                            </div>
+
+                        {% endif %}
+                        </dd>
+                    {% endfor %}
+
+                    {% set iterator = iterator+1 %}
+
+                    <dd class="{% if iterator is odd %}pos-left{% else %}pos-right{% endif %} clearfix">
                         <div class="circ"></div>
                         <div class="time">{{ user.createdAt|localizeddate('medium', 'none') }}</div>
                         <div class="events">
                             <div class="events-body">
-                                <p>Registration on GimmeTheMenu</p>
+                                <p>Beginning on GimmeTheMenu</p>
                             </div>
                         </div>
                     </dd>
@@ -71,37 +113,4 @@
             </div>
         </div>
     </div>
-
-                    {#{% set dish_url = path('dish_show', {#}
-                        {#'country_slug': dish.restaurant.country.slug,#}
-                        {#'locality_slug': dish.restaurant.locality.slug,#}
-                        {#'restaurant_slug': dish.restaurant.slug,#}
-                        {#'dish_slug': dish.slug#}
-                    {#}) %}#}
-
-                {#<div class="col-xs-6 col-sm-4 col-md-4">#}
-                    {#<div class="thumbnail">#}
-
-                    {#{% if dish.reviews[0].photoName %}#}
-                        {#<a href="{{ dish_url }}"><img class="img-rounded" src="{{ vich_uploader_asset(dish.reviews[0], 'dish_photo') }}"></a>#}
-                    {#{% endif %}#}
-
-                        {#<div class="caption text-center">#}
-                            {#<h3><a href="{{ dish_url }}">{{ dish.name }}</a></h3>#}
-
-                            {#{% include 'ApplicationMainBundle:Common:rating.html.twig' with {'rating': dish.averageRating} %}#}
-
-                            {#<p>#}
-                                {#<a href="{{ dish_url }}">#}
-                                    {#<span class="label label-info">{{ dish.dishType }}</span>#}
-                                    {#<span class="label label-warning">{{ dish.price }}&nbsp;&euro;</span>#}
-                                    {#<span class="label label-success">#}
-                                        {#{{ dish.reviews|length }} review#}
-                                    {#</span>#}
-                                {#</a>#}
-                            {#</p>#}
-                        {#</div>#}
-                    {#</div>#}
-                {#</div>#}
-                {#{% endfor %}#}
 {% endblock %}

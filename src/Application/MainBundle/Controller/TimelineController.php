@@ -24,12 +24,51 @@ class TimelineController extends Controller
             throw $this->createNotFoundException('User not found');
         }
 
-//        $logs = $this->getDoctrine()
-//            ->getRepository('ApplicationMainBundle:User')
-//            ->getLogs($user);
+        $logs = array();
+
+        //added dishes
+        $dishes = $this->getDoctrine()
+            ->getRepository('ApplicationMainBundle:Dish')
+            ->findBy(
+                array(),
+                array('createdAt' => 'DESC')
+            );
+
+        //added menuFile
+        $menuFiles = $this->getDoctrine()
+            ->getRepository('ApplicationMainBundle:RestaurantMenuFile')
+            ->findBy(
+                array(),
+                array('createdAt' => 'DESC')
+            );
+
+        //added reviews
+        $reviews = $this->getDoctrine()
+            ->getRepository('ApplicationMainBundle:Review')
+            ->findBy(
+                array(),
+                array('when' => 'DESC')
+            );
+
+        $dateFormat = 'Y-m-d H:i:s';
+
+        foreach ($dishes as $dish) {
+            $logs[$dish->getCreatedAt()->format($dateFormat)]['dish'] = $dish;
+        }
+
+        foreach ($menuFiles as $menuFile) {
+            $logs[$menuFile->getCreatedAt()->format($dateFormat)]['menuFile'] = $menuFile;
+        }
+
+        foreach ($reviews as $review) {
+            $logs[$review->getWhen()->format($dateFormat)]['review'] = $review;
+        }
+
+        krsort ($logs);
 
         return array(
             'user' => $user,
+            'logs' => $logs,
         );
     }
 }
