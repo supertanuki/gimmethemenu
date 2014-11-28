@@ -50,10 +50,3 @@ DirectoryIndex app.php
         # RedirectTemp cannot be used instead
     </IfModule>
 </IfModule>
-
-
-<IfModule mod_php5.c>
-  AddType application/x-httpd-php .php
-
-  php_flag magic_quotes_gpc Off
-</IfModule>

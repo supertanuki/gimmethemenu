@@ -23,12 +23,18 @@
 
                         {% if log['menuFile'] is defined %}
 
+                            {% set restaurant_url = path('restaurant_show', {
+                                'country_slug': log['menuFile'].restaurant.country.slug,
+                                'locality_slug': log['menuFile'].restaurant.locality.slug,
+                                'restaurant_slug': log['menuFile'].restaurant.slug
+                            }) %}
+
                             <div class="time">{{ log['menuFile'].createdAt|localizeddate('medium', 'none') }}</div>
                             <div class="events">
                                 <div class="events-body">
                                     <p>
                                         <span class="label label-info">Added menu</span>
-                                        <a href="#">{{ log['menuFile'].restaurant.name }}</a>
+                                        <a href="{{ restaurant_url }}">{{ log['menuFile'].restaurant.name }}</a>
                                     </p>
                                 </div>
                             </div>
