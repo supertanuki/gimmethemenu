@@ -11,6 +11,12 @@ imports:
 #        result_cache_driver: apc
 #        query_cache_driver: apc
 
+ewz_recaptcha:
+    public_key:   6Lf-c_4SAAAAAH2Gr7Hk6l2HUgr9sOr40TfAIJ5h # keys for gimmethemenu.com
+    private_key:  6Lf-c_4SAAAAAD670DPbdkWi1gqhEe3UZ_qbxhM0
+    locale_key:   %kernel.default_locale%
+    enabled:      true
+
 monolog:
     handlers:
         main:

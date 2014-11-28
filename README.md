@@ -8,25 +8,6 @@ in /app/config.php
 for ewz_recaptcha parameters
 Create keys for prod domain @ https://www.google.com/recaptcha/admin#createsite
 
-* Change status to closed of published projects which have dateEnd < now
-cronjob to run every hour :
-$ php app/console project:close-ended
-
-
-h1. Access
-
-Accès QA :
-* URL : http://tendances-edition-qa.itnetwork.fr
-* Identifiant : tendances
-* Mot de passe : edition
-
-Tu peux t'enregistrer en tant qu'utilisateur pour pouvoir consulter les projets et y répondre.
-
-Accès à l'administration :
-* http://tendances-edition-qa.itnetwork.fr/_administration
-* Identifiant : myadmin
-* Mot de passe : mypass
-
 
 h1. Tips
 

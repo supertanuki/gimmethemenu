@@ -114,8 +114,8 @@ vich_uploader:
             delete_on_remove:   true
 
 ewz_recaptcha:
-    public_key:   6LfF9_gSAAAAAE7ItE8NX5naqnEskP9jrnjrvFdP # keys for tendances-edition-qa.itnetwork.fr
-    private_key:  6LfF9_gSAAAAADMG-bG5n-dBPBAC9LSJtwqXZIxf
+    public_key:   6Lcn2_gSAAAAADTIWqTFAmKp6PjQGmynjqVKXIdB # keys for localhost
+    private_key:  6Lcn2_gSAAAAAMRZKbruKHt320-AQqMtsf0dkFQz
     locale_key:   %kernel.default_locale%
     enabled:      true
 
