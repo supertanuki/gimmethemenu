@@ -51,13 +51,13 @@
                 <li><a href="{{ path('restaurant_search') }}">Search a restaurant</a></li>
 
                 {% if app.user %}
+                    <li><a href="{{ path('user_timeline', { 'slug': app.user.slug }) }}">My timeline</a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                             <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
                             {{ app.user }} <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="{{ path('user_timeline', { 'slug': app.user.slug }) }}">My timeline</a></li>
                             <li><a href="{{ path('fos_user_profile_edit') }}">Edit my profile</a></li>
                             <li class="divider"></li>
                             <li><a href="{{ path('fos_user_security_logout') }}">Logout</a></li>

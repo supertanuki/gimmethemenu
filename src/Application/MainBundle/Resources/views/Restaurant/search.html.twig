@@ -3,24 +3,7 @@
 {% block title %}Search a restaurant{% endblock %}
 
 {% block body %}
-    <div class="well">
-        <span class="glyphicon glyphicon-arrow-down"></span> Search a restaurant or an address below, you will see all restaurants around.
-        <span id="messageGeolocate"></span>
-    </div>
-
-    <div class="row">
-        <div class="col-xs-12 col-sm-10 col-md-10">
-            <input id="map-search-input" type="text" placeholder="Search a restaurant name or any address">
-            <div id="map_canvas"></div><!-- map -->
-        </div>
-        <div class="col-sm-2 col-md-2 hidden-xs">
-            <div id="listing">
-                <table id="resultsTable" class="table table-condensed table-striped table-bordered table-hover">
-                    <tbody id="results"></tbody>
-                </table>
-            </div><!-- listing on the right of the map -->
-        </div>
-    </div>
+    {% include 'ApplicationMainBundle:Restaurant:search_content.html.twig' %}
 {% endblock %}
 
 {% block javascripts %}

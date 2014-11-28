@@ -9,6 +9,7 @@
     overflow: auto;
 }
 
+/*
 #map-search-input {
     background-color: #fff;
     padding: 0 11px 0 13px;
@@ -32,13 +33,16 @@
     margin-left: -1px;
     padding-left: 14px;  /* Regular padding-left + 1. */
 }
+*/
 
 @media screen and (max-width: 767px) {
     #map_canvas {
         height: 240px;
     }
 
-    #map-search-input {
-        width: 90%;
-    }
+/*
+#map-search-input {
+    width: 90%;
+}
+*/
 }

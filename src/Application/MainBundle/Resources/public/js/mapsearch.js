@@ -23,7 +23,7 @@ function initialize() {
      * Autocomplete
      */
     var input = document.getElementById('map-search-input');
-    map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+//    map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 
 
 //    var southWest = new google.maps.LatLng( 25.341233, 68.289986 );
