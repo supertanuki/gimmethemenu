@@ -16,30 +16,32 @@
 
                     {% set iterator = 0 %}
                     {% for log in logs %}
-                        {% set iterator = iterator+1 %}
-
-                        <dd class="{% if iterator is odd %}pos-left{% else %}pos-right{% endif %} clearfix">
-                            <div class="circ"></div>
-
                         {% if log['menuFile'] is defined %}
+
+                            {% set iterator = iterator+1 %}
 
                             {% set restaurant_url = path('restaurant_show', {
                                 'country_slug': log['menuFile'].restaurant.country.slug,
                                 'locality_slug': log['menuFile'].restaurant.locality.slug,
                                 'restaurant_slug': log['menuFile'].restaurant.slug
                             }) %}
-
-                            <div class="time">{{ log['menuFile'].createdAt|localizeddate('medium', 'none') }}</div>
-                            <div class="events">
-                                <div class="events-body">
-                                    <p>
-                                        <span class="label label-info">Added menu</span>
-                                        <a href="{{ restaurant_url }}">{{ log['menuFile'].restaurant.name }}</a>
-                                    </p>
+                            
+                            <dd class="{% if iterator is odd %}pos-left{% else %}pos-right{% endif %} clearfix">
+                                <div class="circ"></div>
+                                <div class="time">{{ log['menuFile'].createdAt|localizeddate('medium', 'none') }}</div>
+                                <div class="events">
+                                    <div class="events-body">
+                                        <p>
+                                            <span class="label label-info">Added menu</span>
+                                            <a href="{{ restaurant_url }}">{{ log['menuFile'].restaurant.name }}</a>
+                                        </p>
+                                    </div>
                                 </div>
-                            </div>
+                            </dd>
 
                         {% elseif log['dish'] is defined %}
+
+                            {% set iterator = iterator+1 %}
 
                             {% set dish_url = path('dish_show', {
                                 'country_slug': log['dish'].restaurant.country.slug,
@@ -54,67 +56,82 @@
                                 'restaurant_slug': log['dish'].restaurant.slug
                             }) %}
 
-                            <div class="time">{{ log['dish'].createdAt|localizeddate('medium', 'none') }}</div>
-                            <div class="events">
-                                <div class="events-body">
-                                    <p>
-                                        <span class="label label-info">Added dish</span>
-                                        <a href="{{ dish_url }}">{{ log['dish'].name }}</a>
-                                        @ <a href="{{ restaurant_url }}">{{ log['dish'].restaurant.name }}</a>
-                                    </p>
+
+                            <dd class="{% if iterator is odd %}pos-left{% else %}pos-right{% endif %} clearfix">
+                                <div class="circ"></div>
+
+                                <div class="time">{{ log['dish'].createdAt|localizeddate('medium', 'none') }}</div>
+                                <div class="events">
+                                    <div class="events-body">
+                                        <p>
+                                            <span class="label label-info">Added dish</span>
+                                            <a href="{{ dish_url }}">{{ log['dish'].name }}</a>
+                                            @ <a href="{{ restaurant_url }}">{{ log['dish'].restaurant.name }}</a>
+                                        </p>
+                                    </div>
                                 </div>
-                            </div>
+                            </dd>
 
-                        {% elseif log['review'] is defined %}
+                        {% elseif log['reviews'] is defined %}
+                            {% for review in log['reviews'] %}
 
-                            {% set dish_url = path('dish_show', {
-                                'country_slug': log['review'].dish.restaurant.country.slug,
-                                'locality_slug': log['review'].dish.restaurant.locality.slug,
-                                'restaurant_slug': log['review'].dish.restaurant.slug,
-                                'dish_slug': log['review'].dish.slug
-                            }) %}
+                                {% set iterator = iterator+1 %}
 
-                            {% set restaurant_url = path('restaurant_show', {
-                                'country_slug': log['review'].dish.restaurant.country.slug,
-                                'locality_slug': log['review'].dish.restaurant.locality.slug,
-                                'restaurant_slug': log['review'].dish.restaurant.slug
-                            }) %}
+                                {% set dish_url = path('dish_show', {
+                                    'country_slug': review.dish.restaurant.country.slug,
+                                    'locality_slug': review.dish.restaurant.locality.slug,
+                                    'restaurant_slug': review.dish.restaurant.slug,
+                                    'dish_slug': review.dish.slug
+                                }) %}
+    
+                                {% set restaurant_url = path('restaurant_show', {
+                                    'country_slug': review.dish.restaurant.country.slug,
+                                    'locality_slug': review.dish.restaurant.locality.slug,
+                                    'restaurant_slug': review.dish.restaurant.slug
+                                }) %}
 
-                            <div class="time">{{ log['review'].when|localizeddate('medium', 'none') }}</div>
-                            <div class="events">
+                                <dd class="{% if iterator is odd %}pos-left{% else %}pos-right{% endif %} clearfix">
+                                    <div class="circ"></div>
+                                    
+                                    <div class="time">{{ review.when|localizeddate('medium', 'none') }}</div>
+                                    <div class="events">
+        
+                                        {% if review.photoName %}
+                                        <div class="pull-left">
+                                            <a href="{{ dish_url }}"><img class="events-object img-rounded" src="{{ vich_uploader_asset(review, 'dish_photo') }}" width="96"></a>
+                                        </div>
+                                        {% endif %}
+        
+                                        <div class="events-body">
+                                            <h4 class="events-heading">
+                                                <a href="{{ dish_url }}">{{ review.dish.name }}</a>
+                                                <br>@ <a href="{{ restaurant_url }}">{{ review.dish.restaurant.name }}</a>
+                                            </h4>
+                                            <p>{{ review.review }}</p>
+                                            <p>{% include 'ApplicationMainBundle:Common:rating.html.twig' with {'rating': review.rank} %}</p>
+                                        </div>
+                                    </div>
+                                </dd>
+                                
+                            {% endfor %}
 
-                                {% if log['review'].photoName %}
-                                <div class="pull-left">
-                                    <a href="{{ dish_url }}"><img class="events-object img-rounded" src="{{ vich_uploader_asset(log['review'], 'dish_photo') }}" width="96"></a>
+                        {% elseif log['registerAt'] is defined %}
+
+                            {% set iterator = iterator+1 %}
+
+                            <dd class="{% if iterator is odd %}pos-left{% else %}pos-right{% endif %} clearfix">
+                                <div class="circ"></div>
+                                <div class="time">{{ log['registerAt']|localizeddate('medium', 'none') }}</div>
+                                <div class="events">
+                                    <div class="events-body alert alert-info">
+                                        <span class="glyphicon glyphicon-heart"></span>
+                                        <i>The very first time on</i> GimmeThe<b>Menu</b>
+                                    </div>
                                 </div>
-                                {% endif %}
-
-                                <div class="events-body">
-                                    <h4 class="events-heading">
-                                        <a href="{{ dish_url }}">{{ log['review'].dish.name }}</a>
-                                        <br>@ <a href="{{ restaurant_url }}">{{ log['review'].dish.restaurant.name }}</a>
-                                    </h4>
-                                    <p>{{ log['review'].review }}</p>
-                                    <p>{% include 'ApplicationMainBundle:Common:rating.html.twig' with {'rating': log['review'].rank} %}</p>
-                                </div>
-                            </div>
+                            </dd>
 
                         {% endif %}
-                        </dd>
                     {% endfor %}
-
-                    {% set iterator = iterator+1 %}
-
-                    <dd class="{% if iterator is odd %}pos-left{% else %}pos-right{% endif %} clearfix">
-                        <div class="circ"></div>
-                        <div class="time">{{ user.createdAt|localizeddate('medium', 'none') }}</div>
-                        <div class="events">
-                            <div class="events-body">
-                                <p>Beginning on GimmeTheMenu</p>
-                            </div>
-                        </div>
-                    </dd>
-
                 </dl>
             </div>
         </div>

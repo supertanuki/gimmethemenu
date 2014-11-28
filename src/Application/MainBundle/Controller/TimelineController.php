@@ -30,7 +30,7 @@ class TimelineController extends Controller
         $dishes = $this->getDoctrine()
             ->getRepository('ApplicationMainBundle:Dish')
             ->findBy(
-                array(),
+                array('user' => $user),
                 array('createdAt' => 'DESC')
             );
 
@@ -38,7 +38,7 @@ class TimelineController extends Controller
         $menuFiles = $this->getDoctrine()
             ->getRepository('ApplicationMainBundle:RestaurantMenuFile')
             ->findBy(
-                array(),
+                array('user' => $user),
                 array('createdAt' => 'DESC')
             );
 
@@ -46,7 +46,7 @@ class TimelineController extends Controller
         $reviews = $this->getDoctrine()
             ->getRepository('ApplicationMainBundle:Review')
             ->findBy(
-                array(),
+                array('user' => $user),
                 array('when' => 'DESC')
             );
 
@@ -61,8 +61,11 @@ class TimelineController extends Controller
         }
 
         foreach ($reviews as $review) {
-            $logs[$review->getWhen()->format($dateFormat)]['review'] = $review;
+            $logs[$review->getWhen()->format($dateFormat)]['reviews'][] = $review;
         }
+
+        // register date
+        $logs[$user->getCreatedAt()->format($dateFormat)]['registerAt'] = $user->getCreatedAt();
 
         krsort ($logs);
 
