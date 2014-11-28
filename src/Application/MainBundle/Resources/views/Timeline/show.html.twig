@@ -8,9 +8,19 @@
         {{ user.firstName }}'s timeline
     </h1>
 
+    <nav class="navbar navbar-inverse navbar-fixed-bottom" role="navigation">
+        <div class="container">
+            <ul class="nav nav-pills">
+                <li class="active" id="timeline_filter_reviews"><a href="#timeline">Only reviews</a></li>
+                <li id="timeline_filter_all"><a href="#timeline">All activity</a></li>
+            </ul>
+        </div>
+    </nav>
+
     <div class="row">
         <div class="col-md-12">
             <div class="timeline">
+                <a name="timeline"></a>
                 <dl>
                     {#<dt>Apr 2014</dt>#}
 
@@ -26,7 +36,7 @@
                                 'restaurant_slug': log['menuFile'].restaurant.slug
                             }) %}
                             
-                            <dd class="{% if iterator is odd %}pos-left{% else %}pos-right{% endif %} clearfix">
+                            <dd class="{% if iterator is odd %}pos-left{% else %}pos-right{% endif %} clearfix collapse">
                                 <div class="circ"></div>
                                 <div class="time">{{ log['menuFile'].createdAt|localizeddate('medium', 'none') }}</div>
                                 <div class="events">
@@ -57,7 +67,7 @@
                             }) %}
 
 
-                            <dd class="{% if iterator is odd %}pos-left{% else %}pos-right{% endif %} clearfix">
+                            <dd class="{% if iterator is odd %}pos-left{% else %}pos-right{% endif %} clearfix collapse">
                                 <div class="circ"></div>
 
                                 <div class="time">{{ log['dish'].createdAt|localizeddate('medium', 'none') }}</div>
@@ -119,7 +129,7 @@
 
                             {% set iterator = iterator+1 %}
 
-                            <dd class="{% if iterator is odd %}pos-left{% else %}pos-right{% endif %} clearfix">
+                            <dd class="{% if iterator is odd %}pos-left{% else %}pos-right{% endif %} clearfix collapse">
                                 <div class="circ"></div>
                                 <div class="time">{{ log['registerAt']|localizeddate('medium', 'none') }}</div>
                                 <div class="events">
