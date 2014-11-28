@@ -26,11 +26,24 @@
         #}
     </p>
 
-    <ul class="nav nav-pills visible-xs-block">
-        <li><a href="#menu">Menu</a></li>
-        <li><a href="#dishes">Dishes</a></li>
-        <li><a href="#address">Address</a></li>
-    </ul>
+    <nav class="navbar navbar-inverse navbar-fixed-bottom" role="navigation">
+        <div class="container">
+            <ul class="nav nav-pills">
+                <li><a href="#menu">Menu</a></li>
+                <li><a href="#dishes">Dishes</a></li>
+                {% if app.user %}
+                    <li>
+                        <a href="#add-a-dish" onclick="$('#addDishForm').show();">
+                            Add a dish
+                        </a>
+                    </li>
+                {% endif %}
+                <li><a href="#address">Address</a></li>
+            </ul>
+        </div>
+    </nav>
+
+
 
     <hr>
 
@@ -98,7 +111,7 @@
 
         <div class="col-md-6">
 
-            <h2><a name="dishes"></a>The dishes</h2>
+            <h2>The dishes</h2>
 
         {% if dishes|length == 0 %}
 
@@ -132,6 +145,7 @@
             <div class="well">
                 Choose one below to see reviews and photos.
 
+                <a name="add-a-dish"></a>
             {% if app.user %}
                 Or <a href="#" class="btn btn-primary" onclick="$('#addDishForm').toggle(); return false">add a dish</a>
             {% else %}
@@ -152,6 +166,7 @@
             </div>
             {% endif %}
 
+            <a name="dishes"></a>
             <div class="row">
 
                 {% for dish in dishes %}
