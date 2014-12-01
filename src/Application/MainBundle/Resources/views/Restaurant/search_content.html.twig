@@ -1,14 +1,19 @@
-<div class="row">
-    <div class="col-xs-12 col-sm-10 col-md-10">
-        <input id="map-search-input" type="text" class="form-control" placeholder="Search a restaurant name or any address">
-        <div id="map_canvas"></div><!-- map -->
-    </div>
-    <div class="col-sm-2 col-md-2 hidden-xs">
+
+<div class="form-group">
+    <input id="map-search-input" type="text" class="form-control" placeholder="Search a restaurant name, an address or both!">
+    <p class="help-block">Example : <i>"Lao thai, rue Tolbiac Paris"</i></p>
+</div>
+
+<div id="map-search-results" class="row">
+    <div class="col-xs-6 collapse">
         <div id="listing">
             <table id="resultsTable" class="table table-condensed table-striped table-bordered table-hover">
                 <tbody id="results"></tbody>
             </table>
         </div><!-- listing on the right of the map -->
+    </div>
+    <div class="col-xs-12">
+        <div id="map_canvas"></div><!-- map -->
     </div>
 </div>
 

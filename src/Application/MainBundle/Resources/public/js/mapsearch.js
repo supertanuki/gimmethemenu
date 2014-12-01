@@ -3,7 +3,7 @@ var markers = [];
 var searchTimeout;
 var centerMarker;
 var hostnameRegexp = new RegExp('^https?://.+?/');
-var typeSearch = 'restaurant'; // others types : bar, cafe
+var typeSearch = ['restaurant', 'bar', 'cafe', 'food', 'bakery', 'meal_delivery', 'meal_takeaway'];
 var rankBy = 'prominence'; // other criteria : distance
 var defaultIcon = assets_dir + '/img/mapicons/restaurant.png';
 var activeIcon = assets_dir + '/img/mapicons-active/restaurant.png';
@@ -15,6 +15,8 @@ function initialize() {
         zoom: 12,
         mapTypeId: google.maps.MapTypeId.ROADMAP,
         streetViewControl: false,
+        mapTypeControl: false,
+        zoomControl: false,
         center: new google.maps.LatLng(48.858859, 2.3470599) // Paris
     }
     map = new google.maps.Map(document.getElementById('map_canvas'), myOptions);
@@ -23,18 +25,14 @@ function initialize() {
      * Autocomplete
      */
     var input = document.getElementById('map-search-input');
-//    map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 
+    // clear on focus
+    $(input).on('focus', function() {
+        $(this).val('');
+        $(input).popover('destroy');
+    });
 
-//    var southWest = new google.maps.LatLng( 25.341233, 68.289986 );
-//    var northEast = new google.maps.LatLng( 25.450715, 68.428345 );
-//    var hyderabadBounds = new google.maps.LatLngBounds( southWest, northEast );
-
-    var autocomplete = new google.maps.places.Autocomplete(input,
-        {
-            //componentRestrictions: countryRestrict
-            //bounds: hyderabadBounds,
-        });
+    var autocomplete = new google.maps.places.Autocomplete(input);
     autocomplete.bindTo('bounds', map);
 
     var infowindow = new google.maps.InfoWindow();
@@ -43,7 +41,10 @@ function initialize() {
         anchorPoint: new google.maps.Point(0, -29)
     });
 
+
+
     google.maps.event.addListener(autocomplete, 'place_changed', function() {
+
         infowindow.close();
         marker.setVisible(false);
         var place = autocomplete.getPlace();
@@ -59,39 +60,32 @@ function initialize() {
             map.setZoom(17);
         }
 
-        // show marker and infowindow only if it is a restaurant
-        if ($.inArray(typeSearch, place.types) == -1) {
-            return;
-        }
+        // show marker and infowindow only if it is a typeSearch is found
+        $.each(typeSearch, function( index, value ) {
+            if ($.inArray(value, place.types) != -1) {
 
-        marker.setIcon(/** @type {google.maps.Icon} */({
-            url: activeIcon,
-            size: new google.maps.Size(71, 71),
-            origin: new google.maps.Point(0, 0),
-            anchor: new google.maps.Point(17, 34),
-            scaledSize: new google.maps.Size(35, 35)
-        }));
-        marker.setPosition(place.geometry.location);
-        marker.setVisible(true);
+                marker.setIcon(/** @type {google.maps.Icon} */({
+                    url: activeIcon,
+                    size: new google.maps.Size(71, 71),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(17, 34),
+                    scaledSize: new google.maps.Size(35, 35)
+                }));
+                marker.setPosition(place.geometry.location);
+                marker.setVisible(true);
 
-        //google.maps.event.addListener(marker, 'click', getDetails(place, i));
-        infowindow.setContent(getIWContent(place));
-        infowindow.open(map, marker);
+                //google.maps.event.addListener(marker, 'click', getDetails(place, i));
+                infowindow.setContent(getIWContent(place));
+                infowindow.open(map, marker);
 
-//        var address = '';
-//        if (place.address_components) {
-//            address = [
-//                (place.address_components[0] && place.address_components[0].short_name || ''),
-//                (place.address_components[1] && place.address_components[1].short_name || ''),
-//                (place.address_components[2] && place.address_components[2].short_name || '')
-//            ].join(' ');
-//        }
+                return false;
+            }
+        });
     });
     /*
      * End autocomplete
      */
 
-    showInputSearch();
 
 
     // places on the map
@@ -103,9 +97,6 @@ function initialize() {
     if(geolocalisation_cache) {
         var position = geolocalisation_cache.split(',');
         setMapCenter(position[0], position[1]);
-
-        // show inputSearch
-        showInputSearch();
 
         // show info
         showMyAlertModal('We show your last geolocalisation.', '');
@@ -127,12 +118,6 @@ function initialize() {
             // show info
             showMyAlertModal('You are now geolocated !', 'Yeah !');
 
-            // hide modal
-            window.setTimeout(hideMyAlertModal, 1000);
-
-            // show inputSearch
-            showInputSearch();
-
         }, function() {
             handleNoGeolocation(true);
         });
@@ -140,42 +125,12 @@ function initialize() {
         // Browser doesn't support Geolocation
         handleNoGeolocation(false);
     }
-
-//    document.getElementById('keyword').onkeyup = function(e) {
-//        if (!e) var e = window.event;
-//        if (e.keyCode != 13) return;
-//        document.getElementById('keyword').blur();
-//        var keyword = document.getElementById('keyword').value;
-//        search(keyword);
-//    }
 }
 
 function setMapCenter(lat, lng) {
     var pos = new google.maps.LatLng(lat, lng);
     map.setCenter(pos);
     map.setZoom(17);
-}
-
-
-function showInputSearch() {
-    var input = $('#map-search-input');
-
-    input.show();
-
-    // info on input
-    input.popover({
-        animation: true,
-        trigger: 'manual',
-        placement:'bottom'
-    });
-
-    input.popover('show');
-
-    // clear on focus
-    input.on('focus', function() {
-        this.value = '';
-        $(input).popover('destroy');
-    });
 }
 
 function tilesLoaded() {
@@ -210,9 +165,7 @@ function reallyDoSearch() {
 //        search.keyword = keyword;
 //    }
 
-    if (typeSearch != 'establishment') {
-        search.types = [typeSearch];
-    }
+    search.types = typeSearch;
 
     if (rankBy == 'distance' && (search.types || search.keyword)) {
         search.rankBy = google.maps.places.RankBy.DISTANCE;

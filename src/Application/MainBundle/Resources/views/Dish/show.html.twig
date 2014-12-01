@@ -38,19 +38,35 @@
     </p>
     <hr>
 
+    <nav class="navbar navbar-inverse navbar-fixed-bottom visible-xs-block" role="navigation">
+        <div class="container">
+            <ul class="nav nav-pills">
+                <li><a href="#photos">Photos</a></li>
+                <li><a href="#reviews">Reviews</a></li>
+                <li>
+                    <a href="#add-my-review" onclick="$('#addMyReviewBtn').click();">
+                        Add a review
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <a name="add-my-review"></a>
+
     <div class="row">
         <div class="col-xs-12 col-md-6 col-md-offset-3">
             <p class="text-center">
-                <a href="#" class="btn btn-primary btn-lg"
-                   onclick="$('#reviewForm').show(); $(this).hide(); return false">
+                <a href="#add-my-review" id="addMyReviewBtn" class="btn btn-primary btn-lg"
+                   onclick="$('#reviewForm').show(); $(this).hide();">
                     <span class="glyphicon glyphicon-pencil"></span>
-                    Add my review
+                    Add a review
                 </a>
             </p>
 
             <div class="panel panel-primary collapse" id="reviewForm">
                 <div class="panel-heading">
-                    <h3 class="panel-title">My review</h3>
+                    <h3 class="panel-title">Add a review</h3>
                 </div>
                 <div class="panel-body">
                     {% include 'ApplicationMainBundle:Dish:reviewForm.html.twig' with {'form_review': form_review} %}
@@ -59,6 +75,8 @@
         </div>
     </div>
 
+
+    <a name="photos"></a>
 
     <div class="row">
         <div class="col-md-6">
@@ -113,6 +131,7 @@
             </div>
         </div>
 
+        <a name="reviews"></a>
 
         <div class="col-md-6">
             <h2>Reviews</h2>

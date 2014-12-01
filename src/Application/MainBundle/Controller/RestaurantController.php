@@ -2,10 +2,11 @@
 
 namespace Application\MainBundle\Controller;
 
-use Application\MainBundle\Entity\Review;
+
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -14,6 +15,7 @@ use Application\MainBundle\Entity\RestaurantMenuFile;
 use Application\MainBundle\Entity\Country;
 use Application\MainBundle\Entity\Locality;
 use Application\MainBundle\Entity\Dish;
+use Application\MainBundle\Entity\Review;
 use Application\MainBundle\Form\Type\RestaurantMenuType;
 use Application\MainBundle\Form\Type\DishType;
 
@@ -21,9 +23,9 @@ class RestaurantController extends Controller
 {
     /**
      * @Route("/restaurant/get", name="restaurant_get")
-     * @Method("get")
+     * @Method("get|post")
      *
-     * Paramters get :
+     * Parameters get :
      * place_id
      * name
      * address
@@ -102,9 +104,18 @@ class RestaurantController extends Controller
             $em->flush();
         }
 
-        // redirect to the restaurant page
         if ($restaurant) {
-            return $this->redirect($this->getRestaurantUrl($restaurant));
+            if ($request->isXmlHttpRequest()) {
+                // return restaurant info
+                $response = new JsonResponse();
+                $response->setData(array(
+                    'data' => 123
+                ));
+
+            } else {
+                // redirect to the restaurant page
+                return $this->redirect($this->getRestaurantUrl($restaurant));
+            }
         }
 
         throw $this->createNotFoundException('Nothing to do !');
