@@ -69,7 +69,7 @@
                     <div class="caption text-center">
                         <h3><a href="{{ dish_url }}">{{ review.dish.name }}</a></h3>
                         <p>@ <a href="{{ restaurant_url }}">{{ review.dish.restaurant.name }}</a>, {{ review.dish.restaurant.locality }}</p>
-                        <p>by <b>{{ review.user }}</b></p>
+                        <p>by <a href="{{ path('user_timeline', {'slug':review.user.slug}) }}">{{ review.user }}</a></p>
                         <p>
                             {% include 'ApplicationMainBundle:Common:rating.html.twig' with {'rating': review.rank} %}
                         </p>

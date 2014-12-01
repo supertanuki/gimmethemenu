@@ -1,0 +1,28 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+
+    <h1>About</h1>
+    <div class="row">
+        <div class="col-xs-12 col-sm-4 col-md-4">
+            <div class="alert alert-danger">
+                <h4>The problem</h4>
+                <p>Lost in a restaurant menu? Disappointed with the chosen dish?<br><b>Do not be anymore!</b></p>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-4 col-md-4">
+            <div class="alert alert-success">
+                <h4>The solution</h4>
+                <p><b>GimmeTheMenu</b> is the simplest and easiest way to get the menu, reviews and photos of each dish of a restaurant.</p>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-4 col-md-4">
+            <div class="alert alert-info">
+                <h4>Review and log</h4>
+                <p>On <b>GimmeTheMenu</b>, make your timeline of visited restaurants! Log all what you eat or drink.
+                For example, take a look on <a href="{{ path('user_timeline', {'slug': 'richard'}) }}">Richard's timeline</a>.</p>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

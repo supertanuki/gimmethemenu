@@ -87,7 +87,7 @@
 
                     {% for review in dish.reviews if review.photoName %}
                         <img src="{{ vich_uploader_asset(review, 'dish_photo') }}" style="width: 100%" alt="">
-                        <p>Added by <b>{{ review.user }}</b> on {{ review.createdAt|localizeddate('medium', 'none') }}</p>
+                        <p>Added by <a href="{{ path('user_timeline', {'slug':review.user.slug}) }}">{{ review.user }}</a> on {{ review.createdAt|localizeddate('medium', 'none') }}</p>
                     {% endfor %}
 
                 {% else %}
@@ -109,7 +109,7 @@
                             <img src="{{ vich_uploader_asset(review, 'dish_photo') }}" style="width: 100%" alt="">
 
                             <div class="carousel-caption">
-                                Added by <b>{{ review.user }}</b> on {{ review.createdAt|localizeddate('medium', 'none') }}</p>
+                                Added by <a href="{{ path('user_timeline', {'slug':review.user.slug}) }}">{{ review.user }}</a> on {{ review.createdAt|localizeddate('medium', 'none') }}</p>
                             </div>
                         </div>
                         {% set iterator = iterator+1 %}
@@ -151,7 +151,7 @@
 
                             <div class="events-body">
                                 <h4 class="events-heading">
-                                    <a href="#">{{ review.user }}</a>
+                                    <a href="{{ path('user_timeline', {'slug':review.user.slug}) }}">{{ review.user }}</a>
                                 </h4>
 
                                 <div class="visible-xs-block">on {{ review.when|localizeddate('medium', 'none') }}</div>

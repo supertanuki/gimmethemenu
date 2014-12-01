@@ -49,6 +49,7 @@
             <ul class="nav navbar-nav navbar-right">
 
                 <li><a href="{{ path('restaurant_search') }}">Search a restaurant</a></li>
+                <li><a href="{{ path('about') }}">About</a></li>
 
                 {% if app.user %}
                     <li><a href="{{ path('user_timeline', { 'slug': app.user.slug }) }}">My timeline</a></li>

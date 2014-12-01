@@ -26,4 +26,13 @@ class HomeController extends Controller
             'lastReviews' => $lastReviews
         );
     }
+
+    /**
+     * @Route("/about", name="about")
+     * @Template()
+     */
+    public function aboutAction()
+    {
+        return array();
+    }
 }

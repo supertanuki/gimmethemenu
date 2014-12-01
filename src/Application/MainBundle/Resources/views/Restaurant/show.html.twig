@@ -59,7 +59,7 @@
                         <div class="tab-pane {% if key==0 %} active{% endif %}" id="menu{{ key+1 }}">
                             <img src="{{ vich_uploader_asset(menuFile, 'restaurant_menu_file') }}" class="img-responsive" style="width:100%">
                             <br>
-                            Added by <b>{{ menuFile.user }}</b> on {{ menuFile.createdAt|localizeddate('medium', 'none') }}
+                            Added by <a href="{{ path('user_timeline', {'slug':menuFile.user.slug}) }}">{{ menuFile.user }}</a> on {{ menuFile.createdAt|localizeddate('medium', 'none') }}
                         </div>
                         {% endfor %}
                     </div>
