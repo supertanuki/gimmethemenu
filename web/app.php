@@ -1,12 +1,12 @@
 <?php
-if (!isset($_SERVER['PHP_AUTH_USER'])
-    || $_SERVER['PHP_AUTH_USER'] != 'jaime'
-    || $_SERVER['PHP_AUTH_PW'] != 'lagalette') {
-    header('WWW-Authenticate: Basic realm="Access to GimmeTheMenu"');
-    header('HTTP/1.0 401 Unauthorized');
-    echo '<h1>GimmeTheMenu is not yet released.</h1>Please come back later!';
-    exit;
-}
+//if (!isset($_SERVER['PHP_AUTH_USER'])
+//    || $_SERVER['PHP_AUTH_USER'] != 'jaime'
+//    || $_SERVER['PHP_AUTH_PW'] != 'lagalette') {
+//    header('WWW-Authenticate: Basic realm="Access to GimmeTheMenu"');
+//    header('HTTP/1.0 401 Unauthorized');
+//    echo '<h1>GimmeTheMenu is not yet released.</h1>Please come back later!';
+//    exit;
+//}
 
 use Symfony\Component\ClassLoader\ApcClassLoader;
 use Symfony\Component\HttpFoundation\Request;
