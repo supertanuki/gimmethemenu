@@ -62,7 +62,7 @@
 
                     {% if review.photoName %}
                         <a href="{{ dish_url }}">
-                            <img class="img-rounded" src="{{ vich_uploader_asset(review, 'dish_photo') }}">
+                            <img class="img-rounded" src="{{ vich_uploader_asset(review, 'dish_photo') | imagine_filter('thumb') }}">
                         </a>
                     {% endif %}
 

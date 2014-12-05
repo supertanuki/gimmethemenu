@@ -32,6 +32,9 @@ fos_user_change_password:
     resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
     prefix: /my-profile
 
+_liip_imagine:
+    resource: "@LiipImagineBundle/Resources/config/routing.xml"
+
 application_main:
     resource: "@ApplicationMainBundle/Controller/"
     type:     annotation

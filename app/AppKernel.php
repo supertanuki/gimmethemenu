@@ -47,6 +47,9 @@ class AppKernel extends Kernel
             // UploaderBundle
             new Vich\UploaderBundle\VichUploaderBundle(),
 
+            // image transformation
+            new Liip\ImagineBundle\LiipImagineBundle(),
+
             // Main application bundle
             new Application\MainBundle\ApplicationMainBundle(),
             new Application\PageBundle\ApplicationPageBundle(),

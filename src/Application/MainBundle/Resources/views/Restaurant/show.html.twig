@@ -38,7 +38,6 @@
                         </a>
                     </li>
                 {% endif %}
-                <li><a href="#address">Address</a></li>
             </ul>
         </div>
     </nav>
@@ -57,9 +56,10 @@
                     <div class="tab-content">
                         {% for key, menuFile in restaurant.restaurantMenuFiles %}
                         <div class="tab-pane {% if key==0 %} active{% endif %}" id="menu{{ key+1 }}">
-                            <img src="{{ vich_uploader_asset(menuFile, 'restaurant_menu_file') }}" class="img-responsive" style="width:100%">
+                            <img src="{{ vich_uploader_asset(menuFile, 'restaurant_menu_file') | imagine_filter('large') }}" class="img-responsive" style="width:100%">
                             <br>
-                            Added by <a href="{{ path('user_timeline', {'slug':menuFile.user.slug}) }}">{{ menuFile.user }}</a> on {{ menuFile.createdAt|localizeddate('medium', 'none') }}
+                            Added by <a href="{{ path('user_timeline', {'slug':menuFile.user.slug}) }}">{{ menuFile.user }}</a>
+                            on {{ menuFile.createdAt|localizeddate('medium', 'none') }}
                         </div>
                         {% endfor %}
                     </div>
@@ -72,7 +72,11 @@
 
                     <ul class="nav nav-tabs">
                         {% for key, menuFile in restaurant.restaurantMenuFiles %}
-                            <li{% if key==0 %} class="active"{% endif %}><a href="#menu{{ key+1 }}" data-toggle="tab">{{ key+1 }}</a></li>
+                            <li{% if key==0 %} class="active"{% endif %}>
+                                <a href="#menu{{ key+1 }}" data-toggle="tab">
+                                    {{ key+1 }}
+                                </a>
+                            </li>
                         {% endfor %}
                     </ul>
                 </div>
@@ -182,7 +186,9 @@
                     <div class="thumbnail">
 
                     {% if dish.reviews[0].photoName %}
-                        <a href="{{ dish_url }}"><img class="img-rounded" src="{{ vich_uploader_asset(dish.reviews[0], 'dish_photo') }}"></a>
+                        <a href="{{ dish_url }}">
+                            <img class="img-rounded" src="{{ vich_uploader_asset(dish.reviews[0], 'dish_photo') | imagine_filter('thumb') }}">
+                        </a>
                     {% endif %}
 
                         <div class="caption text-center">

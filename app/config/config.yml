@@ -113,6 +113,24 @@ vich_uploader:
             delete_on_update:   true
             delete_on_remove:   true
 
+liip_imagine:
+    resolvers:
+        default:
+            web_path:
+                web_root: %kernel.root_dir%/../web
+                cache_prefix: uploads/cache
+
+    filter_sets:
+        cache: ~
+        thumb:
+            quality: 90
+            filters:
+                thumbnail: { size: [160, 160], mode: inset }
+        large:
+            quality: 90
+            filters:
+                thumbnail: { size: [600, 600], mode: inset }
+
 ewz_recaptcha:
     public_key:   6Lcn2_gSAAAAADTIWqTFAmKp6PjQGmynjqVKXIdB # keys for localhost
     private_key:  6Lcn2_gSAAAAAMRZKbruKHt320-AQqMtsf0dkFQz

@@ -28,7 +28,8 @@
         "sonata-project/formatter-bundle": "dev-master",
         "sonata-project/media-bundle": "dev-master",
         "excelwebzone/recaptcha-bundle": "dev-master",
-        "vich/uploader-bundle": "~0.10.0"
+        "vich/uploader-bundle": "~0.10.0",
+        "liip/imagine-bundle": "dev-master"
     },
     "scripts": {
         "post-install-cmd": [

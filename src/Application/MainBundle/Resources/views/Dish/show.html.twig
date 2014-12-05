@@ -86,7 +86,7 @@
                 {% if dish.reviews|length == 1 %}
 
                     {% for review in dish.reviews if review.photoName %}
-                        <img src="{{ vich_uploader_asset(review, 'dish_photo') }}" style="width: 100%" alt="">
+                        <img src="{{ vich_uploader_asset(review, 'dish_photo') | imagine_filter('large') }}" style="width: 100%" alt="">
                         <p>Added by <a href="{{ path('user_timeline', {'slug':review.user.slug}) }}">{{ review.user }}</a> on {{ review.createdAt|localizeddate('medium', 'none') }}</p>
                     {% endfor %}
 
@@ -106,7 +106,7 @@
                     {% set iterator = 0 %}
                     {% for review in dish.reviews if review.photoName %}
                         <div class="item {% if iterator == 0 %}active{% endif %}">
-                            <img src="{{ vich_uploader_asset(review, 'dish_photo') }}" style="width: 100%" alt="">
+                            <img src="{{ vich_uploader_asset(review, 'dish_photo') | imagine_filter('large') }}" style="width: 100%" alt="">
 
                             <div class="carousel-caption">
                                 Added by <a href="{{ path('user_timeline', {'slug':review.user.slug}) }}">{{ review.user }}</a> on {{ review.createdAt|localizeddate('medium', 'none') }}</p>
@@ -145,7 +145,7 @@
                         <div class="events">
                             {% if review.photoName %}
                                 <div class="pull-left">
-                                    <img class="events-object img-rounded" src="{{ vich_uploader_asset(review, 'dish_photo') }}" width="60">
+                                    <img class="events-object img-rounded" src="{{ vich_uploader_asset(review, 'dish_photo') | imagine_filter('thumb') }}" width="60">
                                 </div>
                             {% endif %}
 
