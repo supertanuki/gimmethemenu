@@ -34,13 +34,14 @@
 
                     <button type="submit" id="_submit" name="_submit" class="btn btn-primary">Submit</button>
                 </form>
+                <hr>
+                <a href="{{ path('fos_user_resetting_request') }}">Password forgotten?</a>
             </div>
         </div>
 
 
-        <div class="well">
-            <a href="{{ path('fos_user_resetting_request') }}">Password forgotten?</a><br>
-            <a href="{{ path('fos_user_registration_register') }}">Not a member? Sign in!</a>
+        <div class="well text-center">
+            Not yet a member? <a href="{{ path('fos_user_registration_register') }}" class="btn btn-default">Quick register</a>
         </div>
     </div>
 </div>
