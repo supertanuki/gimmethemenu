@@ -4,8 +4,10 @@
 # Cache and logs (Symfony2)
 /app/cache/*
 /app/logs/*
+/app/sessions/*
 !app/cache/.gitkeep
 !app/logs/.gitkeep
+!app/sessions/.gitkeep
 
 # Cache and logs (Symfony3)
 /var/cache/*
