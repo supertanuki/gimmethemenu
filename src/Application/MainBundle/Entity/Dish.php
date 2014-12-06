@@ -4,6 +4,7 @@ namespace Application\MainBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Table(name="dish")
@@ -24,6 +25,7 @@ class Dish
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $name;
 
@@ -31,6 +33,7 @@ class Dish
      * @var float
      *
      * @ORM\Column(name="price", type="float")
+     * @Assert\Type(type="float", message="The value {{ value }} is not a valid price.")
      */
     private $price;
 

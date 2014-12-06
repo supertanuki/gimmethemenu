@@ -3,12 +3,14 @@
 <div
         class="collection"
         data-label-add="Add a photo"
-        data-label-delete="Delete"
+        data-label-delete="Cancel"
         data-label-delete-confirm="Delete this field ?"
+        data-is-delete-first-field="false"
         data-prototype="{{ form_widget(form_restaurant_menu.restaurantMenuFiles.vars.prototype)|e }}"
         >
     {% for menuFile in form_restaurant_menu.restaurantMenuFiles %}
         <div class="collection_item">
+            {{ form_errors(menuFile.fileFile) }}
             {{ form_widget(menuFile.fileFile) }}
         </div>
     {% endfor %}

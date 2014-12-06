@@ -5,6 +5,7 @@ namespace Application\MainBundle\Entity;
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="Application\MainBundle\Repository\UserRepository")
@@ -23,6 +24,11 @@ class User extends BaseUser
      * @var string
      *
      * @ORM\Column(name="first_name", type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *      min = "2",
+     *      minMessage = "Your first name must be at least {{ limit }} characters long"
+     * )
      */
     private $firstName;
 

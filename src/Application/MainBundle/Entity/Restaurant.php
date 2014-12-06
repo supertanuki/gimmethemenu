@@ -4,6 +4,7 @@ namespace Application\MainBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Table(name="restaurant", indexes={@ORM\Index(name="gg_place_id_idx", columns={"gg_place_id"})})
@@ -24,6 +25,10 @@ class Restaurant
      * @var string
      *
      * @ORM\Column(name="gg_place_id", type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *      min = "20"
+     * )
      */
     private $ggPlaceId;
 
@@ -31,6 +36,10 @@ class Restaurant
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *      min = "2"
+     * )
      */
     private $name;
 
@@ -38,6 +47,7 @@ class Restaurant
      * @var string
      *
      * @ORM\Column(name="address", type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $address;
 
@@ -45,6 +55,7 @@ class Restaurant
      * @var string
      *
      * @ORM\Column(name="full_address", type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $fullAddress;
 
@@ -52,6 +63,7 @@ class Restaurant
      * @var float
      *
      * @ORM\Column(name="location_lat", type="float")
+     * @Assert\Type(type="float", message="The value {{ value }} is not a valid latitude.")
      */
     private $locationLat;
 
@@ -59,13 +71,14 @@ class Restaurant
      * @var float
      *
      * @ORM\Column(name="location_lng", type="float")
+     * @Assert\Type(type="float", message="The value {{ value }} is not a valid longitude.")
      */
     private $locationLng;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="international_phone_number", type="string", length=255)
+     * @ORM\Column(name="international_phone_number", type="string", length=255, nullable=true)
      */
     private $internationalPhoneNumber;
 

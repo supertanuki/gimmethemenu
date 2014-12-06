@@ -5,6 +5,7 @@ namespace Application\MainBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Table(name="review")
@@ -26,6 +27,11 @@ class Review
      * @var string
      *
      * @ORM\Column(name="review", type="text")
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *      min = "20",
+     *      minMessage = "Your review must be at least {{ limit }} characters long"
+     * )
      */
     private $review;
 
@@ -33,23 +39,35 @@ class Review
      * @var float
      *
      * @ORM\Column(name="price", type="float", nullable=true)
+     * @Assert\Type(type="float", message="The value {{ value }} is not a valid price.")
      */
     private $price;
 
     /**
      * @var integer
      * @ORM\Column(name="rank", type="integer")
+     * @Assert\Range(
+     *      min = 1,
+     *      max = 5
+     * )
+     * @Assert\Type(type="integer", message="The value {{ value }} is not a valid {{ type }}.")
      */
     private $rank;
 
     /**
      * @var \DateTime
      * @ORM\Column(name="visited_at", type="date")
+     * @ Assert\Date()
      */
     private $when;
 
     /**
      * @Vich\UploadableField(mapping="dish_photo", fileNameProperty="photoName")
+     * @Assert\File(
+     *     maxSize="5M",
+     *     mimeTypes={"image/png", "image/jpeg", "image/pjpeg"},
+     *     mimeTypesMessage = "Please upload a jpg or a png photo"
+     * )
      * @var File
      */
     protected $photoFile;

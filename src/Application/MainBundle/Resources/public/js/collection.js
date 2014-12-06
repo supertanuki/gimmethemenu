@@ -14,7 +14,10 @@ $( document ).ready(function() {
     if(collectionHolder)
     {
         // ajoute un lien de suppression à tous les éléments li des formulaires existants
-        collectionHolder.find('.collection_item').each(function() {
+        collectionHolder.find('.collection_item').each(function(index) {
+            if(index == 0 && collectionHolder.attr('data-is-delete-first-field') == 'false') {
+                return;
+            }
             addFormDeleteLink(collectionHolder, $(this));
         });
 
@@ -49,8 +52,8 @@ function addForm(collectionHolder, $newLinkLi) {
 }
 
 function addFormDeleteLink(collectionHolder, $FormLi) {
-    var $removeFormA = $('<a href="#" class="btn btn-danger btn-xs pull-right">'+collectionHolder.attr('data-label-delete')+'</a>');
-    $FormLi.prepend($removeFormA);
+    var $removeFormA = $('<a href="#" class="btn btn-danger btn-xs" style="margin-top:4px">'+collectionHolder.attr('data-label-delete')+'</a>');
+    $FormLi.append($removeFormA);
 
     $removeFormA.on('click', function(e) {
         // empêche le lien de créer un « # » dans l'URL

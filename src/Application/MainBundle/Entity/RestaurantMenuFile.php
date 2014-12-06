@@ -34,6 +34,11 @@ class RestaurantMenuFile
 
     /**
      * @Vich\UploadableField(mapping="restaurant_menu_file", fileNameProperty="fileName")
+     * @Assert\File(
+     *     maxSize="5M",
+     *     mimeTypes={"image/png", "image/jpeg", "image/pjpeg"},
+     *     mimeTypesMessage = "Please upload a jpg or a png photo"
+     * )
      * @var File $fileFile
      */
     protected $fileFile;
