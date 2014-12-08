@@ -47,7 +47,10 @@ class TimelineController extends Controller
             ->getRepository('ApplicationMainBundle:Review')
             ->findBy(
                 array('user' => $user),
-                array('when' => 'DESC')
+                array(
+                    'when' => 'DESC',
+                    'createdAt' => 'DESC'
+                )
             );
 
         $dateFormat = 'Y-m-d H:i:s';

@@ -98,3 +98,7 @@ hr {
 blockquote {
     font-size:100%;
 }
+
+.glyphicon-heart, .glyphicon-heart-empty {
+    color:#DA4453;
+}
