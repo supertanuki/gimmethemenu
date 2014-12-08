@@ -38,7 +38,7 @@ class Review
     /**
      * @var string
      *
-     * @ORM\Column(name="personal_note", type="text")
+     * @ORM\Column(name="personal_note", type="text", nullable=true)
      */
     private $personalNote;
 

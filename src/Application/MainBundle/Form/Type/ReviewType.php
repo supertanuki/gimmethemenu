@@ -19,6 +19,7 @@ class ReviewType extends AbstractType
             ))
             ->add('personalNote', null, array(
                 'label' => 'Your personal note',
+                'required' => false,
             ))
             ->add('when', null, array(
                 'widget' => 'single_text',

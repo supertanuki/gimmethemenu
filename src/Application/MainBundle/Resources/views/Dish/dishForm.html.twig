@@ -1,10 +1,5 @@
 {{ form_start(form_dish) }}
 
-
-    {% if form_errors(form_dish) %}
-        <div class="alert alert-danger">{{ form_errors(form_dish) }}</div>
-    {% endif %}
-
     <div class="form-group">
         {{ form_label(form_dish.name) }}
         {{ form_errors(form_dish.name) }}

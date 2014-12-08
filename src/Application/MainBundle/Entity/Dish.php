@@ -26,6 +26,10 @@ class Dish
      *
      * @ORM\Column(name="name", type="string", length=255)
      * @Assert\NotBlank()
+     * @Assert\Length(
+     *      min = "2",
+     *      minMessage = "The dish name must be at least {{ limit }} characters long"
+     * )
      */
     private $name;
 

@@ -5,6 +5,7 @@ namespace Application\MainBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -124,7 +125,6 @@ class RestaurantController extends Controller
     /**
      * @Route("/restaurant/{country_slug}/{locality_slug}/{restaurant_slug}", name="restaurant_show")
      * @Method("get|post")
-     * @Template()
      */
     public function showAction(Request $request, $country_slug, $locality_slug, $restaurant_slug)
     {
@@ -143,12 +143,12 @@ class RestaurantController extends Controller
             ->findBy(array('restaurant' => $restaurant));
 
         $form_menu = $this->getFormRestaurantMenu($request, $restaurant);
-        if ($form_menu instanceof RedirectResponse) {
+        if ($form_menu instanceof RedirectResponse || $form_menu instanceof Response) {
             return $form_menu;
         }
 
         $form_dish = $this->getFormDish($request, $restaurant);
-        if ($form_dish instanceof RedirectResponse) {
+        if ($form_dish instanceof RedirectResponse || $form_dish instanceof Response) {
             return $form_dish;
         }
 
@@ -156,12 +156,15 @@ class RestaurantController extends Controller
         $this->get('session')->set('last_visited_restaurant_url', $this->getRestaurantUrl($restaurant));
         $this->get('session')->set('last_visited_restaurant_name', $restaurant->getName());
 
-        return array(
-            'restaurant' => $restaurant,
-            'restaurant_url' => $this->getRestaurantUrl($restaurant),
-            'dishes' => $dishes,
-            'form_restaurant_menu' => $form_menu->createView(),
-            'form_dish' => $form_dish->createView(),
+        return $this->render(
+            'ApplicationMainBundle:Restaurant:show.html.twig',
+            array(
+                'restaurant' => $restaurant,
+                'restaurant_url' => $this->getRestaurantUrl($restaurant),
+                'dishes' => $dishes,
+                'form_restaurant_menu' => $form_menu->createView(),
+                'form_dish' => $form_dish->createView(),
+            )
         );
     }
 
@@ -251,6 +254,16 @@ class RestaurantController extends Controller
                 // redirect
                 return $this->redirect($this->getRestaurantUrl($restaurant));
             }
+
+            // onError
+            return $this->render(
+                'ApplicationMainBundle:Dish:add.html.twig',
+                array(
+                    'restaurant' => $restaurant,
+                    'restaurant_url' => $this->getRestaurantUrl($restaurant),
+                    'form_dish' => $form_dish->createView()
+                )
+            );
         }
 
         return $form_dish;

@@ -39,6 +39,7 @@ twig:
         resources:
             - 'SonataFormatterBundle:Form:formatter.html.twig'
             - 'VichUploaderBundle:Form:fields.html.twig'
+            - 'ApplicationMainBundle:Common:forms.html.twig'
 
 # Assetic Configuration
 assetic:

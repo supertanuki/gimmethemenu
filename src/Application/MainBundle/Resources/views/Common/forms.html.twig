@@ -1,0 +1,19 @@
+{% block form_errors %}
+    {% spaceless %}
+        {% if errors|length > 0 %}
+            {% if form.parent == null %}
+                <div class="alert alert-danger">
+                {% for error in errors %}
+                    <p>{{ error.message }}</p>
+                {% endfor %}
+                </div>
+            {% else %}
+                <div class="alert alert-danger">
+                {% for error in errors %}
+                    {{ error.message }}
+                {% endfor %}
+                </div>
+            {% endif %}
+        {% endif %}
+    {% endspaceless %}
+{% endblock form_errors %}

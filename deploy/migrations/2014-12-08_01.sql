@@ -1,1 +1,1 @@
-ALTER TABLE review ADD personal_note LONGTEXT NOT NULL;
+ALTER TABLE review ADD personal_note LONGTEXT DEFAULT NULL;
