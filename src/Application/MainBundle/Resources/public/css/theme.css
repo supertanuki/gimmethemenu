@@ -82,3 +82,7 @@ hr {
         text-align: center;
     }
 }
+
+blockquote {
+    font-size:100%;
+}
