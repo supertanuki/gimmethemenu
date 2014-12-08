@@ -8,14 +8,16 @@
         {{ user.firstName }}'s timeline
     </h1>
 
-    <nav class="navbar navbar-inverse navbar-fixed-bottom" role="navigation">
-        <div class="container">
-            <ul class="nav nav-pills">
-                <li class="active" id="timeline_filter_reviews"><a href="#timeline">Only reviews</a></li>
-                <li id="timeline_filter_all"><a href="#timeline">All activity</a></li>
-            </ul>
-        </div>
-    </nav>
+    {% if logs|length > 1 %}
+        <nav class="navbar navbar-inverse navbar-fixed-bottom" role="navigation">
+            <div class="container">
+                <ul class="nav nav-pills">
+                    <li class="active" id="timeline_filter_reviews"><a href="#timeline">Only reviews</a></li>
+                    <li id="timeline_filter_all"><a href="#timeline">All activity</a></li>
+                </ul>
+            </div>
+        </nav>
+    {% endif %}
 
     <div class="row">
         <div class="col-md-12">
@@ -35,7 +37,7 @@
                                 'locality_slug': log['menuFile'].restaurant.locality.slug,
                                 'restaurant_slug': log['menuFile'].restaurant.slug
                             }) %}
-                            
+
                             <dd class="{% if iterator is odd %}pos-left{% else %}pos-right{% endif %} clearfix collapse">
                                 <div class="circ"></div>
                                 <div class="time">{{ log['menuFile'].createdAt|localizeddate('medium', 'none') }}</div>
@@ -93,7 +95,7 @@
                                     'restaurant_slug': review.dish.restaurant.slug,
                                     'dish_slug': review.dish.slug
                                 }) %}
-    
+
                                 {% set restaurant_url = path('restaurant_show', {
                                     'country_slug': review.dish.restaurant.country.slug,
                                     'locality_slug': review.dish.restaurant.locality.slug,
@@ -102,16 +104,16 @@
 
                                 <dd class="{% if iterator is odd %}pos-left{% else %}pos-right{% endif %} clearfix">
                                     <div class="circ"></div>
-                                    
+
                                     <div class="time">{{ review.when|localizeddate('medium', 'none') }}</div>
                                     <div class="events">
-        
+
                                         {% if review.photoName %}
                                         <div class="pull-left">
                                             <a href="{{ dish_url }}"><img class="events-object img-rounded" src="{{ vich_uploader_asset(review, 'dish_photo') | imagine_filter('thumb') }}" width="96"></a>
                                         </div>
                                         {% endif %}
-        
+
                                         <div class="events-body">
                                             <h4 class="events-heading">
                                                 <a href="{{ dish_url }}">{{ review.dish.name }}</a>
@@ -129,14 +131,14 @@
                                         </div>
                                     </div>
                                 </dd>
-                                
+
                             {% endfor %}
 
                         {% elseif log['registerAt'] is defined %}
 
                             {% set iterator = iterator+1 %}
 
-                            <dd class="{% if iterator is odd %}pos-left{% else %}pos-right{% endif %} clearfix collapse">
+                            <dd class="{% if iterator is odd %}pos-left{% else %}pos-right{% endif %} clearfix {% if logs|length > 1 %}collapse{% endif %}">
                                 <div class="circ"></div>
                                 <div class="time">{{ log['registerAt']|localizeddate('medium', 'none') }}</div>
                                 <div class="events">
