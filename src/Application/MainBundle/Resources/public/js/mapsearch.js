@@ -11,6 +11,12 @@ var activeIcon = assets_dir + '/img/mapicons-active/restaurant.png';
 var cookieGeolocalisationName = 'geolocalisation_cache';
 
 function initialize() {
+
+    var map_canvas = document.getElementById('map_canvas');
+    if (map_canvas == null) {
+        return;
+    }
+
     var myOptions = {
         zoom: 12,
         mapTypeId: google.maps.MapTypeId.ROADMAP,
@@ -19,7 +25,7 @@ function initialize() {
         zoomControl: false,
         center: new google.maps.LatLng(48.858859, 2.3470599) // Paris
     }
-    map = new google.maps.Map(document.getElementById('map_canvas'), myOptions);
+    map = new google.maps.Map(map_canvas, myOptions);
 
     /*
      * Autocomplete

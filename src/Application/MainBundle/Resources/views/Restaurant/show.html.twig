@@ -13,19 +13,6 @@
         &ldquo;{{ restaurant.name }}&rdquo;
     </h1>
 
-    <p class="restaurantAddress">
-        {{ restaurant.address }}
-
-        {#
-        <br />@todo:
-        <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-        <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-        <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-        <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
-        <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
-        #}
-    </p>
-
     <nav class="navbar navbar-inverse navbar-fixed-bottom visible-xs-block" role="navigation">
         <div class="container">
             <ul class="nav nav-pills">
@@ -43,8 +30,28 @@
     </nav>
 
 
+    <address id="restaurant-address-link" class="restaurantAddress">
+        <a href="#" title="show more">{{ restaurant.address }}</a>
 
-    <hr>
+        {#
+        <br />@todo:
+        <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+        <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+        <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+        <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
+        <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
+        #}
+        <hr>
+    </address>
+
+    <div id="restaurant-address-map" class="well collapse">
+        <address>
+            {{ restaurant.fullAddress }}<br>
+            <abbr title="Phone">P:</abbr> {{ restaurant.internationalPhoneNumber }}
+        </address>
+
+        <div id="map_restaurant"></div>
+    </div>
 
     <div class="row">
         <div class="col-md-6">
@@ -217,16 +224,6 @@
         </div><!-- /col-md-6 -->
     </div><!-- /row -->
 
-    <h2><a name="address"></a>The address</h2>
-    <div class="well">
-        <p>
-            <b>{{ restaurant.name }}</b><br>
-            {{ restaurant.fullAddress }}<br>
-            Tel: {{ restaurant.internationalPhoneNumber }}
-        </p>
-
-        <div id="map_restaurant"></div>
-    </div>
 {% endblock %}
 
 {% block javascripts %}
