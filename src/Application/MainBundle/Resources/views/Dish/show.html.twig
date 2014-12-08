@@ -161,6 +161,14 @@
                                 <p>
                                     {{ review.review }}
                                 </p>
+
+                                {% if review.personalNote and app.user.id == review.user.id %}
+                                <hr>
+                                <blockquote class="blockquote-reverse">
+                                    <p>{{ review.personalNote }}</p>
+                                    <footer>My personal note</footer>
+                                </blockquote>
+                                {% endif %}
                             </div>
                         </div>
                     </dd>

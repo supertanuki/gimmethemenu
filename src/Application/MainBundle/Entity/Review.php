@@ -36,6 +36,13 @@ class Review
     private $review;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="personal_note", type="text")
+     */
+    private $personalNote;
+
+    /**
      * @var float
      *
      * @ORM\Column(name="price", type="float", nullable=true)
@@ -135,6 +142,29 @@ class Review
     public function getReview()
     {
         return $this->review;
+    }
+
+    /**
+     * Set personalNote
+     *
+     * @param string $personalNote
+     * @return Review
+     */
+    public function setPersonalNote($personalNote)
+    {
+        $this->personalNote = $personalNote;
+
+        return $this;
+    }
+
+    /**
+     * Get personalNote
+     *
+     * @return string
+     */
+    public function getPersonalNote()
+    {
+        return $this->personalNote;
     }
 
     /**

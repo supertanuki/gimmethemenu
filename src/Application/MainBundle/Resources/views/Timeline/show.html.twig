@@ -117,8 +117,16 @@
                                                 <a href="{{ dish_url }}">{{ review.dish.name }}</a>
                                                 <br>@ <a href="{{ restaurant_url }}">{{ review.dish.restaurant.name }}</a>
                                             </h4>
-                                            <p>{{ review.review }}</p>
+
                                             <p>{% include 'ApplicationMainBundle:Common:rating.html.twig' with {'rating': review.rank} %}</p>
+                                            <p>{{ review.review }}</p>
+                                            {% if review.personalNote and app.user.id == review.user.id %}
+                                                <hr>
+                                                <blockquote class="blockquote-reverse">
+                                                    <p>{{ review.personalNote }}</p>
+                                                    <footer>My personal note</footer>
+                                                </blockquote>
+                                            {% endif %}
                                         </div>
                                     </div>
                                 </dd>
