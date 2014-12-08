@@ -27,7 +27,7 @@ class Restaurant
      * @ORM\Column(name="gg_place_id", type="string", length=255)
      * @Assert\NotBlank()
      * @Assert\Length(
-     *      min = "20"
+     *      min = "5"
      * )
      */
     private $ggPlaceId;

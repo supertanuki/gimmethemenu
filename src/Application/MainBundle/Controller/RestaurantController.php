@@ -195,6 +195,11 @@ class RestaurantController extends Controller
         // form default file
         $restaurantMenuFile = new RestaurantMenuFile();
         $restaurant_tmp = new Restaurant();
+        // crade
+        $restaurant_tmp->setName('_tmp');
+        $restaurant_tmp->setGgPlaceId('_tmp_');
+        $restaurant_tmp->setAddress('_tmp');
+        $restaurant_tmp->setFullAddress('_tmp');
         $restaurant_tmp->getRestaurantMenuFiles()->add($restaurantMenuFile);
 
         $form_restaurant_menu = $this->createForm(
@@ -203,9 +208,10 @@ class RestaurantController extends Controller
             array('action' => $this->getRestaurantUrl($restaurant))
         );
 
-        if ($request->getMethod() === 'POST') {
+        if ($request->getMethod() === 'POST' && $request->request->has('application_main_restaurant_menu')) {
             $form_restaurant_menu->handleRequest($request);
             if ($form_restaurant_menu->isValid()) {
+
                 $em = $this->getDoctrine()->getManager();
                 foreach ($restaurant_tmp->getRestaurantMenuFiles() as $menuFile) {
                     $menuFile->setUser($this->getUser());
@@ -239,7 +245,7 @@ class RestaurantController extends Controller
             array('action' => $this->getRestaurantUrl($restaurant))
         );
 
-        if ($request->getMethod() === 'POST') {
+        if ($request->getMethod() === 'POST' && $request->request->has('application_main_dish')) {
             $form_dish->handleRequest($request);
             if ($form_dish->isValid()) {
                 $em = $this->getDoctrine()->getManager();

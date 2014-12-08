@@ -15,7 +15,6 @@ class DishController extends Controller
     /**
      * @Route("/restaurant/{country_slug}/{locality_slug}/{restaurant_slug}/{dish_slug}", name="dish_show")
      * @Method("get|post")
-     * @Template()
      */
     public function showAction(Request $request, $country_slug, $locality_slug, $restaurant_slug, $dish_slug)
     {
@@ -62,12 +61,25 @@ class DishController extends Controller
                 // redirect
                 return $this->redirect($this->getDishUrl($dish));
             }
+
+            // onError
+            return $this->render(
+                'ApplicationMainBundle:Review:add.html.twig',
+                array(
+                    'dish' => $dish,
+                    'dish_url' => $this->getDishUrl($dish),
+                    'form_review' => $form_review->createView(),
+                )
+            );
         }
         // review form end
 
-        return array(
-            'dish' => $dish,
-            'form_review' => $form_review->createView(),
+        return $this->render(
+            'ApplicationMainBundle:Dish:show.html.twig',
+            array(
+                'dish' => $dish,
+                'form_review' => $form_review->createView(),
+            )
         );
     }
 

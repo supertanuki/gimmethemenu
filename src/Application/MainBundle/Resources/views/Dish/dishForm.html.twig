@@ -26,7 +26,7 @@
     </div>
 
     {% for review in form_dish.reviews %}
-        {% include 'ApplicationMainBundle:Dish:reviewContentForm.html.twig' with {'review': review} %}
+        {% include 'ApplicationMainBundle:Review:reviewContentForm.html.twig' with {'review': review} %}
     {% endfor %}
 
     <button type="submit" class="btn btn-primary">Submit</button>

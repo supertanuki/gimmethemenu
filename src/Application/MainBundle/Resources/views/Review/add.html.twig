@@ -1,0 +1,34 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Add a review - {{ dish.name }} - {{ dish.restaurant.name }} - Restaurant{% endblock %}
+
+{% block body %}
+    {% set restaurant_url = path('restaurant_show', {
+        'country_slug': dish.restaurant.country.slug,
+        'locality_slug': dish.restaurant.locality.slug,
+        'restaurant_slug': dish.restaurant.slug
+    }) %}
+
+
+    <ol class="breadcrumb">
+        <li><a href="{{ path('homepage') }}">Home</a></li>
+        <li>{{ dish.restaurant.country }}</li>
+        <li>{{ dish.restaurant.locality }}</li>
+        <li><a href="{{ restaurant_url }}">{{ dish.restaurant }}</a></li>
+        <li class="active"><a href="{{ dish_url }}">{{ dish.name }}</a></li>
+    </ol>
+
+
+    <div class="row">
+        <div class="col-xs-12 col-md-6 col-md-offset-3">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Add a review</h3>
+                </div>
+                <div class="panel-body">
+                    {% include 'ApplicationMainBundle:Review:reviewForm.html.twig' with {'form_review': form_review} %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
