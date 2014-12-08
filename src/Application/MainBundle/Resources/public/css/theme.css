@@ -4,6 +4,18 @@ body {
     background-color: #eee;
 }
 
+h1 {
+    font-size:31px;
+}
+
+h2 {
+    font-size:23px;
+}
+
+h3 {
+    font-size:19px;
+}
+
 #myAlertModal {
     z-index: 10000;
 }

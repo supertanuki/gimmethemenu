@@ -19,21 +19,18 @@
         &ldquo;{{ dish.name }}&rdquo;
     </h1>
 
-    {#
-        Last 10:
-        <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-        <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-        <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-        <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-        <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
-        <br>
-    #}
-
     <p class="restaurantAddress">
+        <span class="label label-warning label-lg price">9<small>,00</small>&nbsp;€</span>
+
+        <br>
         All time:
         {% include 'ApplicationMainBundle:Common:rating.html.twig' with {'rating': dish.averageRating} %}
-        <br>
 
+        {#
+        Last 10: <3 <3 <3 <3 <3
+        #}
+
+        <br>
         <a href="{{ restaurant_url }}">{{ dish.restaurant.name }}</a>, {{ dish.restaurant.address }}
     </p>
     <hr>
