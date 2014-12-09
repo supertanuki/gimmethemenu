@@ -3,7 +3,7 @@ var markers = [];
 var searchTimeout;
 var centerMarker;
 var hostnameRegexp = new RegExp('^https?://.+?/');
-var typeSearch = ['restaurant', 'bar', 'cafe', 'food', 'bakery', 'meal_delivery', 'meal_takeaway'];
+var typeSearch = ['restaurant', 'bar', 'cafe', 'bakery', 'meal_delivery', 'meal_takeaway'];
 var rankBy = 'prominence'; // other criteria : distance
 var defaultIcon = assets_dir + '/img/mapicons/restaurant.png';
 var activeIcon = assets_dir + '/img/mapicons-active/restaurant.png';
@@ -318,9 +318,15 @@ function getIWContent(place) {
 //    console.log(params);
 
     var content = '';
-    content += '<b><a href="' + route_restaurant_get + '?' + params + '">' + place.name + '</a></b><br>';
+    content += '<h5>';
+//    content += '<img src="' + place.icon + '" width="16" />&nbsp;';
+    content += place.name;
+    content += '</h5>';
+    content += '<p>';
     content += place.vicinity;
-    content += '<br><a href="' + route_restaurant_get + '?' + params + '">Gimme the menu</a><br>';
+//    content += '<br>Type : ' + place.types.join(', ');
+    content += '</p>';
+    content += '<p class="text-center"><a href="' + route_restaurant_get + '?' + params + '" class="btn btn-primary btn-xs">Gimme!</a></p>';
 //    content += '<table>';
 //    content += '<tr class="iw_table_row">';
 //    content += '<td style="text-align: right"><img class="hotelIcon" src="' + place.icon + '"/></td>';

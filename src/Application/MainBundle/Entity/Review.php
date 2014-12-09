@@ -27,7 +27,6 @@ class Review
      * @var string
      *
      * @ORM\Column(name="review", type="text")
-     * @Assert\NotBlank()
      * @Assert\Length(
      *      min = "20",
      *      minMessage = "Your review must be at least {{ limit }} characters long"
@@ -55,9 +54,11 @@ class Review
      * @ORM\Column(name="rank", type="integer")
      * @Assert\Range(
      *      min = 1,
-     *      max = 5
+     *      max = 5,
+     *      minMessage = "Please select between 1 and 5 hearts for rating",
+     *      maxMessage = "Please select between 1 and 5 hearts for rating",
+     *      invalidMessage = "Please select between 1 and 5 hearts for rating"
      * )
-     * @Assert\Type(type="integer", message="The value {{ value }} is not a valid {{ type }}.")
      */
     private $rank;
 

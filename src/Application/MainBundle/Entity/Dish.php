@@ -38,6 +38,7 @@ class Dish
      *
      * @ORM\Column(name="price", type="float")
      * @Assert\Type(type="float", message="The value {{ value }} is not a valid price.")
+     * @Assert\NotBlank()
      */
     private $price;
 

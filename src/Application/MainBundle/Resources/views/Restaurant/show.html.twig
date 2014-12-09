@@ -17,7 +17,11 @@
         <div class="container">
             <ul class="nav nav-pills">
                 <li><a href="#menu">Menu</a></li>
-                <li><a href="#dishes">Dishes</a></li>
+
+                {% if dishes|length > 0 %}
+                    <li><a href="#dishes">Dishes</a></li>
+                {% endif %}
+
                 {% if app.user %}
                     <li>
                         <a href="#add-a-dish" onclick="$('#addDishForm').show();">
@@ -98,7 +102,6 @@
                         {% else %}
                             You're the first one!
                         {% endif %}
-                        Gimme the menu!
                     </h3>
                 </div>
 
@@ -126,6 +129,7 @@
 
         {% if dishes|length == 0 %}
 
+            <a name="add-a-dish"></a>
             <div class="panel panel-info">
                 <div class="panel-heading">
                     <h3 class="panel-title">Dibs!</h3>
