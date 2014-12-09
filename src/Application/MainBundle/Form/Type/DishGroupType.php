@@ -11,8 +11,12 @@ class DishGroupType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
-            ->add('price')
+            ->add('name', null, array(
+                'label' => 'Meal\'s name'
+            ))
+            ->add('price', null, array(
+                'label' => 'Meal\'s price'
+            ))
             ->add('dishes', 'collection', array(
                 'label' => false,
                 'type' => new DishChildrenReviewType(),

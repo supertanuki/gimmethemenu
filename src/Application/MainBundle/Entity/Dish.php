@@ -38,7 +38,6 @@ class Dish
      *
      * @ORM\Column(name="price", type="float", nullable=true)
      * @Assert\Type(type="float", message="The value {{ value }} is not a valid price.")
-     * @Assert\NotBlank()
      */
     private $price;
 
@@ -115,6 +114,21 @@ class Dish
     public function __toString()
     {
         return $this->getName();
+    }
+
+    /**
+     * Get params for generating the dish url
+     *
+     * @return array
+     */
+    public function getParamsForUrl()
+    {
+        return array(
+            'restaurant_slug' => $this->getRestaurant()->getSlug(),
+            'locality_slug' => $this->getRestaurant()->getLocality()->getSlug(),
+            'country_slug' => $this->getRestaurant()->getCountry()->getSlug(),
+            'dish_slug' => $this->getSlug()
+        );
     }
 
     /**

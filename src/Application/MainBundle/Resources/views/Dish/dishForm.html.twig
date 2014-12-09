@@ -12,18 +12,20 @@
         {{ form_widget(form_dish.dishType, {'attr': {'class': 'form-control'}}) }}
     </div>
 
-    <div class="form-group">
-        {{ form_label(form_dish.price) }}
-        {{ form_errors(form_dish.price) }}
-        <div class="row">
-            <div class="col-md-3">
-                <div class="input-group">
-                    {{ form_widget(form_dish.price, {'attr': {'class': 'form-control', 'placeholder': '0.00'}}) }}
-                    <span class="input-group-addon">€</span>
+    {% if form_dish.price is defined %}
+        <div class="form-group">
+            {{ form_label(form_dish.price) }}
+            {{ form_errors(form_dish.price) }}
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="input-group">
+                        {{ form_widget(form_dish.price, {'attr': {'class': 'form-control', 'placeholder': '0.00'}}) }}
+                        <span class="input-group-addon">€</span>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    {% endif %}
 
     {% for review in form_dish.reviews %}
         {% include 'ApplicationMainBundle:Review:reviewContentForm.html.twig' with {'review': review} %}

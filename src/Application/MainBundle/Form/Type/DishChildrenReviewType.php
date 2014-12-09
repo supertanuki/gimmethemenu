@@ -11,7 +11,9 @@ class DishChildrenReviewType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
+            ->add('name', null, array(
+                'label' => "Dish's name"
+            ))
             ->add('dishType', null, array(
                 'required' => true
             ))

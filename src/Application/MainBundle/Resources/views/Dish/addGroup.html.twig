@@ -7,7 +7,7 @@
         <li><a href="{{ path('homepage') }}">Home</a></li>
         <li>{{ restaurant.country }}</li>
         <li>{{ restaurant.locality }}</li>
-        {#<li class="active"><a href="{{ path('restaurant_show', { restaurant.paramsForUrl }) }}">{{ restaurant.name }}</a></li>#}
+        <li class="active"><a href="{{ path('restaurant_show', restaurant.paramsForUrl) }}">{{ restaurant.name }}</a></li>
     </ol>
 
 
@@ -16,20 +16,22 @@
 
             <div class="panel panel-info">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Add a menu (group of dishes)</h3>
+                    <h3 class="panel-title">Add a meal <small>(group of dishes)</small></h3>
                 </div>
                 <div class="panel-body">
 
                     {{ form_start(form_dish) }}
 
+                    {{ form_errors(form_dish) }}
+
                     <div class="form-group">
-                        {{ form_label(form_dish.name, "Menu's name") }}
+                        {{ form_label(form_dish.name) }}
                         {{ form_errors(form_dish.name) }}
                         {{ form_widget(form_dish.name, {'attr': {'class': 'form-control'}}) }}
                     </div>
 
                     <div class="form-group">
-                        {{ form_label(form_dish.price, "Menu's price") }}
+                        {{ form_label(form_dish.price) }}
                         {{ form_errors(form_dish.price) }}
                         <div class="row">
                             <div class="col-md-3">
@@ -42,7 +44,9 @@
                     </div>
 
                     <hr>
-                    <h4>Now, you can add at least two dishes</h4>
+                    <h4>Add the first dish</h4>
+                    <p class="help-block">For example the starter</p>
+
                     {% for children_dish in form_dish.dishes %}
 
                         <div class="form-group">
@@ -75,7 +79,7 @@
                         </div>
                     </div>
 
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary">Next step</button>
 
                     {{ form_rest(form_dish) }}
                     {{ form_end(form_dish) }}

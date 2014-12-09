@@ -7,7 +7,11 @@
         <li><a href="{{ path('homepage') }}">Home</a></li>
         <li>{{ restaurant.country }}</li>
         <li>{{ restaurant.locality }}</li>
-        <li class="active"><a href="{{ restaurant_url }}">{{ restaurant.name }}</a></li>
+        <li class="active">
+            <a href="{{ path('restaurant_show', restaurant.paramsForUrl) }}">
+                {{ restaurant.name }}
+            </a>
+        </li>
     </ol>
 
 

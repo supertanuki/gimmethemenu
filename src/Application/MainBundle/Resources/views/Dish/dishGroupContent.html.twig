@@ -1,0 +1,45 @@
+{% set photos = [] %}
+    {% for review in dish.reviews if review.photoName %}
+        {% set photos = photos|merge([review]) %}
+    {% endfor %}
+
+
+<ol class="breadcrumb">
+    <li><a href="{{ path('homepage') }}">Home</a></li>
+    <li>{{ dish.restaurant.country }}</li>
+    <li>{{ dish.restaurant.locality }}</li>
+    <li class="active"><a href="{{ path('restaurant_show', dish.restaurant.paramsForUrl) }}">{{ dish.restaurant }}</a></li>
+</ol>
+
+<h1>
+    &ldquo;{{ dish.name }}&rdquo;
+</h1>
+
+<p class="restaurantAddress">
+    <span class="label label-warning label-lg price">
+        {{ dish.price }}{#<small>,00</small>#}&nbsp;€
+    </span>
+
+    <br>
+
+    <a href="{{ path('restaurant_show', dish.restaurant.paramsForUrl) }}">{{ dish.restaurant.name }}</a>,
+    {{ dish.restaurant.address }}
+</p>
+
+<hr>
+
+<div class="row">
+
+    {% for childDish in dish.dishes %}
+
+        <div class="col-xs-6 col-sm-3 col-md-2">
+            {% include 'ApplicationMainBundle:Dish:dishThumbnail.html.twig' with {'dish': childDish} %}
+        </div>
+
+    {% endfor %}
+
+    <div class="col-xs-6 col-sm-3 col-md-2">
+        <a href="{{ path('dish_child_add', dish.paramsForUrl) }}" class="btn btn-primary">Add a dish</a>
+    </div>
+
+</div><!-- /row -->

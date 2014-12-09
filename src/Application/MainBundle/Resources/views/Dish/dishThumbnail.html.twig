@@ -1,0 +1,39 @@
+<div class="thumbnail">
+    {% set dish_url = path('dish_show', dish.paramsForUrl) %}
+
+    {% if dish.reviews|length and dish.reviews[0].photoName %}
+        <a href="{{ dish_url }}">
+            <img class="img-rounded" src="{{ vich_uploader_asset(dish.reviews[0], 'dish_photo') | imagine_filter('thumb') }}">
+        </a>
+    {% endif %}
+
+    <div class="caption text-center">
+        <h3><a href="{{ dish_url }}">{{ dish.name }}</a></h3>
+
+        {% include 'ApplicationMainBundle:Common:rating.html.twig' with {'rating': dish.averageRating} %}
+
+        <p>
+            <a href="{{ dish_url }}">
+                <span class="label label-info">{{ dish.dishType }}</span>
+
+                {% if dish.price %}
+                    <span class="label label-warning">{{ dish.price }}&nbsp;&euro;</span>
+                {% endif %}
+
+                {% if dish.dishes|length %}
+
+                    <span class="label label-danger">
+                        Meal
+                    </span>
+
+                {% else %}
+
+                    <span class="label label-success">
+                        {{ dish.reviews|length }} {{ dish.reviews|length > 1 ? 'reviews' : 'review' }}
+                    </span>
+
+                {% endif %}
+            </a>
+        </p>
+    </div>
+</div>

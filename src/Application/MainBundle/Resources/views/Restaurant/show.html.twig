@@ -146,12 +146,8 @@
                     {% else %}
 
                         <p>
-                            <a href="{{ path('add_group_dishes', {
-                                'country_slug': restaurant.country.slug,
-                                'locality_slug': restaurant.locality.slug,
-                                'restaurant_slug': restaurant.slug
-                            }) }}">Do you prefer to add a menu ?</a>
-                            <small>(for example Starter + Main course + Desert)</small>
+                            <a href="{{ path('add_group_dishes', restaurant.paramsForUrl) }}">Do you prefer to add a meal ?</a>
+                            <small>(for example starter + main course + dessert)</small>
                         </p>
 
                         {% include 'ApplicationMainBundle:Dish:dishForm.html.twig' with {'form_dish': form_dish} %}
@@ -185,12 +181,8 @@
                 <div class="panel-body">
 
                     <p>
-                        <a href="{{ path('add_group_dishes', {
-                        'country_slug': restaurant.country.slug,
-                        'locality_slug': restaurant.locality.slug,
-                        'restaurant_slug': restaurant.slug
-                        }) }}">Do you prefer to add a menu ?</a>
-                        <small>(for example Starter + Main course + Desert)</small>
+                        <a href="{{ path('add_group_dishes', restaurant.paramsForUrl) }}">Do you prefer to add a meal ?</a>
+                        <small>(for example starter + main course + dessert)</small>
                     </p>
 
                     {% include 'ApplicationMainBundle:Dish:dishForm.html.twig' with {'form_dish': form_dish} %}
@@ -204,38 +196,10 @@
 
                 {% for dish in dishes %}
 
-                    {% set dish_url = path('dish_show', {
-                        'country_slug': dish.restaurant.country.slug,
-                        'locality_slug': dish.restaurant.locality.slug,
-                        'restaurant_slug': dish.restaurant.slug,
-                        'dish_slug': dish.slug
-                    }) %}
-
                 <div class="col-xs-6 col-sm-4 col-md-4">
-                    <div class="thumbnail">
 
-                    {% if dish.reviews[0].photoName %}
-                        <a href="{{ dish_url }}">
-                            <img class="img-rounded" src="{{ vich_uploader_asset(dish.reviews[0], 'dish_photo') | imagine_filter('thumb') }}">
-                        </a>
-                    {% endif %}
+                    {% include 'ApplicationMainBundle:Dish:dishThumbnail.html.twig' with {'dish': dish} %}
 
-                        <div class="caption text-center">
-                            <h3><a href="{{ dish_url }}">{{ dish.name }}</a></h3>
-
-                            {% include 'ApplicationMainBundle:Common:rating.html.twig' with {'rating': dish.averageRating} %}
-
-                            <p>
-                                <a href="{{ dish_url }}">
-                                    <span class="label label-info">{{ dish.dishType }}</span>
-                                    <span class="label label-warning">{{ dish.price }}&nbsp;&euro;</span>
-                                    <span class="label label-success">
-                                        {{ dish.reviews|length }} review
-                                    </span>
-                                </a>
-                            </p>
-                        </div>
-                    </div>
                 </div>
                 {% endfor %}
 

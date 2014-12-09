@@ -18,6 +18,13 @@
 </div>
 
 <div class="form-group">
+    {{ form_label(review.photoFile) }}
+    {{ form_errors(review.photoFile) }}
+    {#<p>The dish! Say &ldquo;sheeez&rdquo;!</p>#}
+    {{ form_widget(review.photoFile, {'attr': {'class': 'form-control'}}) }}
+</div>
+
+<div class="form-group">
     {{ form_label(review.personalNote) }}
     <p class="help-block">
         Because there is a personal story over a meal.
@@ -25,11 +32,4 @@
     </p>
     {{ form_errors(review.personalNote) }}
     {{ form_widget(review.personalNote, {'attr': {'class': 'form-control'}}) }}
-</div>
-
-<div class="form-group">
-    {{ form_label(review.photoFile) }}
-    {{ form_errors(review.photoFile) }}
-    {#<p>The dish! Say &ldquo;sheeez&rdquo;!</p>#}
-    {{ form_widget(review.photoFile, {'attr': {'class': 'form-control'}}) }}
 </div>

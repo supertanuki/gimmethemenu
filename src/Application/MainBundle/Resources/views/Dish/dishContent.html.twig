@@ -1,0 +1,194 @@
+{% set photos = [] %}
+    {% for review in dish.reviews if review.photoName %}
+        {% set photos = photos|merge([review]) %}
+    {% endfor %}
+
+
+<ol class="breadcrumb">
+    <li><a href="{{ path('homepage') }}">Home</a></li>
+    <li>{{ dish.restaurant.country }}</li>
+    <li>{{ dish.restaurant.locality }}</li>
+    <li {% if not dish.parent %}class="active"{% endif %}><a href="{{ path('restaurant_show', dish.restaurant.paramsForUrl) }}">{{ dish.restaurant }}</a></li>
+
+    {% if dish.parent %}
+        <li class="active"><a href="{{ path('dish_show', dish.parent.paramsForUrl) }}">{{ dish.parent.name }}</a></li>
+    {% endif %}
+</ol>
+
+<h1>
+    &ldquo;{{ dish.name }}&rdquo;
+</h1>
+
+<p class="restaurantAddress">
+    {% if dish.price %}
+        <span class="label label-warning label-lg price">
+            {{ dish.price }}{#<small>,00</small>#}&nbsp;€
+        </span>
+    {% endif %}
+
+    <br>
+    All time:
+    {% include 'ApplicationMainBundle:Common:rating.html.twig' with {'rating': dish.averageRating} %}
+
+
+    {% if dish.parent %}
+        <br>
+        Meal:
+        <a href="{{ path('dish_show', dish.parent.paramsForUrl) }}">
+            {{ dish.parent.name }}
+        </a>
+    {% endif %}
+
+    {#
+    Last 10: <3 <3 <3 <3 <3
+    #}
+
+    <br>
+    <a href="{{ path('restaurant_show', dish.restaurant.paramsForUrl) }}">{{ dish.restaurant.name }}</a>, {{ dish.restaurant.address }}
+</p>
+
+<hr>
+
+<nav class="navbar navbar-inverse navbar-fixed-bottom visible-xs-block" role="navigation">
+    <div class="container">
+        <ul class="nav nav-pills">
+            {% if photos|length %}
+                <li><a href="#photos">Photos</a></li>
+            {% endif %}
+            <li><a href="#reviews">Reviews</a></li>
+            <li>
+                <a href="#add-my-review" onclick="$('#addMyReviewBtn').click();">
+                    Add a review
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<a name="add-my-review"></a>
+
+<div class="row">
+    <div class="col-xs-12 col-md-6 col-md-offset-3">
+        <p class="text-center">
+            <a href="#add-my-review" id="addMyReviewBtn" class="btn btn-primary btn-lg"
+               onclick="$('#reviewForm').show(); $(this).hide();">
+                <span class="glyphicon glyphicon-pencil"></span>
+                Add a review
+            </a>
+        </p>
+
+        <div class="panel panel-primary collapse" id="reviewForm">
+            <div class="panel-heading">
+                <h3 class="panel-title">Add a review</h3>
+            </div>
+            <div class="panel-body">
+                {% include 'ApplicationMainBundle:Review:reviewForm.html.twig' with {'form_review': form_review} %}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<a name="photos"></a>
+
+<div class="row">
+
+    {% if photos|length %}
+        <div class="col-md-6">
+            <h2>Photos</h2>
+
+            <div class="well">
+
+                {% if photos|length == 1 %}
+
+                    {% for review in photos %}
+                        <img src="{{ vich_uploader_asset(review, 'dish_photo') | imagine_filter('large') }}" style="width: 100%" alt="">
+                        <p>Added by <a href="{{ path('user_timeline', {'slug':review.user.slug}) }}">{{ review.user }}</a> on {{ review.createdAt|localizeddate('medium', 'none') }}</p>
+                    {% endfor %}
+
+                {% else %}
+
+                    <div id="dish-photos" class="carousel slide" data-ride="carousel">
+
+                        <ol class="carousel-indicators">
+                            {% for review in photos %}
+                                <li data-target="#dish-photos" data-slide-to="{{ loop.index }}" {% if loop.index == 1 %}class="active"{% endif %}></li>
+                            {% endfor %}
+                        </ol>
+
+                        <div class="carousel-inner" role="listbox">
+                            {% for review in photos %}
+                                <div class="item {% if loop.index == 1 %}active{% endif %}">
+                                    <img src="{{ vich_uploader_asset(review, 'dish_photo') | imagine_filter('large') }}" style="width: 100%" alt="">
+
+                                    <div class="carousel-caption">
+                                        Added by <a href="{{ path('user_timeline', {'slug':review.user.slug}) }}">{{ review.user }}</a> on {{ review.createdAt|localizeddate('medium', 'none') }}</p>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                        <!-- Controls -->
+                        <a class="left carousel-control" href="#dish-photos" role="button" data-slide="prev">
+                            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="right carousel-control" href="#dish-photos" role="button" data-slide="next">
+                            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </div>
+
+                {% endif %}
+
+            </div>
+        </div>
+    {% endif %}
+
+    <a name="reviews"></a>
+
+    <div class="{% if photos|length %}col-md-6{% else %}col-xs-12 col-md-6 col-md-offset-3{% endif %}">
+        <h2>Reviews</h2>
+
+        <div class="timeline reviews">
+            <dl>
+                {% for review in dish.reviews %}
+                    <dd class="pos-right clearfix">
+                        <div class="circ"></div>
+                        <div class="time hidden-xs">{{ review.when|localizeddate('medium', 'none') }}</div>
+                        <div class="events">
+                            {% if review.photoName %}
+                                <div class="pull-left">
+                                    <img class="events-object img-rounded" src="{{ vich_uploader_asset(review, 'dish_photo') | imagine_filter('thumb') }}" width="60">
+                                </div>
+                            {% endif %}
+
+                            <div class="events-body">
+                                <h4 class="events-heading">
+                                    <a href="{{ path('user_timeline', {'slug':review.user.slug}) }}">{{ review.user }}</a>
+                                </h4>
+
+                                <div class="visible-xs-block">on {{ review.when|localizeddate('medium', 'none') }}</div>
+
+                                {% include 'ApplicationMainBundle:Common:rating.html.twig' with {'rating': review.rank} %}
+
+                                <p>
+                                    {{ review.review }}
+                                </p>
+
+                                {% if review.personalNote and app.user.id == review.user.id %}
+                                    <blockquote class="blockquote-reverse">
+                                        <p><i>{{ review.personalNote }}</i></p>
+                                        <footer>My personal note</footer>
+                                    </blockquote>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </dd>
+                {% endfor %}
+
+            </dl>
+        </div><!-- reviews -->
+
+    </div><!-- /col-md-6 -->
+</div><!-- /row -->
