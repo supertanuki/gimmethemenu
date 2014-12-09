@@ -136,7 +136,7 @@ class DishController extends Controller
                 $em->persist($dish);
                 $em->flush();
 
-                $this->get('session')->getFlashBag()->add('info', 'The dish is created. Thank you!');
+                $this->get('session')->getFlashBag()->add('info', 'Thank you! The meal is created. You can now add another dish');
 
                 // redirect
                 return $this->redirect($this->getDishUrl($dish));
@@ -179,7 +179,20 @@ class DishController extends Controller
             ->findOneBy(array(
                 'parent' => $dish,
                 'user' => $this->getUser()
+            ), array(
+                'createdAt' => 'DESC'
             ));
+
+        if ($otherChildDish) {
+            $otherChildDishReview = $this->getDoctrine()
+                ->getRepository('ApplicationMainBundle:Review')
+                ->findOneBy(array(
+                    'dish' => $otherChildDish,
+                    'user' => $this->getUser()
+                ), array(
+                    'createdAt' => 'DESC'
+                ));
+        }
 
         if (!$dish) {
             throw $this->createNotFoundException('Dish not found');
@@ -196,8 +209,8 @@ class DishController extends Controller
         $review->setUser($this->getUser());
         $childDish->getReviews()->add($review);
 
-        if ($otherChildDish) {
-            $review->setWhen($otherChildDish->getWhen());
+        if ($otherChildDish && $otherChildDishReview) {
+            $review->setWhen($otherChildDishReview->getWhen());
         } else {
             $review->setWhen(new \DateTime("now"));
         }
