@@ -4,10 +4,11 @@ namespace Application\MainBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Table(name="dish")
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="Application\MainBundle\Repository\DishRepository")
  */
 class Dish
 {
@@ -24,13 +25,20 @@ class Dish
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *      min = "2",
+     *      minMessage = "The dish name must be at least {{ limit }} characters long"
+     * )
      */
     private $name;
 
     /**
      * @var float
      *
-     * @ORM\Column(name="price", type="float")
+     * @ORM\Column(name="price", type="float", nullable=true)
+     * @Assert\Type(type="float", message="The value {{ value }} is not a valid price.")
+     * @Assert\NotBlank()
      */
     private $price;
 
@@ -55,7 +63,6 @@ class Dish
      */
     private $updatedAt;
 
-
     /**
      * @ORM\ManyToOne(targetEntity="Restaurant", inversedBy="dishes")
      * @ORM\JoinColumn(name="restaurant_id", referencedColumnName="id", nullable=false)
@@ -64,7 +71,7 @@ class Dish
 
     /**
      * @ORM\ManyToOne(targetEntity="DishType", inversedBy="dishes")
-     * @ORM\JoinColumn(name="dish_type_id", referencedColumnName="id", nullable=false)
+     * @ORM\JoinColumn(name="dish_type_id", referencedColumnName="id", nullable=true)
      */
     protected $dishType;
 
@@ -75,14 +82,20 @@ class Dish
     protected $user;
 
     /**
-     * @ORM\OneToMany(targetEntity="Review", mappedBy="dish")
+     * @ORM\OneToMany(targetEntity="Review", mappedBy="dish", cascade={"persist"})
      */
     protected $reviews;
 
-//    /**
-//     * @ORM\OneToMany(targetEntity="RestaurantMenuFile", mappedBy="restaurant", cascade={"persist", "remove"}, orphanRemoval=true)
-//     */
-//    private $restaurantMenuFiles;
+    /**
+     * @ORM\OneToMany(targetEntity="Dish", mappedBy="parent", cascade={"persist"})
+     */
+    protected $dishes;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Dish", inversedBy="dishes")
+     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", nullable=true)
+     */
+    protected $parent;
 
     /**
      * Get title
@@ -263,5 +276,89 @@ class Dish
     public function getPrice()
     {
         return $this->price;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->reviews = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Set user
+     *
+     * @param \Application\MainBundle\Entity\User $user
+     * @return Dish
+     */
+    public function setUser(\Application\MainBundle\Entity\User $user)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \Application\MainBundle\Entity\User 
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * Add reviews
+     *
+     * @param \Application\MainBundle\Entity\Review $reviews
+     * @return Dish
+     */
+    public function addReview(\Application\MainBundle\Entity\Review $reviews)
+    {
+        $this->reviews[] = $reviews;
+
+        return $this;
+    }
+
+    /**
+     * Remove reviews
+     *
+     * @param \Application\MainBundle\Entity\Review $reviews
+     */
+    public function removeReview(\Application\MainBundle\Entity\Review $reviews)
+    {
+        $this->reviews->removeElement($reviews);
+    }
+
+    /**
+     * Get reviews
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getReviews()
+    {
+        return $this->reviews;
+    }
+
+    /**
+     * Get average rating
+     *
+     * @return integer
+     */
+    public function getAverageRating()
+    {
+        $reviews = $this->getReviews();
+
+        if (!count($reviews)) {
+            return null;
+        }
+
+        $total = 0;
+        foreach ($reviews as $review) {
+            $total += $review->getRank();
+        }
+
+        return round($total / count($reviews));
     }
 }

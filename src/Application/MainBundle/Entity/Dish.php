@@ -36,7 +36,7 @@ class Dish
     /**
      * @var float
      *
-     * @ORM\Column(name="price", type="float")
+     * @ORM\Column(name="price", type="float", nullable=true)
      * @Assert\Type(type="float", message="The value {{ value }} is not a valid price.")
      * @Assert\NotBlank()
      */
@@ -71,7 +71,7 @@ class Dish
 
     /**
      * @ORM\ManyToOne(targetEntity="DishType", inversedBy="dishes")
-     * @ORM\JoinColumn(name="dish_type_id", referencedColumnName="id", nullable=false)
+     * @ORM\JoinColumn(name="dish_type_id", referencedColumnName="id", nullable=true)
      */
     protected $dishType;
 
@@ -85,6 +85,27 @@ class Dish
      * @ORM\OneToMany(targetEntity="Review", mappedBy="dish", cascade={"persist"})
      */
     protected $reviews;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Dish", mappedBy="parent", cascade={"persist"})
+     */
+    protected $dishes;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Dish", inversedBy="dishes")
+     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", nullable=true)
+     */
+    protected $parent;
+
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->reviews = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->dishes = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get title
@@ -266,13 +287,6 @@ class Dish
     {
         return $this->price;
     }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->reviews = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
     /**
      * Set user
@@ -349,5 +363,61 @@ class Dish
         }
 
         return round($total / count($reviews));
+    }
+
+    /**
+     * Add dishes
+     *
+     * @param \Application\MainBundle\Entity\Dish $dishes
+     * @return Dish
+     */
+    public function addDish(\Application\MainBundle\Entity\Dish $dishes)
+    {
+        $this->dishes[] = $dishes;
+
+        return $this;
+    }
+
+    /**
+     * Remove dishes
+     *
+     * @param \Application\MainBundle\Entity\Dish $dishes
+     */
+    public function removeDish(\Application\MainBundle\Entity\Dish $dishes)
+    {
+        $this->dishes->removeElement($dishes);
+    }
+
+    /**
+     * Get dishes
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getDishes()
+    {
+        return $this->dishes;
+    }
+
+    /**
+     * Set parent
+     *
+     * @param \Application\MainBundle\Entity\Dish $parent
+     * @return Dish
+     */
+    public function setParent(\Application\MainBundle\Entity\Dish $parent = null)
+    {
+        $this->parent = $parent;
+
+        return $this;
+    }
+
+    /**
+     * Get parent
+     *
+     * @return \Application\MainBundle\Entity\Dish 
+     */
+    public function getParent()
+    {
+        return $this->parent;
     }
 }

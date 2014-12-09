@@ -6,27 +6,32 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class DishType extends AbstractType
+class DishGroupType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add('name')
             ->add('price')
-            ->add('dishType')
-            ->add('reviews', 'collection', array(
+            ->add('dishes', 'collection', array(
                 'label' => false,
-                'type' => new ReviewType(),
-                'allow_add' => false,
-                'allow_delete' => false,
+                'type' => new DishChildrenReviewType(),
+                'allow_add' => true,
+                'allow_delete' => true,
                 'by_reference' => false,
+            ))
+            ->add('when', 'date', array(
+                'widget' => 'single_text',
+                'label' => 'When did you eat this?',
+                'mapped' => false,
+                'required' => true
             ))
         ;
     }
 
     public function getName()
     {
-        return 'application_main_dish';
+        return 'application_main_dish_group';
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

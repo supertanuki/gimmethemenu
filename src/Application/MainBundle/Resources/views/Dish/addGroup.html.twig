@@ -1,0 +1,89 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Add a group of dishes - {{ restaurant.name }} - Restaurant{% endblock %}
+
+{% block body %}
+    <ol class="breadcrumb">
+        <li><a href="{{ path('homepage') }}">Home</a></li>
+        <li>{{ restaurant.country }}</li>
+        <li>{{ restaurant.locality }}</li>
+        {#<li class="active"><a href="{{ path('restaurant_show', { restaurant.paramsForUrl }) }}">{{ restaurant.name }}</a></li>#}
+    </ol>
+
+
+    <div class="row">
+        <div class="col-xs-12 col-md-6 col-md-offset-3">
+
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Add a menu (group of dishes)</h3>
+                </div>
+                <div class="panel-body">
+
+                    {{ form_start(form_dish) }}
+
+                    <div class="form-group">
+                        {{ form_label(form_dish.name, "Menu's name") }}
+                        {{ form_errors(form_dish.name) }}
+                        {{ form_widget(form_dish.name, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form_label(form_dish.price, "Menu's price") }}
+                        {{ form_errors(form_dish.price) }}
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="input-group">
+                                    {{ form_widget(form_dish.price, {'attr': {'class': 'form-control', 'placeholder': '0.00'}}) }}
+                                    <span class="input-group-addon">€</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr>
+                    <h4>Now, you can add at least two dishes</h4>
+                    {% for children_dish in form_dish.dishes %}
+
+                        <div class="form-group">
+                            {{ form_label(children_dish.name) }}
+                            {{ form_errors(children_dish.name) }}
+                            {{ form_widget(children_dish.name, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+
+                        <div class="form-group">
+                            {{ form_label(children_dish.dishType) }}
+                            {{ form_errors(children_dish.dishType) }}
+                            {{ form_widget(children_dish.dishType, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+
+                        {% for review in children_dish.reviews %}
+                            {% include 'ApplicationMainBundle:Review:reviewWithoutWhenContentForm.html.twig' with {'review': review} %}
+                        {% endfor %}
+
+                        <hr>
+                    {% endfor %}
+
+
+                    <div class="form-group">
+                        {{ form_label(form_dish.when) }}
+                        {{ form_errors(form_dish.when) }}
+                        <div class="row">
+                            <div class="col-md-4">
+                                {{ form_widget(form_dish.when, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Submit</button>
+
+                    {{ form_rest(form_dish) }}
+                    {{ form_end(form_dish) }}
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}

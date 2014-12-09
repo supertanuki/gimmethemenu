@@ -145,6 +145,15 @@
 
                     {% else %}
 
+                        <p>
+                            <a href="{{ path('add_group_dishes', {
+                                'country_slug': restaurant.country.slug,
+                                'locality_slug': restaurant.locality.slug,
+                                'restaurant_slug': restaurant.slug
+                            }) }}">Do you prefer to add a menu ?</a>
+                            <small>(for example Starter + Main course + Desert)</small>
+                        </p>
+
                         {% include 'ApplicationMainBundle:Dish:dishForm.html.twig' with {'form_dish': form_dish} %}
 
                     {% endif %}
@@ -174,6 +183,15 @@
                     <h3 class="panel-title">Add a dish or a drink</h3>
                 </div>
                 <div class="panel-body">
+
+                    <p>
+                        <a href="{{ path('add_group_dishes', {
+                        'country_slug': restaurant.country.slug,
+                        'locality_slug': restaurant.locality.slug,
+                        'restaurant_slug': restaurant.slug
+                        }) }}">Do you prefer to add a menu ?</a>
+                        <small>(for example Starter + Main course + Desert)</small>
+                    </p>
 
                     {% include 'ApplicationMainBundle:Dish:dishForm.html.twig' with {'form_dish': form_dish} %}
 

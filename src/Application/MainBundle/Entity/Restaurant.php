@@ -125,6 +125,15 @@ class Restaurant
      */
     private $dishes;
 
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->restaurantMenuFiles = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
     /**
      * Get title
      *
@@ -133,6 +142,20 @@ class Restaurant
     public function __toString()
     {
         return $this->getName();
+    }
+
+    /**
+     * Get array of params for generating restaurant url
+     *
+     * @return array
+     */
+    public function getParamsForUrl()
+    {
+        return array(
+            'restaurant_slug' => $this->getSlug(),
+            'locality_slug' => $this->getLocality()->getSlug(),
+            'country_slug' => $this->getCountry()->getSlug()
+        );
     }
 
     /**
@@ -419,13 +442,6 @@ class Restaurant
     public function getLocality()
     {
         return $this->locality;
-    }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->restaurantMenuFiles = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**

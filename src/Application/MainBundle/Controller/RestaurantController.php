@@ -2,7 +2,6 @@
 
 namespace Application\MainBundle\Controller;
 
-
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,7 +17,7 @@ use Application\MainBundle\Entity\Locality;
 use Application\MainBundle\Entity\Dish;
 use Application\MainBundle\Entity\Review;
 use Application\MainBundle\Form\Type\RestaurantMenuType;
-use Application\MainBundle\Form\Type\DishType;
+use Application\MainBundle\Form\Type\DishReviewType;
 
 class RestaurantController extends Controller
 {
@@ -183,11 +182,7 @@ class RestaurantController extends Controller
      */
     private function getRestaurantUrl($restaurant)
     {
-        return $this->generateUrl('restaurant_show', array(
-            'restaurant_slug' => $restaurant->getSlug(),
-            'locality_slug' => $restaurant->getLocality()->getSlug(),
-            'country_slug' => $restaurant->getCountry()->getSlug()
-        ));
+        return $this->generateUrl('restaurant_show', $restaurant->getParamsForUrl());
     }
 
     private function getFormRestaurantMenu(Request $request, $restaurant)
@@ -240,12 +235,12 @@ class RestaurantController extends Controller
         $dish->getReviews()->add($review);
 
         $form_dish = $this->createForm(
-            new DishType(),
+            new DishReviewType(),
             $dish,
             array('action' => $this->getRestaurantUrl($restaurant))
         );
 
-        if ($request->getMethod() === 'POST' && $request->request->has('application_main_dish')) {
+        if ($request->getMethod() === 'POST' && $request->request->has('application_main_dish_review')) {
             $form_dish->handleRequest($request);
             if ($form_dish->isValid()) {
                 $em = $this->getDoctrine()->getManager();
