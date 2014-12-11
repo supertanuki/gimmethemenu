@@ -120,14 +120,19 @@
         #}
         <hr>
         <div class="copyright clearfix">
+            <div class="pull-right">
+                <a href="{{ path('changelog') }}">Changelog</a> | © 2014 GimmeTheMenu
+            </div>
+
             Talk to us : <a href="//twitter.com/GimmeTheMenu">Twitter</a> or <a href="//www.facebook.com/gimmethemenu">Facebook</a>
             <br>
             {{ render(controller('ApplicationPageBundle:Page:list')) }}
-            <p>© 2014 GimmeTheMenu</p>
+
         </div>
     </div>
 </div>
 
+{#
 <div id="myAlertModal" class="bs-example-modal-sm modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
@@ -142,6 +147,7 @@
         </div>
     </div>
 </div>
+#}
 
 {% block javascripts %}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
