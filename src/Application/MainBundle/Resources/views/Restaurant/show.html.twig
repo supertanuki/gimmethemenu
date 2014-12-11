@@ -62,13 +62,24 @@
             <h2><a name="menu"></a>The menu</h2>
 
             {% if restaurant.restaurantMenuFiles|length > 0 %}
-            <div class="row">
+            {#<div class="row">#}
+            <div class="well images-gallery">
                 {% for key, menuFile in restaurant.restaurantMenuFiles %}
-                    <div class="col-xs-4 col-sm-4 col-md-3">
-                        <div class="thumbnail">
-                            <img src="{{ vich_uploader_asset(menuFile, 'restaurant_menu_file') | imagine_filter('square') }}" class="img-rounded">
-                        </div>
-                    </div>
+                    {#<div class="col-xs-4 col-sm-4 col-md-3">#}
+                        {#<div class="thumbnail">#}
+
+                    <!--<div class="col-xs-4 col-sm-4 col-md-3">-->
+                    <!--<div class="thumbnail">-->
+                    <a href="{{ vich_uploader_asset(menuFile, 'restaurant_menu_file') }}"
+                       title="Added by {{ menuFile.user }}"
+                       data-msrc="{{ vich_uploader_asset(menuFile, 'restaurant_menu_file') | imagine_filter('thumb') }}"
+                       data-size="2304x2304"
+                    >
+                       <img src="{{ vich_uploader_asset(menuFile, 'restaurant_menu_file') | imagine_filter('square') }}" class="img-rounded">
+                    </a>
+
+                        {#</div>#}
+                    {#</div>#}
 
                     {#Added by <a href="{{ path('user_timeline', {'slug':menuFile.user.slug}) }}">{{ menuFile.user }}</a>#}
                     {#on {{ menuFile.createdAt|localizeddate('medium', 'none') }}#}
@@ -199,5 +210,9 @@
 
     <script>
         var restaurantPosition = { 'lat':{{ restaurant.locationLat }}, 'lng':{{ restaurant.locationLng }} };
+    </script>
+
+    <script>
+        initPhotoSwipeFromDOM('.images-gallery');
     </script>
 {% endblock %}

@@ -12,7 +12,7 @@
   overflow: hidden;
   -ms-touch-action: none;
   touch-action: none;
-  z-index: 500;
+  z-index: 500000;
   -webkit-text-size-adjust: 100%;
   -webkit-backface-visibility: hidden;
   outline: none; }
