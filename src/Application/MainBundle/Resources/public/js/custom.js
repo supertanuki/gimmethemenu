@@ -6,7 +6,7 @@ $(document).ready(function() {
 function showMyAlertModal(content, title) {
 
     $('#messageGeolocate').html(
-        (typeof title !== 'undefined' ? '<b>'+title+'</b> ' : '')
+        (typeof title != 'undefined' ? '<b>'+title+'</b> ' : '')
         + '<i>' + content + '</i>'
     );
 

@@ -62,35 +62,17 @@
             <h2><a name="menu"></a>The menu</h2>
 
             {% if restaurant.restaurantMenuFiles|length > 0 %}
-            <div class="panel">
-                <div class="tabbable tabs-below">
-                    <div class="tab-content">
-                        {% for key, menuFile in restaurant.restaurantMenuFiles %}
-                        <div class="tab-pane {% if key==0 %} active{% endif %}" id="menu{{ key+1 }}">
-                            <img src="{{ vich_uploader_asset(menuFile, 'restaurant_menu_file') | imagine_filter('large') }}" class="img-responsive" style="width:100%">
-                            <br>
-                            Added by <a href="{{ path('user_timeline', {'slug':menuFile.user.slug}) }}">{{ menuFile.user }}</a>
-                            on {{ menuFile.createdAt|localizeddate('medium', 'none') }}
+            <div class="row">
+                {% for key, menuFile in restaurant.restaurantMenuFiles %}
+                    <div class="col-xs-4 col-sm-4 col-md-3">
+                        <div class="thumbnail">
+                            <img src="{{ vich_uploader_asset(menuFile, 'restaurant_menu_file') | imagine_filter('square') }}" class="img-rounded">
                         </div>
-                        {% endfor %}
                     </div>
 
-                    {#<div class="text-center">
-                        <ul class="sync-pagination pagination-sm"></ul>
-                        <div id="sync-example-page-content" class="well">Page 1</div>
-                        <ul class="sync-pagination pagination-sm"></ul>
-                    </div>#}
-
-                    <ul class="nav nav-tabs">
-                        {% for key, menuFile in restaurant.restaurantMenuFiles %}
-                            <li{% if key==0 %} class="active"{% endif %}>
-                                <a href="#menu{{ key+1 }}" data-toggle="tab">
-                                    {{ key+1 }}
-                                </a>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                </div>
+                    {#Added by <a href="{{ path('user_timeline', {'slug':menuFile.user.slug}) }}">{{ menuFile.user }}</a>#}
+                    {#on {{ menuFile.createdAt|localizeddate('medium', 'none') }}#}
+                {% endfor %}
             </div>
             {% endif %}
 
@@ -213,7 +195,7 @@
 {% endblock %}
 
 {% block javascripts %}
-    {{ parent() }}
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
 
     <script>
         var restaurantPosition = { 'lat':{{ restaurant.locationLat }}, 'lng':{{ restaurant.locationLng }} };
