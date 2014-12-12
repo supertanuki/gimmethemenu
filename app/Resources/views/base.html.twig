@@ -50,11 +50,14 @@
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
 
-                <li><a href="{{ path('restaurant_search') }}">Search a restaurant</a></li>
+                {% set current_route = app.request.attributes.get('_route') %}
+                {% if current_route != 'homepage' and current_route != 'restaurant_search' %}
+                    <li><a href="{{ path('restaurant_search') }}">Search a restaurant</a></li>
+                {% endif %}
+
                 <li><a href="{{ path('about') }}">About</a></li>
 
                 {% if app.user %}
-                    <li><a href="{{ path('user_timeline', { 'slug': app.user.slug }) }}">My timeline</a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                             <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
@@ -66,6 +69,7 @@
                             <li><a href="{{ path('fos_user_security_logout') }}">Logout</a></li>
                         </ul>
                     </li>
+                    <li><a href="{{ path('user_timeline', { 'slug': app.user.slug }) }}">My timeline</a></li>
                 {% else %}
                     <li><a href="{{ path('fos_user_security_login') }}">Log in</a></li>
                     <li><a href="{{ path('fos_user_registration_register') }}">Sign up</a></li>
