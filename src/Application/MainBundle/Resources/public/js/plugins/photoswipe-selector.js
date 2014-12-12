@@ -15,9 +15,10 @@ var initPhotoSwipeFromDOM = function(gallerySelector) {
 
         for(var i = 0; i < numNodes; i++) {
             var el = thumbElements[i];
-//
-//                var el = el[0].children;
-//                alert(el.getAttribute('class'));
+            var el = el.children;
+            var el = el[0];
+            var el = el.children;
+            var el = el[0];
 
             // include only element nodes
             if(el.nodeType !== 1) {
@@ -61,23 +62,23 @@ var initPhotoSwipeFromDOM = function(gallerySelector) {
             return el.tagName === 'A';
         });
 
-        if(!clickedListItem) {
+        if (!clickedListItem) {
             return;
         }
 
-        var clickedGallery = clickedListItem.parentNode;
+        var clickedGallery = clickedListItem.parentNode.parentNode.parentNode;
 
-        var childNodes = clickedListItem.parentNode.childNodes,
+        var childNodes = clickedGallery.children,
             numChildNodes = childNodes.length,
             nodeIndex = 0,
             index;
 
         for (var i = 0; i < numChildNodes; i++) {
-            if(childNodes[i].nodeType !== 1) {
-                continue;
-            }
+            var child = childNodes[i].children;
+            var child = child[0].children;
+            var child = child[0];
 
-            if(childNodes[i] === clickedListItem) {
+            if(child === clickedListItem) {
                 index = nodeIndex;
                 break;
             }
