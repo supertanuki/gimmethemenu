@@ -185,7 +185,7 @@ $(document).ready(function() {
     }
 
     function search() {
-        clearResults();
+//        clearResults();
         clearMarkers();
 
         if (searchTimeout) {
@@ -227,7 +227,7 @@ $(document).ready(function() {
                     }));
                     google.maps.event.addListener(markers[i], 'click', getDetails(results[i], i));
                     window.setTimeout(dropMarker(i), i * 50);
-                    addResult(results[i], i);
+//                    addResult(results[i], i);
                 }
             } else {
                 handlePlacesError(status)

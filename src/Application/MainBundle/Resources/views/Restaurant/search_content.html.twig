@@ -1,14 +1,17 @@
 
+<div class="container">
 <div class="form-group">
-    <input id="map-search-input" type="text" class="form-control" placeholder="Search a restaurant name, an address or both!">
-    <p class="help-block">Example : <i>"Lao thai, rue Tolbiac Paris"</i></p>
+<input id="map-search-input" type="text" class="form-control" placeholder="Search a restaurant name, an address or both!">
+<p class="help-block">Example : <i>"Lao thai, rue Tolbiac Paris"</i></p>
+</div>
 </div>
 
-<div id="map-search-results" class="row">
-    <div class="col-xs-7 col-sm-9 col-md-10 ">
+<div id="map-search-results">
+    {#<div class="col-xs-7 col-sm-9 col-md-10 ">#}
         <div id="map_canvas"></div><!-- map -->
         <div id="messageGeolocate" class="text-center"></div>
-    </div>
+    {#</div>#}
+    {#
     <div class="col-xs-5 col-sm-3 col-md-2">
         <div id="listing">
             <table id="resultsTable" class="table table-condensed table-striped table-bordered table-hover">
@@ -20,4 +23,5 @@
             </table>
         </div><!-- listing on the right of the map -->
     </div>
+    #}
 </div>

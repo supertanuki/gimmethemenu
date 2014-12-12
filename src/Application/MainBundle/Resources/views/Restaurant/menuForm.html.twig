@@ -2,12 +2,13 @@
 
 {{ form_errors(form_restaurant_menu) }}
 
-{{ form_errors(form_restaurant_menu.file) }}
-{{ form_widget(form_restaurant_menu.file, {'attr': {'class': 'form-control'}}) }}
+<div class="form-group">
+    {{ form_errors(form_restaurant_menu.file) }}
+    {{ form_widget(form_restaurant_menu.file, {'attr': {'class': 'form-control'}}) }}
+</div>
 
 {{ form_rest(form_restaurant_menu) }}
 
-<hr>
 <button type="submit" class="btn btn-primary">Submit</button>
 
 {{ form_end(form_restaurant_menu) }}
