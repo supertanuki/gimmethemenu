@@ -16,7 +16,6 @@ use Application\MainBundle\Entity\Country;
 use Application\MainBundle\Entity\Locality;
 use Application\MainBundle\Entity\Dish;
 use Application\MainBundle\Entity\Review;
-use Application\MainBundle\Form\Type\RestaurantMenuType;
 use Application\MainBundle\Form\Type\RestaurantMenuMultipleFilesType;
 use Application\MainBundle\Form\Type\DishReviewType;
 
