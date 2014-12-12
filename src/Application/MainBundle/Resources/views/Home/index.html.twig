@@ -1,6 +1,26 @@
 {% extends '::base.html.twig' %}
 
+{% block content_outside_container %}
+
+    <div class="jumbotron">
+        <div class="container">
+            <h1>Hi, food lovers!</h1>
+
+            <blockquote>
+                <p>
+                &ldquo;&nbsp;On <i>GimmeThe<b>Menu</b></i>, make your timeline of visited restaurants!
+                Review not only the restaurant but also your chosen dish.
+                For example, take a look on <a href="{{ path('user_timeline', {'slug': 'richard'}) }}">my timeline</a>.&nbsp;&rdquo;
+                </p>
+                <footer>Richard</footer>
+            </blockquote>
+        </div>
+    </div>
+
+{% endblock content_outside_container %}
+
 {% block body %}
+
 
     {#
     <div class="row">
@@ -25,13 +45,13 @@
     </div>
     #}
 
-    <div class="alert alert-info">
-        <p>
-            &ldquo;On <i>GimmeThe<b>Menu</b></i>, make your timeline of visited restaurants!
-            Review not only the restaurant but also your chosen dish.
-            For example, take a look on <a href="{{ path('user_timeline', {'slug': 'richard'}) }}">my timeline</a>.&rdquo; Richard
-        </p>
-    </div>
+    {#<div class="alert alert-info">#}
+        {#<p>#}
+            {#&ldquo;On <i>GimmeThe<b>Menu</b></i>, make your timeline of visited restaurants!#}
+            {#Review not only the restaurant but also your chosen dish.#}
+            {#For example, take a look on <a href="{{ path('user_timeline', {'slug': 'richard'}) }}">my timeline</a>.&rdquo; Richard#}
+        {#</p>#}
+    {#</div>#}
 
 
     {% include 'ApplicationMainBundle:Restaurant:search_content.html.twig' %}
