@@ -2,6 +2,7 @@
 
 {% block content_outside_container %}
 
+    {% if not app.user %}
     <div class="jumbotron">
         <div class="container">
             <h1>Hi, food lovers!</h1>
@@ -16,6 +17,7 @@
             </blockquote>
         </div>
     </div>
+    {% endif %}
 
 {% endblock content_outside_container %}
 
