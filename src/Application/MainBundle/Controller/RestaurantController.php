@@ -17,6 +17,7 @@ use Application\MainBundle\Entity\Locality;
 use Application\MainBundle\Entity\Dish;
 use Application\MainBundle\Entity\Review;
 use Application\MainBundle\Form\Type\RestaurantMenuType;
+use Application\MainBundle\Form\Type\RestaurantMenuMultipleFilesType;
 use Application\MainBundle\Form\Type\DishReviewType;
 
 class RestaurantController extends Controller
@@ -105,17 +106,17 @@ class RestaurantController extends Controller
         }
 
         if ($restaurant) {
-            if ($request->isXmlHttpRequest()) {
-                // return restaurant info
-                $response = new JsonResponse();
-                $response->setData(array(
-                    'data' => 123
-                ));
-
-            } else {
+//            if ($request->isXmlHttpRequest()) {
+//                // return restaurant info
+//                $response = new JsonResponse();
+//                $response->setData(array(
+//                    'data' => 123
+//                ));
+//
+//            } else {
                 // redirect to the restaurant page
                 return $this->redirect($this->getRestaurantUrl($restaurant));
-            }
+//            }
         }
 
         throw $this->createNotFoundException('Nothing to do !');
@@ -187,36 +188,29 @@ class RestaurantController extends Controller
 
     private function getFormRestaurantMenu(Request $request, $restaurant)
     {
-        // form default file
-        $restaurantMenuFile = new RestaurantMenuFile();
-        $restaurant_tmp = new Restaurant();
-        // crade
-        $restaurant_tmp->setName('_tmp');
-        $restaurant_tmp->setGgPlaceId('_tmp_');
-        $restaurant_tmp->setAddress('_tmp');
-        $restaurant_tmp->setFullAddress('_tmp');
-        $restaurant_tmp->getRestaurantMenuFiles()->add($restaurantMenuFile);
-
+        // files form begin
         $form_restaurant_menu = $this->createForm(
-            new RestaurantMenuType(),
-            $restaurant_tmp,
-            array('action' => $this->getRestaurantUrl($restaurant))
+            new RestaurantMenuMultipleFilesType(),
+            null
         );
 
-        if ($request->getMethod() === 'POST' && $request->request->has('application_main_restaurant_menu')) {
+        if ($request->getMethod() === 'POST' && $request->request->has('application_main_restaurant_menu_multiple_files')) {
             $form_restaurant_menu->handleRequest($request);
             if ($form_restaurant_menu->isValid()) {
-
                 $em = $this->getDoctrine()->getManager();
-                foreach ($restaurant_tmp->getRestaurantMenuFiles() as $menuFile) {
-                    $menuFile->setUser($this->getUser());
+
+                $data = $form_restaurant_menu->getData();
+                foreach ($data['file'] as $file) {
+                    $menuFile = new RestaurantMenuFile();
+                    $menuFile->setFileFile($file);
                     $menuFile->setRestaurant($restaurant);
-                    $restaurant->getRestaurantMenuFiles()->add($menuFile);
+                    $menuFile->setUser($this->getUser());
+                    $em->persist($menuFile);
                 }
-                $em->persist($restaurant);
+
                 $em->flush();
 
-                $this->get('session')->getFlashBag()->add('info', 'Your photo is online. Thank you!');
+                $this->get('session')->getFlashBag()->add('info', 'Photos are uploaded. Thank you!');
 
                 // redirect
                 return $this->redirect($this->getRestaurantUrl($restaurant));
@@ -253,7 +247,7 @@ class RestaurantController extends Controller
                 $this->get('session')->getFlashBag()->add('info', 'The dish is created. Thank you!');
 
                 // redirect
-                return $this->redirect($this->getRestaurantUrl($restaurant));
+                return $this->redirect($this->generateUrl('dish_show', $dish->getParamsForUrl()));
             }
 
             // onError

@@ -2,21 +2,8 @@
 
 {{ form_errors(form_restaurant_menu) }}
 
-<div
-        class="collection"
-        data-label-add="Add another photo"
-        data-label-delete="Cancel"
-        data-label-delete-confirm="Delete this field ?"
-        data-is-delete-first-field="false"
-        data-prototype="{{ form_widget(form_restaurant_menu.restaurantMenuFiles.vars.prototype)|e }}"
-        >
-    {% for menuFile in form_restaurant_menu.restaurantMenuFiles %}
-        <div class="collection_item">
-            {{ form_errors(menuFile.fileFile) }}
-            {{ form_widget(menuFile.fileFile) }}
-        </div>
-    {% endfor %}
-</div>
+{{ form_errors(form_restaurant_menu.file) }}
+{{ form_widget(form_restaurant_menu.file, {'attr': {'class': 'form-control'}}) }}
 
 {{ form_rest(form_restaurant_menu) }}
 
