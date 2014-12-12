@@ -11,7 +11,9 @@ class RestaurantMenuFileType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('fileFile', 'file', array('label' => false))
+            ->add('fileFile', 'file', array(
+                'label' => false
+            ))
         ;
     }
 
