@@ -16,5 +16,9 @@
             <argument>%fos_user.model.user.class%</argument>
         </service>
 
+        <service id="application_main.twig.image_size_extension" class="Application\MainBundle\Twig\ImageSizeExtension">
+            <tag name="twig.extension" />
+        </service>
+
     </services>
 </container>

@@ -1,6 +1,9 @@
 $(document).ready(function() {
 //    $('input').iCheck();
 
+//    alert (document.getElementsByClassName('images-gallery'));
+
+    initPhotoSwipeFromDOM('.images-gallery');
 });
 
 function showMyAlertModal(content, title) {

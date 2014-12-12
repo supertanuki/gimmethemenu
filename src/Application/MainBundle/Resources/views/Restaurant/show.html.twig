@@ -73,7 +73,7 @@
                     <a href="{{ vich_uploader_asset(menuFile, 'restaurant_menu_file') }}"
                        title="Added by {{ menuFile.user }}"
                        data-msrc="{{ vich_uploader_asset(menuFile, 'restaurant_menu_file') | imagine_filter('thumb') }}"
-                       data-size="1000x1000"
+                       data-size="{{ vich_uploader_asset(menuFile, 'restaurant_menu_file')|image_size('x') }}"
                     >
                        <img src="{{ vich_uploader_asset(menuFile, 'restaurant_menu_file') | imagine_filter('square') }}" class="img-rounded">
                     </a>
@@ -203,6 +203,10 @@
         </div><!-- /col-md-6 -->
     </div><!-- /row -->
 
+
+    {# include template for photoswipe #}
+    {% include 'ApplicationMainBundle:Common:photoswipe.html.twig' %}
+
 {% endblock %}
 
 {% block javascripts %}
@@ -210,9 +214,5 @@
 
     <script>
         var restaurantPosition = { 'lat':{{ restaurant.locationLat }}, 'lng':{{ restaurant.locationLng }} };
-    </script>
-
-    <script>
-        initPhotoSwipeFromDOM('.images-gallery');
     </script>
 {% endblock %}
