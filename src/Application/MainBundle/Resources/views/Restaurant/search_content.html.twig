@@ -5,19 +5,19 @@
 </div>
 
 <div id="map-search-results" class="row">
-    <div class="col-xs-6 collapse">
+    <div class="col-xs-7 col-sm-9 col-md-10 ">
+        <div id="map_canvas"></div><!-- map -->
+        <div id="messageGeolocate" class="text-center"></div>
+    </div>
+    <div class="col-xs-5 col-sm-3 col-md-2">
         <div id="listing">
             <table id="resultsTable" class="table table-condensed table-striped table-bordered table-hover">
-                <tbody id="results"></tbody>
+                <tbody id="results">
+                    <tr>
+                        <td>Here you will find a list of restaurants</td>
+                    </tr>
+                </tbody>
             </table>
         </div><!-- listing on the right of the map -->
     </div>
-    <div class="col-xs-12">
-        <div id="map_canvas"></div><!-- map -->
-    </div>
-</div>
-
-<div class="well">
-    <span class="glyphicon glyphicon-arrow-up"></span> First of all, search a restaurant or an address, you will see all restaurants around.
-    <span id="messageGeolocate"></span>
 </div>
