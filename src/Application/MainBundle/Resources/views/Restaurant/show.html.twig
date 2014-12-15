@@ -66,9 +66,10 @@
                 <div class="row images-gallery">
 
                     {% for key, menuFile in restaurant.restaurantMenuFiles %}
-                        <div class="col-xs-3 col-sm-2 col-md-3">
+                        <div class="col-xs-4 col-sm-3 col-md-3">
                             <div class="thumbnail">
                                 <a href="{{ vich_uploader_asset(menuFile, 'restaurant_menu_file') }}"
+                                   class="zoom-hover"
                                    title="Added by {{ menuFile.user }}"
                                    data-msrc="{{ vich_uploader_asset(menuFile, 'restaurant_menu_file') | imagine_filter('thumb') }}"
                                    data-size="{{ vich_uploader_asset(menuFile, 'restaurant_menu_file')|image_size('x') }}"

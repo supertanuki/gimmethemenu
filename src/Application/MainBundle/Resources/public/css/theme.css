@@ -102,3 +102,23 @@ blockquote {
 .glyphicon-heart, .glyphicon-heart-empty {
     color:#DA4453;
 }
+
+.thumbnail {
+    overflow: hidden;
+}
+
+.zoom-hover img {
+    -webkit-transition: all .3s ease-out;
+    -moz-transition: all .3s ease-out;
+    -o-transition: all .3s ease-out;
+    transition: all .3s ease-out;
+}
+
+.zoom-hover img:hover {
+    -moz-transform: scale(1.1);
+    -webkit-transform: scale(1.1);
+    -o-transform: scale(1.1);
+    transform: scale(1.1);
+    -ms-transform: scale(1.1);
+    filter: progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', M11=1.1, M12=-0, M21=0, M22=1.1);
+}
