@@ -30,7 +30,10 @@
                 </div>
                 <div class="panel-body">
 
-                    {% include 'ApplicationMainBundle:Dish:dishForm.html.twig' with {'form_dish': form_dish} %}
+                    {% include 'ApplicationMainBundle:Dish:dishForm.html.twig' with {
+                        'form_dish': form_dish,
+                        'dish_already_exists': dish_already_exists
+                    } %}
 
                 </div>
             </div>

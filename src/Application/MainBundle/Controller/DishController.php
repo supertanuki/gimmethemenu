@@ -125,6 +125,8 @@ class DishController extends Controller
             $meal
         );
 
+        $dish_already_exists = null;
+
         if ($request->getMethod() === 'POST') {
             $form_dish->handleRequest($request);
             if ($form_dish->isValid()) {
@@ -138,12 +140,29 @@ class DishController extends Controller
                 // redirect
                 return $this->redirect($this->getDishUrl($meal));
             }
+
+            $dish_already_exists = $this->getDoctrine()
+                ->getRepository('ApplicationMainBundle:Dish')
+                ->findOneBy(array(
+                    'restaurant' => $restaurant,
+                    'name' => $meal->getName(),
+                ));
+
+            if (!$dish_already_exists) {
+                $dish_already_exists = $this->getDoctrine()
+                    ->getRepository('ApplicationMainBundle:Dish')
+                    ->findOneBy(array(
+                        'restaurant' => $restaurant,
+                        'name' => $childrenDish->getName(),
+                    ));
+            }
         }
 
         return $this->render(
             'ApplicationMainBundle:Dish:addGroup.html.twig',
             array(
                 'restaurant' => $restaurant,
+                'dish_already_exists' => $dish_already_exists,
                 'form_dish' => $form_dish->createView(),
             )
         );
@@ -166,6 +185,8 @@ class DishController extends Controller
         if (!$restaurant) {
             throw $this->createNotFoundException('Restaurant not found');
         }
+
+
 
         $dish = $this->getDoctrine()
             ->getRepository('ApplicationMainBundle:Dish')
@@ -217,9 +238,12 @@ class DishController extends Controller
             $childDish
         );
 
+        $dish_already_exists = null;
+
         if ($request->getMethod() === 'POST') {
             $form_dish->handleRequest($request);
             if ($form_dish->isValid()) {
+
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($dish);
                 $em->flush();
@@ -229,12 +253,21 @@ class DishController extends Controller
                 // redirect
                 return $this->redirect($this->getDishUrl($dish));
             }
+
+            $dish_already_exists = $this->getDoctrine()
+                ->getRepository('ApplicationMainBundle:Dish')
+                ->findOneBy(array(
+                    'restaurant' => $restaurant,
+                    'name' => $childDish->getName(),
+                ));
+
         }
 
         return $this->render(
             'ApplicationMainBundle:Dish:add.html.twig',
             array(
                 'restaurant' => $restaurant,
+                'dish_already_exists' => $dish_already_exists,
                 'form_dish' => $form_dish->createView(),
             )
         );

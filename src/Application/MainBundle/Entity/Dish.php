@@ -5,10 +5,12 @@ namespace Application\MainBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Table(name="dish")
  * @ORM\Entity(repositoryClass="Application\MainBundle\Repository\DishRepository")
+ * @UniqueEntity(fields={"name", "restaurant"}, message="This dish name is already used")
  */
 class Dish
 {

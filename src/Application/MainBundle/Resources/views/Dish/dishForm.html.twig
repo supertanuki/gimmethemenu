@@ -1,5 +1,11 @@
 {{ form_start(form_dish) }}
 
+    {% if dish_already_exists is defined and dish_already_exists is not null %}
+        <div class="alert alert-danger">
+            This dish already exists for this restaurant. <a href="{{ path('dish_show', dish_already_exists.paramsForUrl) }}" class="btn btn-default">Go and review it!</a>
+        </div>
+    {% endif %}
+
     <div class="form-group">
         {{ form_label(form_dish.name) }}
         {{ form_errors(form_dish.name) }}

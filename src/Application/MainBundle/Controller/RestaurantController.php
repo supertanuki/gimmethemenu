@@ -222,9 +222,14 @@ class RestaurantController extends Controller
     private function getFormDish(Request $request, $restaurant)
     {
         $dish = new Dish();
+        $dish->setUser($this->getUser());
+        $dish->setRestaurant($restaurant);
+
         $review = new Review();
         $review->setDish($dish);
         $review->setWhen(new \DateTime("now"));
+        $review->setUser($this->getUser());
+
         $dish->getReviews()->add($review);
 
         $form_dish = $this->createForm(
@@ -237,9 +242,6 @@ class RestaurantController extends Controller
             $form_dish->handleRequest($request);
             if ($form_dish->isValid()) {
                 $em = $this->getDoctrine()->getManager();
-                $dish->setUser($this->getUser());
-                $dish->setRestaurant($restaurant);
-                $review->setUser($this->getUser());
                 $em->persist($dish);
                 $em->flush();
 
@@ -249,11 +251,19 @@ class RestaurantController extends Controller
                 return $this->redirect($this->generateUrl('dish_show', $dish->getParamsForUrl()));
             }
 
+            $dish_already_exists = $this->getDoctrine()
+                ->getRepository('ApplicationMainBundle:Dish')
+                ->findOneBy(array(
+                    'restaurant' => $restaurant,
+                    'name' => $dish->getName(),
+                ));
+
             // onError
             return $this->render(
                 'ApplicationMainBundle:Dish:add.html.twig',
                 array(
                     'restaurant' => $restaurant,
+                    'dish_already_exists' => $dish_already_exists,
                     'restaurant_url' => $this->getRestaurantUrl($restaurant),
                     'form_dish' => $form_dish->createView()
                 )
