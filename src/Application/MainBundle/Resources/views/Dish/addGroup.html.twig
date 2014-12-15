@@ -68,22 +68,11 @@
                         </div>
 
                         {% for review in children_dish.reviews %}
-                            {% include 'ApplicationMainBundle:Review:reviewWithoutWhenContentForm.html.twig' with {'review': review} %}
+                            {% include 'ApplicationMainBundle:Review:reviewContentForm.html.twig' with {'review': review} %}
                         {% endfor %}
 
                         <hr>
                     {% endfor %}
-
-
-                    <div class="form-group">
-                        {{ form_label(form_dish.when) }}
-                        {{ form_errors(form_dish.when) }}
-                        <div class="row">
-                            <div class="col-md-4">
-                                {{ form_widget(form_dish.when, {'attr': {'class': 'form-control'}}) }}
-                            </div>
-                        </div>
-                    </div>
 
                     <button type="submit" class="btn btn-primary">Next step</button>
 

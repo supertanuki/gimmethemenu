@@ -104,42 +104,39 @@ class DishController extends Controller
             throw $this->createNotFoundException('Restaurant not found');
         }
 
-        $dish = new Dish();
-        $dish->setRestaurant($restaurant);
-        $dish->setUser($this->getUser());
+        $meal = new Dish();
+        $meal->setRestaurant($restaurant);
+        $meal->setUser($this->getUser());
 
-        $childrenDish1 = new Dish();
-        $childrenDish1->setParent($dish);
-        $childrenDish1->setRestaurant($restaurant);
-        $childrenDish1->setUser($this->getUser());
-        $dish->getDishes()->add($childrenDish1);
+        $childrenDish = new Dish();
+        $childrenDish->setParent($meal);
+        $childrenDish->setRestaurant($restaurant);
+        $childrenDish->setUser($this->getUser());
+        $meal->getDishes()->add($childrenDish);
 
-        $review1 = new Review();
-        $review1->setDish($childrenDish1);
-        $review1->setUser($this->getUser());
-        $childrenDish1->getReviews()->add($review1);
+        $review = new Review();
+        $review->setDish($childrenDish);
+        $review->setUser($this->getUser());
+        $review->setWhen(new \DateTime("now"));
+        $childrenDish->getReviews()->add($review);
 
         $form_dish = $this->createForm(
             new DishGroupType(),
-            $dish
+            $meal
         );
-
-        $form_dish->get('when')->setData(new \DateTime("now"));
 
         if ($request->getMethod() === 'POST') {
             $form_dish->handleRequest($request);
             if ($form_dish->isValid()) {
 
-                $review1->setWhen($form_dish->get('when')->getData());
-
                 $em = $this->getDoctrine()->getManager();
-                $em->persist($dish);
+                $em->persist($meal);
                 $em->flush();
 
                 $this->get('session')->getFlashBag()->add('info', 'Thank you! The meal is created. You can now add another dish');
 
                 // redirect
-                return $this->redirect($this->getDishUrl($dish));
+                return $this->redirect($this->getDishUrl($meal));
             }
         }
 

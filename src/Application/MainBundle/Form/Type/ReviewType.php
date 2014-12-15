@@ -40,7 +40,8 @@ class ReviewType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-                'data_class' => 'Application\MainBundle\Entity\Review',
-            ));
+            'data_class' => 'Application\MainBundle\Entity\Review',
+            'cascade_validation' => true,
+        ));
     }
 }

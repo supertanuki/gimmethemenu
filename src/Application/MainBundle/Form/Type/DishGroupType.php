@@ -24,12 +24,6 @@ class DishGroupType extends AbstractType
                 'allow_delete' => true,
                 'by_reference' => false,
             ))
-            ->add('when', 'date', array(
-                'widget' => 'single_text',
-                'label' => 'When did you eat this?',
-                'mapped' => false,
-                'required' => true
-            ))
         ;
     }
 

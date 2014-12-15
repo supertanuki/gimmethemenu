@@ -19,7 +19,7 @@ class DishChildrenReviewType extends AbstractType
             ))
             ->add('reviews', 'collection', array(
                 'label' => false,
-                'type' => new ReviewWithoutWhenType(),
+                'type' => new ReviewType(),
                 'allow_add' => false,
                 'allow_delete' => false,
                 'by_reference' => false,
