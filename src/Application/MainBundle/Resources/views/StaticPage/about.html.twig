@@ -1,6 +1,13 @@
 {% extends '::base.html.twig' %}
 
-{% block title %}About{% endblock %}
+{% block head_meta %}
+    {% set meta = {
+    'title': 'About',
+    'description': 'Lost in a restaurant menu? Disappointed with the chosen dish? Try GimmeTheMenu'
+    } %}
+    {% include 'ApplicationMainBundle:Common:headMeta.html.twig' with { 'meta': meta } %}
+{% endblock %}
+
 
 {% block body %}
 
@@ -21,29 +28,31 @@
 
     <h2>The story</h2>
 
-    <blockquote>
-        <p>
-            One day I went to a new restaurant near my work, in Paris.
-            The menu was plenty of nice dishes.
-            <br><b>I didn't know what to take.</b>
-        </p>
-        <p>
-            I asked myself if there is a website or an app to help me choose a dish with the reviews and photos of others customers.
-        </p>
-        <p>
-            There is a lot of websites where you can find reviews on the restaurant but Not on dishes.
-            <br><b>So I decided to create it.</b>
-        </p>
-        <p>
-            I imagined also a way to log every dish I eat. I want to see what I eat during a month or during a year.
-        </p>
-        <p>
-            GimmeTheMenu is first for my own use. I hope you will also love to review and log what you eat.
-        </p>
-        <p>
-            As we say in French, <i>Bon Appetit</i>!
-        </p>
-        <footer><a href="{{ path('user_timeline', {'slug': 'richard'}) }}">Richard</a></footer>
-    </blockquote>
+    <div class="well">
+        <blockquote>
+            <p>
+                One day I went to a new restaurant near my work, in Paris.
+                The menu was plenty of nice dishes.
+                <br><b>I didn't know what to take.</b>
+            </p>
+            <p>
+                I asked myself if there is a website or an app to help me choose a dish with the reviews and photos of others customers.
+            </p>
+            <p>
+                There is a lot of websites where you can find reviews on the restaurant but Not on dishes.
+                <br><b>So I decided to create it.</b>
+            </p>
+            <p>
+                I imagined also a way to log every dish I eat. I want to see what I eat during a month or during a year.
+            </p>
+            <p>
+                GimmeTheMenu is first for my own use. I hope you will also love to review and log what you eat.
+            </p>
+            <p>
+                As we say in French, <i>Bon Appetit</i>!
+            </p>
+            <footer><a href="{{ path('user_timeline', {'slug': 'richard'}) }}">Richard</a></footer>
+        </blockquote>
+    </div>
 
 {% endblock %}

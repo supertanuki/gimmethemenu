@@ -1,7 +1,12 @@
 {% extends '::base.html.twig' %}
 
-{% block title %}{{ restaurant.name }} - Restaurant - {{ restaurant.locality }}{% endblock %}
-
+{% block head_meta %}
+    {% set meta = {
+        'title': restaurant.name ~ ' - Restaurant - ' ~ restaurant.locality,
+        'description': 'View the menu and dishes reviews for ' ~ restaurant.name
+    } %}
+    {% include 'ApplicationMainBundle:Common:headMeta.html.twig' with { 'meta': meta } %}
+{% endblock %}
 
 {% block body %}
     <ol class="breadcrumb">

@@ -2,7 +2,13 @@
 
 {% trans_default_domain 'FOSUserBundle' %}
 
-{% block title %}Login{% endblock %}
+{% block head_meta %}
+    {% set meta = {
+    'title': 'Login',
+    'description': 'Start using GimmeTheMenu'
+    } %}
+    {% include 'ApplicationMainBundle:Common:headMeta.html.twig' with { 'meta': meta } %}
+{% endblock %}
 
 {% block h1 %}{% endblock h1 %}
 

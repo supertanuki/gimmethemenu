@@ -1,6 +1,12 @@
 {% extends '::base.html.twig' %}
 
-{% block title %}My profile{% endblock %}
+{% block head_meta %}
+    {% set meta = {
+    'title': 'My profile',
+    'description': 'My profile'
+    } %}
+    {% include 'ApplicationMainBundle:Common:headMeta.html.twig' with { 'meta': meta } %}
+{% endblock %}
 
 {% block h1 %}My profile{% endblock h1 %}
 

@@ -1,6 +1,12 @@
 {% extends '::base.html.twig' %}
 
-{% block title %}Add a review - {{ dish.name }} - {{ dish.restaurant.name }} - Restaurant{% endblock %}
+{% block head_meta %}
+    {% set meta = {
+        'title': 'Add a review: ' ~ dish.name ~ ' - ' ~ restaurant.name,
+        'description': 'Add a review form for ' ~ dish.name
+    } %}
+    {% include 'ApplicationMainBundle:Common:headMeta.html.twig' with { 'meta': meta } %}
+{% endblock %}
 
 {% block body %}
     {% set restaurant_url = path('restaurant_show', {

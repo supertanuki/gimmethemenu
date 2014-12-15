@@ -1,6 +1,12 @@
 {% extends '::base.html.twig' %}
 
-{% block title %}Forbidden access{% endblock %}
+{% block head_meta %}
+    {% set meta = {
+    'title':  'Forbidden access',
+    'description': 'Forbidden access'
+    } %}
+    {% include 'ApplicationMainBundle:Common:headMeta.html.twig' with { 'meta': meta } %}
+{% endblock %}
 
 {% block body %}
     <h1>403</h1>

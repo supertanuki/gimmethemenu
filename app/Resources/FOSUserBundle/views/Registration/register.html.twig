@@ -1,6 +1,12 @@
 {% extends "FOSUserBundle::layout.html.twig" %}
 
-{% block title %}Sign up{% endblock %}
+{% block head_meta %}
+    {% set meta = {
+    'title': 'Sign up',
+    'description': 'Start on Gimme The Menu!'
+    } %}
+    {% include 'ApplicationMainBundle:Common:headMeta.html.twig' with { 'meta': meta } %}
+{% endblock %}
 
 {% block h1 %}{% endblock h1 %}
 

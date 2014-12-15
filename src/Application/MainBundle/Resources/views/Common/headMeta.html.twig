@@ -1,0 +1,22 @@
+{% set meta_title = meta['title'] ? meta['title'] ~ ' - Gimme The Menu' : 'Gimme The Menu' %}
+{% set meta_description = meta.description ? meta.description : 'Make your timeline of visited restaurants! Log all what you eat or drink.' %}
+{% set meta_url = app.request.schemeAndHttpHost ~ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) %}
+
+    <title>{{ meta_title }}</title>
+
+    <meta name="author" content="GimmeTheMenu">
+
+    <meta name="description" content="{{ meta_description }}">
+
+    <meta property="og:title" content="{{ meta_title }}">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ meta_url }}">
+    <meta property="og:image" content="">
+    <meta property="og:description" content="{{ meta_description }}">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@gimmethemenu">
+    <meta name="twitter:url" content="{{ meta_url }}">
+    <meta name="twitter:title" content="{{ meta_title }}">
+    <meta name="twitter:description" content="{{ meta_description }}">
+    <meta name="twitter:image" content="">

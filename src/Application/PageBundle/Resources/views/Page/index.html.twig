@@ -1,6 +1,12 @@
 {% extends '::base.html.twig' %}
 
-{% block title %}{{ page.seoTitle|default(page.title) }}{% endblock %}
+{% block head_meta %}
+    {% set meta = {
+    'title': page.seoTitle|default(page.title),
+    'description': page.seoDescription|default(page.body|striptags)
+    } %}
+    {% include 'ApplicationMainBundle:Common:headMeta.html.twig' with { 'meta': meta } %}
+{% endblock %}
 
 {% block body %}
     <h1>{{ page.title }}</h1>

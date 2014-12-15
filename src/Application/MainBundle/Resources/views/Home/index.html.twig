@@ -1,5 +1,13 @@
 {% extends '::base.html.twig' %}
 
+{% block head_meta %}
+    {% set meta = {
+        'title': '',
+        'description': ''
+    } %}
+    {% include 'ApplicationMainBundle:Common:headMeta.html.twig' with { 'meta': meta } %}
+{% endblock %}
+
 {% block content_outside_container %}
 
     {% if not app.user %}

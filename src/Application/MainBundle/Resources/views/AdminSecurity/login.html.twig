@@ -1,10 +1,6 @@
 {% extends '::base.html.twig' %}
 
-{% block title %}Administration login{% endblock %}
-
 {% block body %}
-    <h1>Administration</h1>
-
     {% if error %}
         <div>{{ error.message|trans }}</div>
     {% endif %}
@@ -16,6 +12,6 @@
         <label for="password">Mot de passe :</label>
         <input type="password" id="password" name="_password" />
 
-        <button type="submit">Valider</button>
+        <button type="submit">Go!</button>
     </form>
 {% endblock %}

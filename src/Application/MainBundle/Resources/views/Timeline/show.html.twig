@@ -1,6 +1,13 @@
 {% extends '::base.html.twig' %}
 
-{% block title %}{{ user.firstName }}'s timeline{% endblock %}
+{% block head_meta %}
+    {% set meta = {
+    'title': user.firstName ~ '\'s timeline',
+    'description': 'Dishes reviews of ' ~ user.firstName
+    } %}
+    {% include 'ApplicationMainBundle:Common:headMeta.html.twig' with { 'meta': meta } %}
+{% endblock %}
+
 
 {% block body %}
 

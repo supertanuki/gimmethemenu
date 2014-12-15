@@ -1,6 +1,12 @@
 {% extends '::base.html.twig' %}
 
-{% block title %}Add a group of dishes - {{ restaurant.name }} - Restaurant{% endblock %}
+{% block head_meta %}
+    {% set meta = {
+    'title': 'Add a meal for ' ~ restaurant.name ~ ' - Restaurant',
+    'description': 'Add a group of dishes form for ' ~ restaurant.name
+    } %}
+    {% include 'ApplicationMainBundle:Common:headMeta.html.twig' with { 'meta': meta } %}
+{% endblock %}
 
 {% block body %}
     <ol class="breadcrumb">

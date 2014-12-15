@@ -21,6 +21,11 @@ class SecurityController extends Controller
 
             $redirect = $request->query->get('redirect');
 
+            $last_visited_restaurant_url = $this->get('session')->get('last_visited_restaurant_url');
+            if (!$redirect && $last_visited_restaurant_url) {
+                $redirect = $last_visited_restaurant_url;
+            }
+
             if (!$redirect) {
                 $redirect = $this->generateUrl('restaurant_search');
             }

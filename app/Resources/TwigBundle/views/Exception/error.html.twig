@@ -1,8 +1,17 @@
 {% extends '::base.html.twig' %}
 
-{% block title %}{{ status_code }} {{ status_text }}{% endblock %}
+{% block head_meta %}
+    {% set meta = {
+    'title':  status_code ~ ' ' ~ status_text,
+    'description': status_text
+    } %}
+    {% include 'ApplicationMainBundle:Common:headMeta.html.twig' with { 'meta': meta } %}
+{% endblock %}
+
 
 {% block body %}
     <h1>Oops!</h1>
-    <h2>{{ status_code }} {{ status_text }}</h2>
+    <div class="well">
+        <h2>{{ status_code }} {{ status_text }}</h2>
+    </div>
 {% endblock body %}

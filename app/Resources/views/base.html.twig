@@ -1,14 +1,40 @@
+<!--
+
+   Welcome to GimmeTheMenu
+   This website is better viewed in a browser !
+
+             _
+   | | | |  | `\
+   | | | |  |   .
+   | | | |  |   C
+   | | | |  |   C
+   |     |  |   C
+   `.   .'  |   C
+     ) (    |   C
+     | |    |   C
+     | |    |   C
+     | |    |   '
+     |_|    |__/
+    /(%)\   |(%)\
+    |(%)|   |(%)|
+    |(%)|   |(%)|
+    |(%)|   |(%)|
+    |(%)|   |(%)|
+    |(%)|   |(%)|
+    |(%)|   |(%)|
+    `---'   `---'
+
+-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="favicon.ico">
 
-    <title>{% block title %}{% endblock %} GimmeTheMenu</title>
+    {% block head_meta %}{% endblock %}
+
+    <link rel="icon" href="favicon.ico">
 
     {% stylesheets
         'bundles/applicationmain/bootstrap/css/bootstrap.min.css'
@@ -50,13 +76,6 @@
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
 
-                {% set current_route = app.request.attributes.get('_route') %}
-                {% if current_route != 'homepage' and current_route != 'restaurant_search' %}
-                    <li><a href="{{ path('restaurant_search') }}">Search a restaurant</a></li>
-                {% endif %}
-
-                <li><a href="{{ path('about') }}">About</a></li>
-
                 {% if app.user %}
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -74,20 +93,35 @@
                     <li><a href="{{ path('fos_user_security_login') }}">Log in</a></li>
                     <li><a href="{{ path('fos_user_registration_register') }}">Sign up</a></li>
                 {% endif %}
+
+                {% set current_route = app.request.attributes.get('_route') %}
+                {% if current_route != 'homepage' and current_route != 'restaurant_search' %}
+                    <li><a href="{{ path('restaurant_search') }}">Search a restaurant</a></li>
+                {% endif %}
+
+                <li><a href="{{ path('about') }}">About</a></li>
             </ul>
         </div><!--/.nav-collapse -->
     </div>
 </nav>
 
 
+{% set messages = app.session.flashbag.get('info') %}
+{% if messages|length %}
+
+    <div class="container">
+        {% for message in messages %}
+            <div class="alert alert-info">{{ message }}</div>
+        {% endfor %}
+    </div> <!-- /container -->
+
+{% endif %}
+
+
 {% block content_outside_container %}{% endblock %}
 
-<div class="container">
-    {# On affiche tous les messages flash dont le nom est « info » #}
-    {% for message in app.session.flashbag.get('info') %}
-        <div class="alert alert-info">{{ message }}</div>
-    {% endfor %}
 
+<div class="container">
     {% block body %}
         <h1>{% block h1 %}{% endblock h1 %}</h1>
     {% endblock body %}

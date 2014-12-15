@@ -1,6 +1,12 @@
 {% extends '::base.html.twig' %}
 
-{% block title %}Changelog{% endblock %}
+{% block head_meta %}
+    {% set meta = {
+    'title': 'Changelog',
+    'description': 'Here, you can follow the evolution of GimmeTheMenu development'
+    } %}
+    {% include 'ApplicationMainBundle:Common:headMeta.html.twig' with { 'meta': meta } %}
+{% endblock %}
 
 {% block body %}
 

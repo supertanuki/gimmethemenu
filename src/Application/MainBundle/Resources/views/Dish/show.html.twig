@@ -1,6 +1,12 @@
 {% extends '::base.html.twig' %}
 
-{% block title %}{{ dish.name }} - {{ dish.restaurant.name }} - Restaurant - {{ dish.restaurant.locality }}{% endblock %}
+{% block head_meta %}
+    {% set meta = {
+    'title': dish.name ~ ' - ' ~ dish.restaurant.name ~' - Restaurant ' ~ ' - ' ~ dish.restaurant.locality,
+    'description': 'Users reviews for ' ~ dish.name
+    } %}
+    {% include 'ApplicationMainBundle:Common:headMeta.html.twig' with { 'meta': meta } %}
+{% endblock %}
 
 {% block body %}
 

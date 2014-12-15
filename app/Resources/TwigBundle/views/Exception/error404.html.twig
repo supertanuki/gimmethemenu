@@ -1,8 +1,16 @@
 {% extends '::base.html.twig' %}
 
-{% block title %}404 Page not found{% endblock %}
+{% block head_meta %}
+    {% set meta = {
+    'title':  '404 Page not found',
+    'description': 'Not found...'
+    } %}
+    {% include 'ApplicationMainBundle:Common:headMeta.html.twig' with { 'meta': meta } %}
+{% endblock %}
 
 {% block body %}
     <h1>404</h1>
-    <h2>Page not found</h2>
+    <div class="well">
+        <h2>Page not found</h2>
+    </div>
 {% endblock body %}

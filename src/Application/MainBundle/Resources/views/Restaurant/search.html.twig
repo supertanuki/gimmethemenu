@@ -1,7 +1,12 @@
 {% extends '::base.html.twig' %}
 
-{% block title %}Search a restaurant{% endblock %}
-
+{% block head_meta %}
+    {% set meta = {
+        'title': 'Search a Restaurant',
+        'description': 'Search a restaurant near you by address or restaurant name'
+    } %}
+    {% include 'ApplicationMainBundle:Common:headMeta.html.twig' with { 'meta': meta } %}
+{% endblock %}
 
 {% block content_outside_container %}
     {% include 'ApplicationMainBundle:Restaurant:search_content.html.twig' %}
