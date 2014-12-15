@@ -10,9 +10,7 @@
 
                 <p>Of course, it's free!</p>
 
-                {% if form_errors(form) %}
-                    <div class="alert alert-danger">{{ form_errors(form) }}</div>
-                {% endif %}
+                {{ form_errors(form) }}
 
                 <form action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="POST">
 

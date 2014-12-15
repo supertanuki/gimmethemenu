@@ -6,10 +6,12 @@ use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="Application\MainBundle\Repository\UserRepository")
  * @ORM\Table(name="user")
+ * @UniqueEntity("email", message="A user already exists with this email")
  */
 class User extends BaseUser
 {

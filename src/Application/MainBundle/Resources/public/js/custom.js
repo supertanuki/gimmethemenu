@@ -1,8 +1,8 @@
 $(document).ready(function() {
-//    $('input').iCheck();
+    // validator for forms
+    $('form').bootstrapValidator();
 
-//    alert (document.getElementsByClassName('images-gallery'));
-
+    // images gallery photoswipe
     initPhotoSwipeFromDOM('.images-gallery');
 });
 

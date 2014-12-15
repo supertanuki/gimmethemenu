@@ -2,18 +2,14 @@
 
 {% block head_meta %}
     {% set meta = {
-        'title': 'Add a review: ' ~ dish.name ~ ' - ' ~ restaurant.name,
+        'title': 'Add a review: ' ~ dish.name ~ ' - ' ~ dish.restaurant.name,
         'description': 'Add a review form for ' ~ dish.name
     } %}
     {% include 'ApplicationMainBundle:Common:headMeta.html.twig' with { 'meta': meta } %}
 {% endblock %}
 
 {% block body %}
-    {% set restaurant_url = path('restaurant_show', {
-        'country_slug': dish.restaurant.country.slug,
-        'locality_slug': dish.restaurant.locality.slug,
-        'restaurant_slug': dish.restaurant.slug
-    }) %}
+    {% set restaurant_url = path('restaurant_show', dish.restaurant.paramsForUrl) %}
 
 
     <ol class="breadcrumb">
