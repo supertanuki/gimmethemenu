@@ -27,20 +27,22 @@ class TimelineController extends Controller
         $logs = array();
 
         //added dishes
-        $dishes = $this->getDoctrine()
-            ->getRepository('ApplicationMainBundle:Dish')
-            ->findBy(
-                array('user' => $user),
-                array('createdAt' => 'DESC')
-            );
+        $dishes = array();
+//        $dishes = $this->getDoctrine()
+//            ->getRepository('ApplicationMainBundle:Dish')
+//            ->findBy(
+//                array('user' => $user),
+//                array('createdAt' => 'DESC')
+//            );
 
         //added menuFile
-        $menuFiles = $this->getDoctrine()
-            ->getRepository('ApplicationMainBundle:RestaurantMenuFile')
-            ->findBy(
-                array('user' => $user),
-                array('createdAt' => 'DESC')
-            );
+        $menuFiles = array();
+//        $menuFiles = $this->getDoctrine()
+//            ->getRepository('ApplicationMainBundle:RestaurantMenuFile')
+//            ->findBy(
+//                array('user' => $user),
+//                array('createdAt' => 'DESC')
+//            );
 
         //added reviews
         $reviews = $this->getDoctrine()

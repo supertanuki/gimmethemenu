@@ -15,16 +15,16 @@
         {{ user.firstName }}'s timeline
     </h1>
 
-    {% if logs|length > 1 %}
-        <nav class="navbar navbar-inverse navbar-fixed-bottom" role="navigation">
-            <div class="container">
-                <ul class="nav nav-pills">
-                    <li class="active" id="timeline_filter_reviews"><a href="#timeline">Only reviews</a></li>
-                    <li id="timeline_filter_all"><a href="#timeline">All activity</a></li>
-                </ul>
-            </div>
-        </nav>
-    {% endif %}
+    {#{% if logs|length > 1 %}#}
+        {#<nav class="navbar navbar-inverse navbar-fixed-bottom" role="navigation">#}
+            {#<div class="container">#}
+                {#<ul class="nav nav-pills">#}
+                    {#<li class="active" id="timeline_filter_reviews"><a href="#timeline">Only reviews</a></li>#}
+                    {#<li id="timeline_filter_all"><a href="#timeline">All activity</a></li>#}
+                {#</ul>#}
+            {#</div>#}
+        {#</nav>#}
+    {#{% endif %}#}
 
     <div class="row">
         <div class="col-md-12">
@@ -145,13 +145,15 @@
 
                             {% set iterator = iterator+1 %}
 
-                            <dd class="{% if iterator is odd %}pos-left{% else %}pos-right{% endif %} clearfix {% if logs|length > 1 %}collapse{% endif %}">
+                            <dd class="{% if iterator is odd %}pos-left{% else %}pos-right{% endif %} clearfix">
                                 <div class="circ"></div>
                                 <div class="time">{{ log['registerAt']|localizeddate('medium', 'none') }}</div>
                                 <div class="events">
-                                    <div class="events-body alert alert-info">
-                                        <span class="glyphicon glyphicon-heart"></span>
-                                        <i>The very first time on</i> GimmeThe<b>Menu</b>
+                                    <div class="events-body">
+                                        <p>
+                                            <span class="glyphicon glyphicon-heart"></span>
+                                            <i>The very first time on</i> GimmeThe<b>Menu</b>
+                                        </p>
                                     </div>
                                 </div>
                             </dd>
