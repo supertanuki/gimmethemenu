@@ -138,7 +138,6 @@ class User extends BaseUser
     public function __construct()
     {
         parent::__construct();
-        $this->reviews = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     public function setEmail($email)
@@ -397,37 +396,4 @@ class User extends BaseUser
 //    {
 //        return $this->projectResponses;
 //    }
-
-    /**
-     * Add reviews
-     *
-     * @param \Application\MainBundle\Entity\Review $reviews
-     * @return User
-     */
-    public function addReview(\Application\MainBundle\Entity\Review $reviews)
-    {
-        $this->reviews[] = $reviews;
-
-        return $this;
-    }
-
-    /**
-     * Remove reviews
-     *
-     * @param \Application\MainBundle\Entity\Review $reviews
-     */
-    public function removeReview(\Application\MainBundle\Entity\Review $reviews)
-    {
-        $this->reviews->removeElement($reviews);
-    }
-
-    /**
-     * Get reviews
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getReviews()
-    {
-        return $this->reviews;
-    }
 }

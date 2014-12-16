@@ -1,0 +1,50 @@
+{% extends '::base.html.twig' %}
+
+{% block head_meta %}
+    {% set meta = {
+    'title': 'Early-adopters users',
+    'description': 'Dishes reviews of early adopters users'
+    } %}
+    {% include 'ApplicationMainBundle:Common:headMeta.html.twig' with { 'meta': meta } %}
+{% endblock %}
+
+
+{% block body %}
+
+    <h1>
+        Early-adopters
+    </h1>
+
+    <table class="table table-striped table-hover">
+        <thead>
+        <tr>
+            <th>User</th>
+            <th>Reviews</th>
+            <th>Last review</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        {% for user in users %}
+        <tr>
+            <td>
+                <a href="{{ path('user_timeline', {'slug':user.slug}) }}">{{ user }}</a>
+            </td>
+            <td>
+                {{ user.reviews|length }}
+            </td>
+            <td>
+                {% if user.reviews|length %}
+                    {% set last_review = user.reviews[user.reviews|length - 1] %}
+                    {% if last_review %}
+                        <a href="{{ path('dish_show', last_review.dish.paramsForUrl) }}">
+                            {{ last_review.dish.name }}
+                        </a>
+                    {% endif %}
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

@@ -89,7 +89,9 @@
                             <li><a href="{{ path('fos_user_security_logout') }}">Logout</a></li>
                         </ul>
                     </li>
+
                     <li><a href="{{ path('user_timeline', { 'slug': app.user.slug }) }}">My timeline</a></li>
+
                 {% else %}
                     <li><a href="{{ path('fos_user_security_login') }}">Log in</a></li>
                     <li><a href="{{ path('fos_user_registration_register') }}">Sign up</a></li>
@@ -98,6 +100,10 @@
                 {% set current_route = app.request.attributes.get('_route') %}
                 {% if current_route != 'homepage' and current_route != 'restaurant_search' %}
                     <li><a href="{{ path('restaurant_search') }}">Search a restaurant</a></li>
+                {% endif %}
+
+                {% if app.user %}
+                    <li><a href="{{ path('users_top') }}">Users</a></li>
                 {% endif %}
 
                 <li><a href="{{ path('about') }}">About</a></li>
