@@ -15,7 +15,7 @@ class RestaurantMenuMultipleFilesType extends AbstractType
         $builder
             ->add('file', 'file', array(
                 'multiple' => true,
-//                "attr" => array("accept" => "image/*"),
+                "attr" => array("accept" => "image/*"),
                 'constraints' => array(
                     new All(array(
                         'constraints' => array(
