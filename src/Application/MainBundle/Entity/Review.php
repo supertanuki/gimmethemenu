@@ -52,6 +52,7 @@ class Review
     /**
      * @var integer
      * @ORM\Column(name="rank", type="integer")
+     * @Assert\Type(type="integer")
      * @Assert\Range(
      *      min = 1,
      *      max = 5,

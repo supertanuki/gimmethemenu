@@ -5,6 +5,8 @@ namespace Application\MainBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Validator\Constraints\All;
+use Symfony\Component\Validator\Constraints\Image;
 
 class RestaurantMenuMultipleFilesType extends AbstractType
 {
@@ -12,7 +14,18 @@ class RestaurantMenuMultipleFilesType extends AbstractType
     {
         $builder
             ->add('file', 'file', array(
-                'multiple' => true
+                'multiple' => true,
+//                "attr" => array("accept" => "image/*"),
+                'constraints' => array(
+                    new All(array(
+                        'constraints' => array(
+                            new Image(array(
+                                'mimeTypes' => array('image/png', 'image/jpeg', 'image/pjpeg'),
+                                'mimeTypesMessage' => 'Please upload a jpg or a png photo'
+                            )),
+                        ))
+                    )
+                )
             ))
         ;
     }

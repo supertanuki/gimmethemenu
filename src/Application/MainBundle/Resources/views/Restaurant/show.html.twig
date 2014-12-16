@@ -164,7 +164,7 @@
 
                     <a name="add-a-dish"></a>
                     {% if app.user %}
-                        Or <a href="#" class="btn btn-primary" onclick="$('#addDishForm').toggle(); return false">add a dish</a>
+                        Or <a href="#add-a-dish" class="btn btn-primary" onclick="$('#addDishForm').toggle();">add a dish</a>
                     {% else %}
                         Or you can add a dish if you're logged. {% include 'ApplicationMainBundle:Security:loginOrSigninLinks.html.twig' with {'redirect': restaurant_url} %}
                     {% endif %}

@@ -13,6 +13,7 @@ class ReviewType extends AbstractType
         $builder
             ->add('rank', null, array(
                 'label' => 'Your rating',
+                'required' => true,
             ))
             ->add('review', null, array(
                 'label' => 'Your review',
@@ -41,7 +42,6 @@ class ReviewType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => 'Application\MainBundle\Entity\Review',
-            'cascade_validation' => true,
         ));
     }
 }
