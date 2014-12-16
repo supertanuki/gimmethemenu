@@ -23,6 +23,7 @@ class DishChildrenReviewType extends AbstractType
                 'allow_add' => false,
                 'allow_delete' => false,
                 'by_reference' => false,
+                'cascade_validation' => true,
             ))
         ;
     }

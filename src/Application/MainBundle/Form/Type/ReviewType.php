@@ -29,6 +29,7 @@ class ReviewType extends AbstractType
             ->add('photoFile', 'file', array(
                 'label' => 'Photo',
                 'required' => false,
+                'attr' => array("accept" => "image/*"),
             ))
         ;
     }

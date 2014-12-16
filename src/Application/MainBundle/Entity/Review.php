@@ -52,7 +52,7 @@ class Review
     /**
      * @var integer
      * @ORM\Column(name="rank", type="integer")
-     * @Assert\Type(type="integer")
+     * @Assert\NotBlank(message="Please select between 1 and 5 hearts for rating")
      * @Assert\Range(
      *      min = 1,
      *      max = 5,

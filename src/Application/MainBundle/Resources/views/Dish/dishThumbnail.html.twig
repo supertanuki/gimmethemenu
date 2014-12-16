@@ -20,18 +20,20 @@
                     <span class="label label-warning">{{ dish.price }}&nbsp;&euro;</span>
                 {% endif %}
 
-                {% if dish.dishes|length %}
+                {% if dish.parent %}
+                    <span class="label label-danger">
+                        in a meal
+                    </span>
+                {% endif %}
 
+                {% if dish.dishes|length %}
                     <span class="label label-danger">
                         Meal
                     </span>
-
                 {% else %}
-
                     <span class="label label-success">
                         {{ dish.reviews|length }} {{ dish.reviews|length > 1 ? 'reviews' : 'review' }}
                     </span>
-
                 {% endif %}
             </a>
         </p>

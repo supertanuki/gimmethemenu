@@ -93,7 +93,7 @@ class Dish
     protected $dishes;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Dish", inversedBy="dishes")
+     * @ORM\ManyToOne(targetEntity="Dish", inversedBy="dishes", cascade={"persist"})
      * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", nullable=true)
      */
     protected $parent;
