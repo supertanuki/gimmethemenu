@@ -137,6 +137,10 @@ liip_imagine:
             quality: 90
             filters:
                 thumbnail: { size: [600, 600], mode: inset }
+        largest:
+            quality: 90
+            filters:
+                thumbnail: { size: [1200, 1200], mode: inset }
 
 ewz_recaptcha:
     public_key:   6Lcn2_gSAAAAADTIWqTFAmKp6PjQGmynjqVKXIdB # keys for localhost

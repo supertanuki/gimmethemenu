@@ -12,7 +12,12 @@ class ImageSizeExtension extends \Twig_Extension
 
     public function imageSizeFilter($file, $option = null)
     {
-        $size = @getimagesize(__DIR__ . '/../../../../web' . $file);
+        $root = '';
+        if (substr($file, 0, 4) != 'http') {
+            $root = __DIR__ . '/../../../../web';
+        }
+
+        $size = @getimagesize($root . $file);
 
         if (!$size[0]) {
             return '';

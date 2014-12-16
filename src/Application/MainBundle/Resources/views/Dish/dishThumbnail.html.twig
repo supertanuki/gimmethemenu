@@ -3,7 +3,7 @@
 
     {% if dish.reviews|length and dish.reviews[0].photoName %}
         <a href="{{ dish_url }}" class="zoom-hover">
-            <img class="img-rounded" src="{{ vich_uploader_asset(dish.reviews[0], 'dish_photo') | imagine_filter('thumb') }}">
+            <img class="img-rounded" src="{{ vich_uploader_asset(dish.reviews[0], 'dish_photo') | imagine_filter('square') }}">
         </a>
     {% endif %}
 

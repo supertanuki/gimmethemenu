@@ -79,10 +79,10 @@
                                 <a href="{{ vich_uploader_asset(menuFile, 'restaurant_menu_file') }}"
                                    class="zoom-hover"
                                    title="Added by {{ menuFile.user }}"
-                                   data-msrc="{{ vich_uploader_asset(menuFile, 'restaurant_menu_file') | imagine_filter('thumb') }}"
+                                   data-msrc="{{ vich_uploader_asset(menuFile, 'restaurant_menu_file')|imagine_filter('thumb') }}"
                                    data-size="{{ vich_uploader_asset(menuFile, 'restaurant_menu_file')|image_size('x') }}"
                                         >
-                                    <img src="{{ vich_uploader_asset(menuFile, 'restaurant_menu_file') | imagine_filter('square') }}" class="img-rounded">
+                                    <img src="{{ vich_uploader_asset(menuFile, 'restaurant_menu_file')|imagine_filter('square') }}" class="img-rounded">
                                 </a>
                             </div>
                         </div>
