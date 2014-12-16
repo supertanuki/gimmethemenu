@@ -23,6 +23,7 @@
 
 <div class="form-group">
     {{ form_label(review.review) }} *
+    <p class="help-block">At least 20 characters, humor required!</p>
     {{ form_errors(review.review) }}
     {{ form_widget(review.review, {'attr': {'class': 'form-control'}}) }}
 </div>
