@@ -141,14 +141,19 @@ class RestaurantController extends Controller
             ->getRepository('ApplicationMainBundle:Dish')
             ->findBy(array('restaurant' => $restaurant));
 
-        $form_menu = $this->getFormRestaurantMenu($request, $restaurant);
-        if ($form_menu instanceof RedirectResponse || $form_menu instanceof Response) {
-            return $form_menu;
-        }
+        $form_menu = null;
+        $form_dish = null;
 
-        $form_dish = $this->getFormDish($request, $restaurant);
-        if ($form_dish instanceof RedirectResponse || $form_dish instanceof Response) {
-            return $form_dish;
+        if ($this->getUser()) {
+            $form_menu = $this->getFormRestaurantMenu($request, $restaurant);
+            if ($form_menu instanceof RedirectResponse || $form_menu instanceof Response) {
+                return $form_menu;
+            }
+
+            $form_dish = $this->getFormDish($request, $restaurant);
+            if ($form_dish instanceof RedirectResponse || $form_dish instanceof Response) {
+                return $form_dish;
+            }
         }
 
         // set this restaurant in session
@@ -161,8 +166,8 @@ class RestaurantController extends Controller
                 'restaurant' => $restaurant,
                 'restaurant_url' => $this->getRestaurantUrl($restaurant),
                 'dishes' => $dishes,
-                'form_restaurant_menu' => $form_menu->createView(),
-                'form_dish' => $form_dish->createView(),
+                'form_restaurant_menu' => $form_menu ? $form_menu->createView() : null,
+                'form_dish' => $form_dish ? $form_dish->createView() : null,
             )
         );
     }
