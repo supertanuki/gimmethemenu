@@ -1,0 +1,29 @@
+liip_imagine:
+    resolvers:
+        default:
+            web_path:
+                web_root: %kernel.root_dir%/../web
+                cache_prefix: uploads/cache
+
+    filter_sets:
+        cache: ~
+        square:
+            quality: 90
+            filters:
+                auto_rotate: ~
+                thumbnail: { size: [160, 160], mode: outbound, allow_upscale: true }
+        thumb:
+            quality: 90
+            filters:
+                auto_rotate: ~
+                thumbnail: { size: [160, 160], mode: inset }
+        large:
+            quality: 90
+            filters:
+                auto_rotate: ~
+                thumbnail: { size: [600, 600], mode: inset }
+        largest:
+            quality: 90
+            filters:
+                auto_rotate: ~
+                thumbnail: { size: [1200, 1200], mode: inset }

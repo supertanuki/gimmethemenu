@@ -2,6 +2,7 @@ imports:
     - { resource: security.yml }
     - { resource: sonata.yml }
     - { resource: doctrine_extensions.yml }
+    - { resource: liip_imagine.yml }
     - { resource: parameters.yml }
 
 framework:
@@ -115,32 +116,6 @@ vich_uploader:
             inject_on_load:     false
             delete_on_update:   true
             delete_on_remove:   true
-
-liip_imagine:
-    resolvers:
-        default:
-            web_path:
-                web_root: %kernel.root_dir%/../web
-                cache_prefix: uploads/cache
-
-    filter_sets:
-        cache: ~
-        square:
-            quality: 90
-            filters:
-                thumbnail: { size: [160, 160], mode: outbound, allow_upscale: true }
-        thumb:
-            quality: 90
-            filters:
-                thumbnail: { size: [160, 160], mode: inset }
-        large:
-            quality: 90
-            filters:
-                thumbnail: { size: [600, 600], mode: inset }
-        largest:
-            quality: 90
-            filters:
-                thumbnail: { size: [1200, 1200], mode: inset }
 
 ewz_recaptcha:
     public_key:   6Lcn2_gSAAAAADTIWqTFAmKp6PjQGmynjqVKXIdB # keys for localhost
