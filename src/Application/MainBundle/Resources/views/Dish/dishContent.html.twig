@@ -59,6 +59,7 @@
 
             <li><a href="#reviews">Reviews</a></li>
 
+            {% if app.user %}
             <li>
                 {% if not already_reviewed %}
                     <a href="#add-my-review" onclick="$('#addMyReviewBtn').click();">
@@ -70,15 +71,18 @@
                     </a>
                 {% endif %}
             </li>
+            {% endif %}
 
         </ul>
     </div>
 </nav>
 
+{% if app.user %}
 <a name="add-my-review"></a>
 
 <div class="row">
     <div class="col-xs-12 col-md-6 col-md-offset-3">
+
         <p class="text-center">
 
             {% if not already_reviewed %}
@@ -114,8 +118,10 @@
                 {% include 'ApplicationMainBundle:Review:reviewForm.html.twig' with {'form_review': form_review} %}
             </div>
         </div>
+
     </div>
 </div>
+{% endif %}
 
 
 <a name="photos"></a>
@@ -216,6 +222,23 @@
                     </dd>
                 {% endfor %}
 
+                {% if not app.user %}
+                    <dd class="pos-right clearfix">
+                        <div class="circ"></div>
+                        <div class="time hidden-xs"></div>
+                        <div class="events">
+                            <div class="events-body">
+
+                                <p>
+                                    To add your review :
+                                </p>
+
+                                {% include 'ApplicationMainBundle:Security:loginOrSigninLinks.html.twig' with {'redirect': path('dish_show', dish.paramsForUrl)} %}
+
+                            </div>
+                        </div>
+                    </dd>
+                {% endif %}
             </dl>
         </div><!-- reviews -->
 

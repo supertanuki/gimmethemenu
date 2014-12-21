@@ -39,7 +39,11 @@
     {% endfor %}
 
     <div class="col-xs-6 col-sm-3 col-md-2">
-        <a href="{{ path('dish_child_add', dish.paramsForUrl) }}" class="btn btn-primary">Add a dish</a>
+
+        {% if app.user %}
+            <a href="{{ path('dish_child_add', dish.paramsForUrl) }}" class="btn btn-primary">Add a dish</a>
+        {% endif %}
+
     </div>
 
 </div><!-- /row -->
