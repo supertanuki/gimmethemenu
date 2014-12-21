@@ -10,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Application\MainBundle\Entity\Dish;
 use Application\MainBundle\Entity\Review;
 use Application\MainBundle\Form\Type\ReviewType;
+use Application\MainBundle\Form\Type\ReviewQuickType;
 use Application\MainBundle\Form\Type\DishChildrenReviewType;
 use Application\MainBundle\Form\Type\DishGroupType;
 
@@ -79,6 +80,78 @@ class DishController extends Controller
 
         return $this->render(
             'ApplicationMainBundle:Dish:show.html.twig',
+            array(
+                'dish' => $dish,
+                'form_review' => $form_review->createView(),
+                'already_reviewed' => $this->reviewDishByUserExists($dish, $this->getUser()),
+            )
+        );
+    }
+
+
+    /**
+     * @Route("/restaurant/{country_slug}/{locality_slug}/{restaurant_slug}/{dish_slug}/add-quick-review", name="review_quick_add")
+     * @Method("get|post")
+     */
+    public function addQuickReviewAction(Request $request, $country_slug, $locality_slug, $restaurant_slug, $dish_slug)
+    {
+        if (!$this->getUser()) {
+            throw $this->createNotFoundException('You are not logged');
+        }
+
+        $restaurant = $this->getDoctrine()
+            ->getRepository('ApplicationMainBundle:Restaurant')
+            ->findOneBy(array('slug' => $restaurant_slug));
+
+        if (!$restaurant) {
+            throw $this->createNotFoundException('Restaurant not found');
+        }
+
+        // @todo : verify $country_slug & $locality_slug
+
+        $dish = $this->getDoctrine()
+            ->getRepository('ApplicationMainBundle:Dish')
+            ->findOneBy(array('slug' => $dish_slug));
+
+        if (!$dish) {
+            throw $this->createNotFoundException('Dish not found');
+        }
+
+        // Check if there is already a review for this dish by this user
+        if (!$this->reviewDishByUserExists($dish, $this->getUser())) {
+            $this->get('session')->getFlashBag()->add('info', 'You need to have already a review to add a quick review');
+            throw $this->createAccessDeniedException('You need to have already a review to add a quick review');
+        }
+
+        // review form begin
+        $review = new Review();
+        $review->setWhen(new \DateTime("now"));
+
+        $form_review = $this->createForm(
+            new ReviewQuickType(),
+            $review
+        );
+
+        if ($request->getMethod() === 'POST') {
+            $form_review->handleRequest($request);
+            if ($form_review->isValid()) {
+                $em = $this->getDoctrine()->getManager();
+                $review->setUser($this->getUser());
+                $review->setDish($dish);
+                $dish->getReviews()->add($review);
+                $em->persist($review);
+                $em->flush();
+
+                $this->get('session')->getFlashBag()->add('info', 'The quick review is created. Thank you!');
+
+                // redirect
+                return $this->redirect($this->getDishUrl($dish));
+            }
+        }
+        // review form end
+
+        return $this->render(
+            'ApplicationMainBundle:Review:addQuickReview.html.twig',
             array(
                 'dish' => $dish,
                 'form_review' => $form_review->createView(),
@@ -186,8 +259,6 @@ class DishController extends Controller
             throw $this->createNotFoundException('Restaurant not found');
         }
 
-
-
         $dish = $this->getDoctrine()
             ->getRepository('ApplicationMainBundle:Dish')
             ->findOneBy(array('slug' => $dish_slug));
@@ -280,5 +351,29 @@ class DishController extends Controller
     private function getDishUrl($dish)
     {
         return $this->generateUrl('dish_show', $dish->getParamsForUrl());
+    }
+
+    /*
+     * Check if there is already a review for this dish by this user
+     * @return boolean
+     */
+    private function reviewDishByUserExists($dish, $user)
+    {
+        if (!$user) {
+            return false;
+        }
+
+        $review = $this->getDoctrine()
+            ->getRepository('ApplicationMainBundle:review')
+            ->findOneBy(array(
+                'dish' => $dish,
+                'user' => $user,
+            ));
+
+        if ($review) {
+            return true;
+        }
+
+        return false;
     }
 }

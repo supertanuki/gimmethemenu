@@ -26,7 +26,7 @@ class Review
     /**
      * @var string
      *
-     * @ORM\Column(name="review", type="text")
+     * @ORM\Column(name="review", type="text", nullable=true)
      * @Assert\Length(
      *      min = "20",
      *      minMessage = "Your review must be at least {{ limit }} characters long"

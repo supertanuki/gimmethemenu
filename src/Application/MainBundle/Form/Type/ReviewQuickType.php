@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class ReviewType extends AbstractType
+class ReviewQuickType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -14,9 +14,6 @@ class ReviewType extends AbstractType
             ->add('rank', null, array(
                 'label' => 'Your rating',
                 'required' => true,
-            ))
-            ->add('review', null, array(
-                'label' => 'Your review',
             ))
             ->add('personalNote', null, array(
                 'label' => 'Your personal note',
@@ -27,17 +24,12 @@ class ReviewType extends AbstractType
                 'label' => 'When did you eat or drink this?',
                 'required' => true,
             ))
-            ->add('photoFile', 'file', array(
-                'label' => 'Photo',
-                'required' => false,
-                'attr' => array("accept" => "image/*"),
-            ))
         ;
     }
 
     public function getName()
     {
-        return 'application_main_review';
+        return 'application_main_review_quick';
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

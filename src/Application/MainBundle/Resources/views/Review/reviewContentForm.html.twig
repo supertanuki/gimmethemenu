@@ -21,19 +21,23 @@
     </div>
 </div>
 
+{% if review.review is defined %}
 <div class="form-group">
     {{ form_label(review.review) }} *
     <p class="help-block">At least 20 characters, humor required!</p>
     {{ form_errors(review.review) }}
     {{ form_widget(review.review, {'attr': {'class': 'form-control'}}) }}
 </div>
+{% endif %}
 
+{% if review.photoFile is defined %}
 <div class="form-group">
     {{ form_label(review.photoFile) }}
     {{ form_errors(review.photoFile) }}
     {#<p>The dish! Say &ldquo;sheeez&rdquo;!</p>#}
     {{ form_widget(review.photoFile, {'attr': {'class': 'form-control'}}) }}
 </div>
+{% endif %}
 
 <div class="form-group">
     {{ form_label(review.personalNote) }}
