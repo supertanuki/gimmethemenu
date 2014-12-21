@@ -1,0 +1,48 @@
+{% if restaurant.restaurantMenuFiles|length > 0 %}
+    <div class="row images-gallery">
+
+        {% for key, menuFile in restaurant.restaurantMenuFiles %}
+            <div class="col-xs-4 col-sm-3 col-md-3">
+                <div class="thumbnail">
+                    <a href="{{ vich_uploader_asset(menuFile, 'restaurant_menu_file')|imagine_filter('largest') }}"
+                       class="zoom-hover"
+                       title="Added by {{ menuFile.user }}"
+                       data-msrc="{{ vich_uploader_asset(menuFile, 'restaurant_menu_file')|imagine_filter('thumb') }}"
+                       data-size="{{ vich_uploader_asset(menuFile, 'restaurant_menu_file')|imagine_filter('largest')|image_size('x') }}"
+                       >
+                       <img src="{{ vich_uploader_asset(menuFile, 'restaurant_menu_file')|imagine_filter('square') }}" class="img-rounded">
+                    </a>
+                </div>
+            </div>
+        {% endfor %}
+
+    </div>
+{% endif %}
+
+<div class="panel panel-info">
+    <div class="panel-heading">
+        <h3 class="panel-title">
+            {% if restaurant.restaurantMenuFiles|length > 0 %}
+                The menu has changed or is incomplete?
+            {% else %}
+                You're the first one!
+            {% endif %}
+        </h3>
+    </div>
+
+    <div class="panel-body">
+        <div class="alert alert-warning">
+            Take photos of the menu with your mobile and upload them!
+        </div>
+
+        {% if not app.user %}
+
+            {% include 'ApplicationMainBundle:Security:loginOrSigninLinks.html.twig' with {'redirect': restaurant_url} %}
+
+        {% else %}
+
+            {% include 'ApplicationMainBundle:Restaurant:menuForm.html.twig' with {'form_restaurant_menu': form_restaurant_menu} %}
+
+        {% endif %}
+    </div>
+</div>
