@@ -4,9 +4,9 @@ namespace Application\MainBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
-use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * RestaurantMenuFile
@@ -27,22 +27,47 @@ class RestaurantMenuFile
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="restaurant", inversedBy="restaurantMenuFiles")
+     * @ORM\ManyToOne(targetEntity="Restaurant", inversedBy="restaurantMenuFiles")
      * @ORM\JoinColumn(name="restaurant_id", referencedColumnName="id", nullable=false)
      */
     protected $restaurant;
 
     /**
      * @Vich\UploadableField(mapping="restaurant_menu_file", fileNameProperty="fileName")
+     * @Assert\File(
+     *     maxSize="5M",
+     *     mimeTypes={"image/png", "image/jpeg", "image/pjpeg"},
+     *     mimeTypesMessage = "Please upload a jpg or a png photo"
+     * )
      * @var File $fileFile
      */
     protected $fileFile;
 
     /**
-     * @ORM\Column(type="string", length=255, name="file_name", nullable=true)
+     * @ORM\Column(type="string", length=255, name="file_name", nullable=false)
      * @var string $fileName
      */
     protected $fileName;
+
+    /**
+     * @ORM\Column(type="string", length=255, name="largest_file", nullable=true)
+     * @var string $largestFile
+     */
+    protected $largestFile;
+
+    /**
+     * @ORM\Column(type="integer", name="largest_width", nullable=true)
+     * @var integer $largestWidth
+     * this is the width of the "largest" image resized by liip imagine
+     */
+    protected $largestWidth;
+
+    /**
+     * @ORM\Column(type="integer", name="largest_height", nullable=true)
+     * @var integer $largestHeight
+     * this is the height of the "largest" image resized by liip imagine
+     */
+    protected $largestHeight;
 
     /**
      * @ORM\ManyToOne(targetEntity="User")
@@ -93,7 +118,7 @@ class RestaurantMenuFile
     /**
      * @return File
      */
-    public function getfileFile()
+    public function getFileFile()
     {
         return $this->fileFile;
     }
@@ -198,5 +223,74 @@ class RestaurantMenuFile
     public function getRestaurant()
     {
         return $this->restaurant;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \Application\MainBundle\Entity\User $user
+     * @return RestaurantMenuFile
+     */
+    public function setUser(\Application\MainBundle\Entity\User $user)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \Application\MainBundle\Entity\User 
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * Set largestWidth
+     *
+     * @param integer $largestWidth
+     * @return RestaurantMenuFile
+     */
+    public function setLargestWidth($largestWidth)
+    {
+        $this->largestWidth = $largestWidth;
+
+        return $this;
+    }
+
+    /**
+     * Get largestWidth
+     *
+     * @return integer 
+     */
+    public function getLargestWidth()
+    {
+        return $this->largestWidth;
+    }
+
+    /**
+     * Set largestHeight
+     *
+     * @param integer $largestHeight
+     * @return RestaurantMenuFile
+     */
+    public function setLargestHeight($largestHeight)
+    {
+        $this->largestHeight = $largestHeight;
+
+        return $this;
+    }
+
+    /**
+     * Get largestHeight
+     *
+     * @return integer 
+     */
+    public function getLargestHeight()
+    {
+        return $this->largestHeight;
     }
 }

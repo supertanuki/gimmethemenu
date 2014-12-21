@@ -57,6 +57,8 @@
         <hr>
     </address>
 
+
+
     <div id="restaurant-address-map" class="well collapse">
         <address>
             {{ restaurant.fullAddress }}<br>
@@ -66,143 +68,20 @@
         <div id="map_restaurant"></div>
     </div>
 
+
+
     <div class="row">
         <div class="col-md-6">
             <h2><a name="menu"></a>The menu</h2>
 
-            {% if restaurant.restaurantMenuFiles|length > 0 %}
-                <div class="row images-gallery">
+            {% include 'ApplicationMainBundle:Restaurant:menu_content.html.twig' %}
 
-                    {% for key, menuFile in restaurant.restaurantMenuFiles %}
-                        <div class="col-xs-4 col-sm-3 col-md-3">
-                            <div class="thumbnail">
-                                <a href="{{ vich_uploader_asset(menuFile, 'restaurant_menu_file') }}"
-                                   class="zoom-hover"
-                                   title="Added by {{ menuFile.user }}"
-                                   data-msrc="{{ vich_uploader_asset(menuFile, 'restaurant_menu_file')|imagine_filter('thumb') }}"
-                                   data-size="{{ vich_uploader_asset(menuFile, 'restaurant_menu_file')|image_size('x') }}"
-                                        >
-                                    <img src="{{ vich_uploader_asset(menuFile, 'restaurant_menu_file')|imagine_filter('square') }}" class="img-rounded">
-                                </a>
-                            </div>
-                        </div>
-                    {% endfor %}
-
-                </div>
-            {% endif %}
-
-            <div class="panel panel-info">
-                <div class="panel-heading">
-                    <h3 class="panel-title">
-                        {% if restaurant.restaurantMenuFiles|length > 0 %}
-                            The menu has changed or is incomplete?
-                        {% else %}
-                            You're the first one!
-                        {% endif %}
-                    </h3>
-                </div>
-
-                <div class="panel-body">
-                    <div class="alert alert-warning">
-                        Take photos of the menu with your mobile and upload them!
-                    </div>
-
-                    {% if not app.user %}
-
-                        {% include 'ApplicationMainBundle:Security:loginOrSigninLinks.html.twig' with {'redirect': restaurant_url} %}
-
-                    {% else %}
-
-                        {% include 'ApplicationMainBundle:Restaurant:menuForm.html.twig' with {'form_restaurant_menu': form_restaurant_menu} %}
-
-                    {% endif %}
-                </div>
-            </div>
         </div>
 
         <div class="col-md-6">
-
             <h2>The dishes</h2>
 
-            {% if dishes|length == 0 %}
-
-                <a name="add-a-dish"></a>
-                <div class="panel panel-info">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Dibs!</h3>
-                    </div>
-                    <div class="panel-body">
-                        <div class="alert alert-warning">
-                            Add the first dish for this restaurant
-                        </div>
-
-                        {% if not app.user %}
-
-                            {% include 'ApplicationMainBundle:Security:loginOrSigninLinks.html.twig' with {'redirect': restaurant_url} %}
-
-                        {% else %}
-
-                            <p>
-                                <a href="{{ path('add_group_dishes', restaurant.paramsForUrl) }}">Do you prefer to add a meal ?</a>
-                                <small>(for example starter + main course + dessert)</small>
-                            </p>
-
-                            {% include 'ApplicationMainBundle:Dish:dishForm.html.twig' with {'form_dish': form_dish} %}
-
-                        {% endif %}
-                    </div>
-                </div>
-
-            {% else %}
-
-
-
-
-
-                <div class="well">
-                    Choose one below to see reviews and photos.
-
-                    <a name="add-a-dish"></a>
-                    {% if app.user %}
-                        Or <a href="#add-a-dish" class="btn btn-primary" onclick="$('#addDishForm').toggle();">add a dish</a>
-                    {% else %}
-                        Or you can add a dish if you're logged. {% include 'ApplicationMainBundle:Security:loginOrSigninLinks.html.twig' with {'redirect': restaurant_url} %}
-                    {% endif %}
-                </div>
-
-                {% if app.user %}
-                    <div id="addDishForm" class="panel panel-info collapse">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">Add a dish or a drink</h3>
-                        </div>
-                        <div class="panel-body">
-
-                            <p>
-                                <a href="{{ path('add_group_dishes', restaurant.paramsForUrl) }}">Do you prefer to add a meal ?</a>
-                                <small>(for example starter + main course + dessert)</small>
-                            </p>
-
-                            {% include 'ApplicationMainBundle:Dish:dishForm.html.twig' with {'form_dish': form_dish} %}
-
-                        </div>
-                    </div>
-                {% endif %}
-
-                <a name="dishes"></a>
-                <div class="row">
-
-                    {% for dish in dishes %}
-
-                        <div class="col-xs-6 col-sm-4 col-md-4">
-
-                            {% include 'ApplicationMainBundle:Dish:dishThumbnail.html.twig' with {'dish': dish} %}
-
-                        </div>
-                    {% endfor %}
-
-                </div><!-- /row -->
-            {% endif %}
-
+            {% include 'ApplicationMainBundle:Restaurant:dishes_content.html.twig' %}
 
         </div><!-- /col-md-6 -->
     </div><!-- /row -->

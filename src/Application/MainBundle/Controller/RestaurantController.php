@@ -160,6 +160,9 @@ class RestaurantController extends Controller
         $this->get('session')->set('last_visited_restaurant_url', $this->getRestaurantUrl($restaurant));
         $this->get('session')->set('last_visited_restaurant_name', $restaurant->getName());
 
+
+//        $this->get('liip_imagine.cache.manager')->getBrowserPath('/relative/path/to/image.jpg', 'my_thumb', true),
+
         return $this->render(
             'ApplicationMainBundle:Restaurant:show.html.twig',
             array(

@@ -50,6 +50,26 @@ class RestaurantMenuFile
     protected $fileName;
 
     /**
+     * @ORM\Column(type="string", length=255, name="largest_file", nullable=true)
+     * @var string $largestFile
+     */
+    protected $largestFile;
+
+    /**
+     * @ORM\Column(type="integer", name="largest_width", nullable=true)
+     * @var integer $largestWidth
+     * this is the width of the "largest" image resized by liip imagine
+     */
+    protected $largestWidth;
+
+    /**
+     * @ORM\Column(type="integer", name="largest_height", nullable=true)
+     * @var integer $largestHeight
+     * this is the height of the "largest" image resized by liip imagine
+     */
+    protected $largestHeight;
+
+    /**
      * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
      */
@@ -226,5 +246,74 @@ class RestaurantMenuFile
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Set largestWidth
+     *
+     * @param integer $largestWidth
+     * @return RestaurantMenuFile
+     */
+    public function setLargestWidth($largestWidth)
+    {
+        $this->largestWidth = $largestWidth;
+
+        return $this;
+    }
+
+    /**
+     * Get largestWidth
+     *
+     * @return integer 
+     */
+    public function getLargestWidth()
+    {
+        return $this->largestWidth;
+    }
+
+    /**
+     * Set largestHeight
+     *
+     * @param integer $largestHeight
+     * @return RestaurantMenuFile
+     */
+    public function setLargestHeight($largestHeight)
+    {
+        $this->largestHeight = $largestHeight;
+
+        return $this;
+    }
+
+    /**
+     * Get largestHeight
+     *
+     * @return integer 
+     */
+    public function getLargestHeight()
+    {
+        return $this->largestHeight;
+    }
+
+    /**
+     * Set largestFile
+     *
+     * @param string $largestFile
+     * @return RestaurantMenuFile
+     */
+    public function setLargestFile($largestFile)
+    {
+        $this->largestFile = $largestFile;
+
+        return $this;
+    }
+
+    /**
+     * Get largestFile
+     *
+     * @return string 
+     */
+    public function getLargestFile()
+    {
+        return $this->largestFile;
     }
 }
