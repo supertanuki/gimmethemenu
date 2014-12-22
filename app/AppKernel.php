@@ -21,6 +21,9 @@ class AppKernel extends Kernel
             // User
             new FOS\UserBundle\FOSUserBundle(),
 
+            // OAuth client to integrate Facebook and Twitter login
+            new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
+
             // Recaptcha
             new EWZ\Bundle\RecaptchaBundle\EWZRecaptchaBundle(),
 

@@ -1,6 +1,10 @@
-# # Customization of fos_user_security_login
-#fos_user_security:
-#    resource: "@FOSUserBundle/Resources/config/routing/security.xml"
+hwi_oauth_redirect:
+    resource: "@HWIOAuthBundle/Resources/config/routing/redirect.xml"
+    prefix:   /connect
+
+hwi_oauth_login:
+    resource: "@HWIOAuthBundle/Resources/config/routing/login.xml"
+    prefix:   /oauth
 
 fos_user_security_login:
     pattern: /login

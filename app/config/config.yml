@@ -3,6 +3,7 @@ imports:
     - { resource: sonata.yml }
     - { resource: doctrine_extensions.yml }
     - { resource: liip_imagine.yml }
+    - { resource: hwi_oauth.yml }
     - { resource: parameters.yml }
 
 framework:
