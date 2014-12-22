@@ -1,9 +1,18 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
 <div class="well">
+    {% if not user.facebookId %}
+        <p>
+            <b>Connect your accounts :</b>
+            {{ render(url('hwi_oauth_connect')) }}
+        </p>
+        <hr>
+    {% endif %}
+
     <ul>
-        <li>{{ user.email }}</li>
-        <li>First name : {{ user.firstName }}</li>
+        <li>Email: <b>{{ user.email }}</b></li>
+        <li>First name: <b>{{ user.firstName }}</b></li>
     </ul>
-    <p><a href="{{ path('fos_user_profile_edit') }}">Update</a></p>
+
+    <p><a href="{{ path('fos_user_profile_edit') }}" class="btn btn-default">Edit</a></p>
 </div>

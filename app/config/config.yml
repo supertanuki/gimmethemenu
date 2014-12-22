@@ -1,4 +1,5 @@
 imports:
+    - { resource: services.yml }
     - { resource: security.yml }
     - { resource: sonata.yml }
     - { resource: doctrine_extensions.yml }
@@ -27,16 +28,12 @@ framework:
     fragments:       ~
     http_method_override: true
 
-services:
-    twig.extension.intl:
-       class: Twig_Extensions_Extension_Intl
-       tags:
-           - { name: twig.extension }
-
 # Twig Configuration
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+    globals:
+        facebook_app_id: "%facebook_app_id%"
     form:
         resources:
             - 'SonataFormatterBundle:Form:formatter.html.twig'
@@ -83,6 +80,8 @@ fos_user:
     db_driver: orm
     firewall_name: main
     user_class: Application\MainBundle\Entity\User
+    service:
+        user_manager: application_main.user_manager
     registration:
         form:
             type: application_main_user_registration

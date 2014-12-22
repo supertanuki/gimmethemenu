@@ -1,0 +1,17 @@
+{% extends '::base.html.twig' %}
+
+{% block head_meta %}
+    {% set meta = {
+    'title': 'Connect',
+    'description': 'Connect'
+    } %}
+    {% include 'ApplicationMainBundle:Common:headMeta.html.twig' with { 'meta': meta } %}
+{% endblock %}
+
+{% block h1 %}Connect{% endblock h1 %}
+
+{% block body %}
+    {{ parent() }}
+    {% block hwi_oauth_content %}
+    {% endblock hwi_oauth_content %}
+{% endblock body %}

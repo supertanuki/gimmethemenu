@@ -1,7 +1,18 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
 <div class="well">
+
+    {% if not form.vars.value.facebookId %}
+        <p>
+            <b>Connect your accounts :</b>
+            {{ render(url('hwi_oauth_connect')) }}
+        </p>
+        <hr>
+    {% endif %}
+
+
     <form action="{{ path('fos_user_profile_edit') }}" {{ form_enctype(form) }} method="POST">
+        {{ form_errors(form) }}
 
         <div class="form-group">
             {{ form_label(form.firstName, 'Your first name') }}
