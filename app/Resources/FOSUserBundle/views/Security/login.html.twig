@@ -3,9 +3,19 @@
 <div class="row">
     <div class="col-xs-12 col-md-6 col-md-offset-3">
 
-        {% if error %}
-            <div class="alert alert-danger">{{ error|trans }}</div>
-        {% endif %}
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Social login</h3>
+            </div>
+
+            <div class="panel-body">
+                <p class="text-center">
+                    {% include 'ApplicationMainBundle:Security:connectors.html.twig' %}
+                </p>
+            </div>
+        </div>
+
+        <p class="text-center">Or</p>
 
         <div class="panel panel-primary">
             <div class="panel-heading">
@@ -14,9 +24,9 @@
 
             <div class="panel-body">
 
-                <p>Login by {{ render(url('hwi_oauth_connect')) }}</p>
-
-                <hr>
+                {% if error %}
+                    <div class="alert alert-danger">{{ error|trans }}</div>
+                {% endif %}
 
                 <form action="{{ path("fos_user_security_check") }}" method="post">
                     <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />

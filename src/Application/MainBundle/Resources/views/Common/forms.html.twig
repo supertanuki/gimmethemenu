@@ -17,3 +17,11 @@
         {% endif %}
     {% endspaceless %}
 {% endblock form_errors %}
+
+{% block form_row %}
+    <div class="form-group">
+        {{ form_label(form) }}
+        {{ form_errors(form) }}
+        {{ form_widget(form, {'attr': {'class': 'form-control'}}) }}
+    </div>
+{% endblock form_row %}

@@ -1,13 +1,6 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
 <div class="well">
-    {% if not user.facebookId %}
-        <p>
-            <b>Connect your accounts :</b>
-            {{ render(url('hwi_oauth_connect')) }}
-        </p>
-        <hr>
-    {% endif %}
 
     <ul>
         <li>Email: <b>{{ user.email }}</b></li>

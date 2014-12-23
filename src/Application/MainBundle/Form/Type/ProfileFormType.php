@@ -14,7 +14,6 @@ class ProfileFormType extends BaseType
         // remove username ; we use email as the username
         $builder
             ->remove('username')
-            ->remove('email')
             ->remove('current_password');
 
         // custom users fields

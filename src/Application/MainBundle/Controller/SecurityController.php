@@ -49,6 +49,6 @@ class SecurityController extends Controller
 
     private function setWelcomeMessage()
     {
-        $this->get('session')->getFlashBag()->add('info', sprintf('Hi %s, happy to see you again !', $this->getUser()->getFirstName()));
+        $this->get('session')->getFlashBag()->add('info', sprintf('Hi %s, happy to see you!', $this->getUser()->getFirstName()));
     }
 }

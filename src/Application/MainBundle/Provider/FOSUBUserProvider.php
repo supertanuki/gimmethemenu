@@ -1,5 +1,5 @@
 <?php
-namespace Application\MainBundle\Security;
+namespace Application\MainBundle\Provider;
 
 use HWI\Bundle\OAuthBundle\OAuth\Response\UserResponseInterface;
 use HWI\Bundle\OAuthBundle\Security\Core\User\FOSUBUserProvider as BaseClass;
@@ -59,7 +59,6 @@ class FOSUBUserProvider extends BaseClass
 
             if (null === $user || !$user instanceof UserInterface) {
 
-//                die("create new user here");
                 // create new user here
                 $user = $this->userManager->createUser();
                 $user->$setter_id($username);
@@ -75,7 +74,6 @@ class FOSUBUserProvider extends BaseClass
 
             } else {
 
-//                die("update the user");
                 // update the user
                 $user->$setter_id($username);
                 $user->$setter_token($response->getAccessToken());
