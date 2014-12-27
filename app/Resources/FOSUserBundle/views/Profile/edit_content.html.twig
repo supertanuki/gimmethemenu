@@ -21,16 +21,16 @@
 
                     {{ form_errors(form) }}
 
-                    <div class="form-group">
-                        {{ form_label(form.firstName, 'Your first name') }}
-                        {{ form_errors(form.firstName) }}
-                        {{ form_widget(form.firstName, {'attr': {'class': 'form-control'}}) }}
-                    </div>
+                    {{ form_row(form.firstName) }}
+
+                    {{ form_row(form.email) }}
+
 
                     <div class="form-group">
-                        {{ form_label(form.email, 'Your email') }}
-                        {{ form_errors(form.email) }}
-                        {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+                        <label>
+                            {{ form_widget(form.isTimelinePublic) }}
+                            My timeline is public
+                        </label>
                     </div>
 
                     {{ form_rest(form) }}

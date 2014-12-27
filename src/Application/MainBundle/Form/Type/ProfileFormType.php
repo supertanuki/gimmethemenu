@@ -18,7 +18,13 @@ class ProfileFormType extends BaseType
 
         // custom users fields
         $builder
-            ->add('firstName')
+            ->add('firstName', null, array(
+                'label' => 'My first name'
+            ))
+            ->add('isTimelinePublic', null, array(
+                'label' => 'My timeline is public',
+                'required' => false
+            ))
 //            ->add('lastName')
 //            ->add('address')
 //            ->add('postalCode')

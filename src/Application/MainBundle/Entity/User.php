@@ -53,6 +53,9 @@ class User extends BaseUser
     /** @ORM\Column(name="google_access_token", type="string", length=255, nullable=true) */
     protected $google_access_token;
 
+    /** @ORM\Column(name="is_timeline_public", type="boolean", nullable=true, options={"default" = 1}) */
+    protected $isTimelinePublic;
+
     /**
      * @ORM\OneToMany(targetEntity="Review", mappedBy="user")
      */
@@ -80,53 +83,6 @@ class User extends BaseUser
     {
         return $this->slug;
     }
-
-//    /**
-//     * @var string
-//     *
-//     * @ORM\Column(name="last_name", type="string", length=255)
-//     */
-//    private $lastName;
-//
-//    /**
-//     * @var string
-//     *
-//     * @ORM\Column(name="address", type="string", length=255)
-//     */
-//    private $address;
-//
-//    /**
-//     * @var string
-//     *
-//     * @ORM\Column(name="postal_code", type="string", length=255)
-//     */
-//    private $postalCode;
-//
-//    /**
-//     * @var string
-//     *
-//     * @ORM\Column(name="city", type="string", length=255)
-//     */
-//    private $city;
-//
-//    /**
-//     * @var string
-//     *
-//     * @ORM\Column(name="country", type="string", length=255)
-//     */
-//    private $country;
-//
-//    /**
-//     * @var string
-//     *
-//     * @ORM\Column(name="phone", type="string", length=255)
-//     */
-//    private $phone;
-//
-//    /**
-//     * ORM\OneToMany(targetEntity="ProjectResponse", mappedBy="user", cascade={"persist", "remove"}, orphanRemoval=true)
-//     */
-//    protected $projectResponses;
 
     /**
      * @var \DateTime
@@ -533,5 +489,38 @@ class User extends BaseUser
     public function getGoogleAccessToken()
     {
         return $this->google_access_token;
+    }
+
+    /**
+     * Set isTimelinePublic
+     *
+     * @param boolean $isTimelinePublic
+     * @return User
+     */
+    public function setIsTimelinePublic($isTimelinePublic)
+    {
+        $this->isTimelinePublic = $isTimelinePublic;
+
+        return $this;
+    }
+
+    /**
+     * Get isTimelinePublic
+     *
+     * @return boolean 
+     */
+    public function getIsTimelinePublic()
+    {
+        return $this->isTimelinePublic;
+    }
+
+    /**
+     * Get isTimelinePublicLabel
+     *
+     * @return boolean
+     */
+    public function getIsTimelinePublicLabel()
+    {
+        return $this->isTimelinePublic ? 'public' : 'private';
     }
 }
