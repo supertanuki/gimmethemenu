@@ -16,11 +16,7 @@ class HomeController extends Controller
     {
         $lastReviews = $this->getDoctrine()
             ->getRepository('ApplicationMainBundle:Review')
-            ->findBy(
-                array(),
-                array('createdAt' => 'DESC'),
-                6
-            );
+            ->getLatest();
 
         return array(
             'lastReviews' => $lastReviews

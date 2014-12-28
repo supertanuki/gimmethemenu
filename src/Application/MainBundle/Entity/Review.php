@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Table(name="review")
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="Application\MainBundle\Repository\ReviewRepository")
  * @Vich\Uploadable
  */
 class Review

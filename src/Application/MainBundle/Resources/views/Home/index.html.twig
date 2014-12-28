@@ -14,119 +14,80 @@
     <div class="jumbotron">
         <div class="container">
             <h1>Hi, food lovers!</h1>
+            <p>
+            &ldquo;&nbsp;On <i>GimmeThe<b>Menu</b></i>, make your timeline of visited restaurants!
+            Review not only the restaurant but also your chosen dish. For example, take a look on <a href="{{ path('user_timeline', {'slug': 'richard'}) }}">my timeline</a>.&nbsp;&rdquo;
+            - <a href="{{ path('user_timeline', {'slug': 'richard'}) }}">Richard</a></p>
 
-            <blockquote>
-                <p>
-                &ldquo;&nbsp;On <i>GimmeThe<b>Menu</b></i>, make your timeline of visited restaurants!
-                Review not only the restaurant but also your chosen dish.
-                For example, take a look on <a href="{{ path('user_timeline', {'slug': 'richard'}) }}">my timeline</a>.&nbsp;&rdquo;
-                </p>
-                <footer>Richard</footer>
-            </blockquote>
+            <p class="text-center">
+                <a href="{{ path('restaurant_search') }}" class="btn btn-primary btn-lg">
+                    <span class="glyphicon glyphicon-search"></span>
+                    Search a restaurant
+                </a>
+                <a href="{{ path('fos_user_registration_register') }}" class="btn btn-default btn-lg">
+                    <span class="glyphicon glyphicon-user"></span>
+                    Sign up!
+                </a>
+            </p>
         </div>
     </div>
-    {% endif %}
 
-    {% include 'ApplicationMainBundle:Restaurant:search_content.html.twig' %}
+    {% else %}
+
+        {% include 'ApplicationMainBundle:Restaurant:search_content.html.twig' %}
+
+    {% endif %}
 
 {% endblock content_outside_container %}
 
 {% block body %}
+    <h2>Latest reviews</h2>
 
+    <div class="row">
+        {% for review in lastReviews %}
+
+            {% set dish_url = path('dish_show', review.dish.paramsForUrl) %}
+
+            {% set restaurant_url = path('restaurant_show', review.dish.restaurant.paramsForUrl) %}
+
+        <div class="col-xs-6 col-sm-3 col-md-2">
+            <div class="thumbnail">
+
+                {% if review.photoName %}
+                    <a href="{{ dish_url }}">
+                        <img class="img-rounded" src="{{ vich_uploader_asset(review, 'dish_photo') | imagine_filter('square') }}">
+                    </a>
+                {% endif %}
+
+                <div class="caption text-center">
+                    <h3><a href="{{ dish_url }}">{{ review.dish.name }}</a></h3>
+                    <p>@ <a href="{{ restaurant_url }}">{{ review.dish.restaurant.name }}</a>, {{ review.dish.restaurant.locality }}</p>
+                    <p>by <a href="{{ path('user_timeline', {'slug':review.user.slug}) }}">{{ review.user }}</a></p>
+                    <p>
+                        {% include 'ApplicationMainBundle:Common:rating.html.twig' with {'rating': review.rank} %}
+                    </p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
 
     {#
+    <hr>
+    <h2>Latest menus</h2>
     <div class="row">
-        <div class="col-xs-12 col-sm-4 col-md-4">
-            <div class="alert alert-danger">
-                <h4>The problem</h4>
-                <p>Lost in a restaurant menu? Disappointed with the chosen dish?<br><b>Do not be anymore!</b></p>
+        <div class="col-xs-6 col-sm-3 col-md-2">
+            <div class="thumbnail">
+                <a href="#"><img class="img-rounded" src="img/samples/pizza.png"></a>
+                <div class="caption text-center">
+                    <h3><a href="#">Pizza Tino</a></h3>
+                    <p>Chelles</p>
+                </div>
             </div>
         </div>
-        <div class="col-xs-12 col-sm-4 col-md-4">
-            <div class="alert alert-success">
-                <h4>The solution</h4>
-                <p><b>GimmeTheMenu</b> is the simplest and easiest way to get the menu, reviews and photos of each dish of a restaurant.</p>
-            </div>
-        </div>
-        <div class="col-xs-12 col-sm-4 col-md-4">
-            <div class="alert alert-info">
-                <h4>Review and log</h4>
-                <p>On <b>GimmeTheMenu</b>, make your timeline of visited restaurants! Review not only the restaurant but also your chosen dish. <a href="timeline.html">Here an example</a>.</p>
-            </div>
-        </div>
+
     </div>
     #}
-
-    {#<div class="alert alert-info">#}
-        {#<p>#}
-            {#&ldquo;On <i>GimmeThe<b>Menu</b></i>, make your timeline of visited restaurants!#}
-            {#Review not only the restaurant but also your chosen dish.#}
-            {#For example, take a look on <a href="{{ path('user_timeline', {'slug': 'richard'}) }}">my timeline</a>.&rdquo; Richard#}
-        {#</p>#}
-    {#</div>#}
-
-
-
-
-
-    <div class="hidden-xs">
-        <hr>
-        <h2>Latest reviews</h2>
-
-        <div class="row">
-            {% for review in lastReviews %}
-
-                {% set dish_url = path('dish_show', {
-                    'country_slug': review.dish.restaurant.country.slug,
-                    'locality_slug': review.dish.restaurant.locality.slug,
-                    'restaurant_slug': review.dish.restaurant.slug,
-                    'dish_slug': review.dish.slug
-                }) %}
-
-                {% set restaurant_url = path('restaurant_show', {
-                    'country_slug': review.dish.restaurant.country.slug,
-                    'locality_slug': review.dish.restaurant.locality.slug,
-                    'restaurant_slug': review.dish.restaurant.slug
-                }) %}
-
-            <div class="col-xs-6 col-sm-3 col-md-2">
-                <div class="thumbnail">
-
-                    {% if review.photoName %}
-                        <a href="{{ dish_url }}">
-                            <img class="img-rounded" src="{{ vich_uploader_asset(review, 'dish_photo') | imagine_filter('square') }}">
-                        </a>
-                    {% endif %}
-
-                    <div class="caption text-center">
-                        <h3><a href="{{ dish_url }}">{{ review.dish.name }}</a></h3>
-                        <p>@ <a href="{{ restaurant_url }}">{{ review.dish.restaurant.name }}</a>, {{ review.dish.restaurant.locality }}</p>
-                        <p>by <a href="{{ path('user_timeline', {'slug':review.user.slug}) }}">{{ review.user }}</a></p>
-                        <p>
-                            {% include 'ApplicationMainBundle:Common:rating.html.twig' with {'rating': review.rank} %}
-                        </p>
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-
-        {#
-        <hr>
-        <h2>Latest menus</h2>
-        <div class="row">
-            <div class="col-xs-6 col-sm-3 col-md-2">
-                <div class="thumbnail">
-                    <a href="#"><img class="img-rounded" src="img/samples/pizza.png"></a>
-                    <div class="caption text-center">
-                        <h3><a href="#">Pizza Tino</a></h3>
-                        <p>Chelles</p>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-        #}
 
 {% endblock %}
 
