@@ -74,7 +74,11 @@ hr {
 @media screen and (max-width: 767px) {
     .timeline.reviews dl dd .time {
         left: 10%;
-        margin-top:-10px
+        margin-top:-10px;
+        width: 50px;
+    }
+    .timeline dl dd .time {
+        width: 50px;
     }
     .timeline.reviews dl dd.pos-right .time {
         padding:0;
