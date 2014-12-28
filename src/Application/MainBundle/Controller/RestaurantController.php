@@ -185,6 +185,22 @@ class RestaurantController extends Controller
         return array();
     }
 
+    public function getLatestForUserAction()
+    {
+        $lastRestaurants = null;
+
+        if ($this->getUser()) {
+            $lastRestaurants = $this->getDoctrine()
+                ->getRepository('ApplicationMainBundle:Review')
+                ->getLatestForUser($this->getUser());
+        }
+
+        return $this->render(
+            'ApplicationMainBundle:Restaurant:getLatestForUser.html.twig',
+            array('lastRestaurants' => $lastRestaurants)
+        );
+    }
+
     /*
      * return the route for restaurant_show
      */

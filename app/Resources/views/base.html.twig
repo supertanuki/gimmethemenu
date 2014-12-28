@@ -92,6 +92,8 @@
 
                     <li><a href="{{ path('user_timeline', { 'slug': app.user.slug }) }}">My timeline</a></li>
 
+                    {{ render(controller('ApplicationMainBundle:Restaurant:getLatestForUser')) }}
+
                 {% else %}
                     <li><a href="{{ path('fos_user_security_login') }}">Log in</a></li>
                     <li><a href="{{ path('fos_user_registration_register') }}">Sign up</a></li>
@@ -231,13 +233,3 @@
     <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-548fe8860fcadc41" async="async"></script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
