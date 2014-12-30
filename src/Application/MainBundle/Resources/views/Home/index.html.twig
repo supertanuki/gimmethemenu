@@ -19,7 +19,20 @@
             Review not only the restaurant but also your chosen dish. For example, take a look on <a href="{{ path('user_timeline', {'slug': 'richard'}) }}">my timeline</a>.&nbsp;&rdquo;
             - <a href="{{ path('user_timeline', {'slug': 'richard'}) }}">Richard</a></p>
 
-            <p class="text-center">
+            {# small buttons for mobile #}
+            <p class="visible-xs-block text-center">
+                <a href="{{ path('restaurant_search') }}" class="btn btn-primary">
+                    <span class="glyphicon glyphicon-search"></span>
+                    Search a restaurant
+                </a>
+                <a href="{{ path('fos_user_registration_register') }}" class="btn btn-warning">
+                    <span class="glyphicon glyphicon-user"></span>
+                    Sign up!
+                </a>
+            </p>
+
+            {# else big buttons #}
+            <p class="hidden-xs text-center">
                 <a href="{{ path('restaurant_search') }}" class="btn btn-primary btn-lg">
                     <span class="glyphicon glyphicon-search"></span>
                     Search a restaurant
