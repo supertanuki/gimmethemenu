@@ -69,7 +69,7 @@
             {% for review in lastReviews %}
                 <div class="item {% if loop.index == 1 %}active{% endif %}">
                     <a href="{{ path('dish_show', review.dish.paramsForUrl) }}">
-                        <img src="{{ vich_uploader_asset(review, 'dish_photo') | imagine_filter('large') }}" style="width: 100%" alt="">
+                        <img src="{{ vich_uploader_asset(review, 'dish_photo') | imagine_filter('square') }}" style="width: 100%" alt="">
                     </a>
 
                     <div class="carousel-caption">
