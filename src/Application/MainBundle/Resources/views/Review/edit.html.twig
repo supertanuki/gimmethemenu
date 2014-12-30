@@ -2,8 +2,8 @@
 
 {% block head_meta %}
     {% set meta = {
-    'title': 'Add a review: ' ~ review.dish.name ~ ' - ' ~ review.dish.restaurant.name,
-    'description': 'Add a review form for ' ~ review.dish.name
+    'title': 'Edit a review: ' ~ review.dish.name ~ ' - ' ~ review.dish.restaurant.name,
+    'description': 'Edit review form for ' ~ review.dish.name
     } %}
     {% include 'ApplicationMainBundle:Common:headMeta.html.twig' with { 'meta': meta } %}
 {% endblock %}

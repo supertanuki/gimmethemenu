@@ -93,14 +93,6 @@ vich_uploader:
     db_driver:  orm
     twig: true
     mappings:
-        project_response_file:
-            uri_prefix:         /uploads/users
-            upload_destination: %kernel.root_dir%/../web/uploads/users
-            namer:              vich_uploader.namer_uniqid
-            inject_on_load:     false
-            delete_on_update:   true
-            delete_on_remove:   true
-
         restaurant_menu_file:
             uri_prefix:         /uploads/menu
             upload_destination: %kernel.root_dir%/../web/uploads/menu

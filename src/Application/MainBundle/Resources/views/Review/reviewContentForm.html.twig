@@ -34,7 +34,15 @@
 <div class="form-group">
     {{ form_label(review.photoFile) }}
     {{ form_errors(review.photoFile) }}
-    {#<p>The dish! Say &ldquo;sheeez&rdquo;!</p>#}
+
+    {% set photoName = review.vars.value.photoName %}
+    {% if photoName %}
+        <p>
+            <img class="img-rounded" src="{{ vich_uploader_asset(review.vars.value, 'dish_photo') | imagine_filter('thumb') }}">
+        </p>
+        <p>Upload a new photo to change it:</p>
+    {% endif %}
+
     {{ form_widget(review.photoFile, {'attr': {'class': 'form-control'}}) }}
 </div>
 {% endif %}
