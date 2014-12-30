@@ -176,7 +176,7 @@
                                     <img src="{{ vich_uploader_asset(review, 'dish_photo') | imagine_filter('large') }}" style="width: 100%" alt="">
 
                                     <div class="carousel-caption">
-                                        Added by <a href="{{ path('user_timeline', {'slug':review.user.slug}) }}">{{ review.user }}</a> on {{ review.createdAt|localizeddate('medium', 'none') }}</p>
+                                        Added by <a href="{{ path('user_timeline', {'slug':review.user.slug}) }}">{{ review.user }}</a> on {{ review.createdAt|localizeddate('medium', 'none') }}
                                     </div>
                                 </div>
                             {% endfor %}
