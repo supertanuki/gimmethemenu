@@ -1,0 +1,40 @@
+{% extends '::base.html.twig' %}
+
+{% block head_meta %}
+    {% set meta = {
+    'title': 'Add a review: ' ~ review.dish.name ~ ' - ' ~ review.dish.restaurant.name,
+    'description': 'Add a review form for ' ~ review.dish.name
+    } %}
+    {% include 'ApplicationMainBundle:Common:headMeta.html.twig' with { 'meta': meta } %}
+{% endblock %}
+
+{% block body %}
+    {% set restaurant_url = path('restaurant_show', review.dish.restaurant.paramsForUrl) %}
+    {% set dish_url = path('dish_show', review.dish.paramsForUrl) %}
+
+    <ol class="breadcrumb">
+        <li><a href="{{ path('homepage') }}">Home</a></li>
+        <li>{{ review.dish.restaurant.country }}</li>
+        <li>{{ review.dish.restaurant.locality }}</li>
+        <li><a href="{{ restaurant_url }}">{{ review.dish.restaurant }}</a></li>
+        <li class="active"><a href="{{ dish_url }}">{{ review.dish.name }}</a></li>
+    </ol>
+
+
+    <div class="row">
+        <div class="col-xs-12 col-md-6 col-md-offset-3">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Edit a review</h3>
+                </div>
+                <div class="panel-body">
+                    {% include 'ApplicationMainBundle:Review:reviewForm.html.twig' with {'form_review': edit_form} %}
+                </div>
+            </div>
+
+            <div class="text-center">
+                {{ form(delete_form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
