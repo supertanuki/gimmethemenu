@@ -60,7 +60,7 @@ class DishController extends Controller
                 $em->persist($review);
                 $em->flush();
 
-                $this->get('session')->getFlashBag()->add('info', 'The review is created. Thank you!');
+                $this->get('session')->getFlashBag()->add('info', 'The review is created. Thank you! __shareit__');
 
                 // redirect
                 return $this->redirect($this->getDishUrl($dish));
@@ -319,7 +319,7 @@ class DishController extends Controller
                 $em->persist($dish);
                 $em->flush();
 
-                $this->get('session')->getFlashBag()->add('info', 'The dish is created. Thank you!');
+                $this->get('session')->getFlashBag()->add('info', 'The dish and your review is created. Thank you! __shareit__');
 
                 // redirect
                 return $this->redirect($this->getDishUrl($dish));

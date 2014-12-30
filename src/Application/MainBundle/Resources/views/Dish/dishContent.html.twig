@@ -17,35 +17,42 @@
 
 <h1>
     &ldquo;{{ dish.name }}&rdquo;
-</h1>
 
-<p class="restaurantAddress">
     {% if dish.price %}
-        <span class="label label-warning label-lg price">
+        <span class="label label-warning price">
             {{ dish.price }}{#<small>,00</small>#}&nbsp;€
         </span>
     {% endif %}
+</h1>
 
-    <br>
-    All time:
-    {% include 'ApplicationMainBundle:Common:rating.html.twig' with {'rating': dish.averageRating} %}
+<div class="row">
+    <div class="col-xs-12 col-md-6">
+        {#All time:#}
+        {% include 'ApplicationMainBundle:Common:rating.html.twig' with {'rating': dish.averageRating} %}
 
 
-    {% if dish.parent %}
+        {% if dish.parent %}
+            <br>
+            Meal:
+            <a href="{{ path('dish_show', dish.parent.paramsForUrl) }}">
+                {{ dish.parent.name }}
+            </a>
+        {% endif %}
+
+        {#
+        Last 10: <3 <3 <3 <3 <3
+        #}
+
         <br>
-        Meal:
-        <a href="{{ path('dish_show', dish.parent.paramsForUrl) }}">
-            {{ dish.parent.name }}
-        </a>
-    {% endif %}
+        <a href="{{ path('restaurant_show', dish.restaurant.paramsForUrl) }}">{{ dish.restaurant.name }}</a>
+        <br>{{ dish.restaurant.address }}
+    </div>
 
-    {#
-    Last 10: <3 <3 <3 <3 <3
-    #}
-
-    <br>
-    <a href="{{ path('restaurant_show', dish.restaurant.paramsForUrl) }}">{{ dish.restaurant.name }}</a>, {{ dish.restaurant.address }}
-</p>
+    <div class="col-xs-12 col-md-6">
+        {# addthis sharing tools #}
+        <div class="addthis_sharing_toolbox pull-right">Share:</div>
+    </div>
+</div>
 
 <hr>
 

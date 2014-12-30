@@ -233,7 +233,7 @@ class RestaurantController extends Controller
 
                 $em->flush();
 
-                $this->get('session')->getFlashBag()->add('info', 'Photos are uploaded. Thank you!');
+                $this->get('session')->getFlashBag()->add('info', 'Uploaded! Thanks!');
 
                 // redirect
                 return $this->redirect($this->getRestaurantUrl($restaurant));
@@ -269,7 +269,7 @@ class RestaurantController extends Controller
                 $em->persist($dish);
                 $em->flush();
 
-                $this->get('session')->getFlashBag()->add('info', 'The dish is created. Thank you!');
+                $this->get('session')->getFlashBag()->add('info', 'The dish is created. Thank you! __shareit__');
 
                 // redirect
                 return $this->redirect($this->generateUrl('dish_show', $dish->getParamsForUrl()));

@@ -350,15 +350,14 @@ $(document).ready(function() {
     //    console.log(params);
 
         var content = '';
-        content += '<h5>';
+        content += '<h5><a href="' + route_restaurant_get + '?' + params + '">';
     //    content += '<img src="' + place.icon + '" width="16" />&nbsp;';
         content += place.name;
-        content += '</h5>';
+        content += '</a></h5>';
         content += '<p>';
         content += place.vicinity;
     //    content += '<br>Type : ' + place.types.join(', ');
         content += '</p>';
-        content += '<p class="text-center"><a href="' + route_restaurant_get + '?' + params + '" class="btn btn-primary btn-xs">Gimme!</a></p>';
     //    content += '<table>';
     //    content += '<tr class="iw_table_row">';
     //    content += '<td style="text-align: right"><img class="hotelIcon" src="' + place.icon + '"/></td>';

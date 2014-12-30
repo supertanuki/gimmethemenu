@@ -120,7 +120,7 @@
 
     <div class="container">
         {% for message in messages %}
-            <div class="alert alert-info">{{ message }}</div>
+            <div class="alert alert-info">{{ message|replace({'__shareit__' : '<div class="addthis_sharing_toolbox">Share it:</div>'})|raw }}</div>
         {% endfor %}
     </div> <!-- /container -->
 
@@ -170,14 +170,21 @@
         </div>
         #}
         <hr>
-        <div class="copyright clearfix">
-            <div class="pull-right">
-                <a href="{{ path('changelog') }}">Changelog</a> | © 2014 GimmeTheMenu
+        <div class="row">
+
+            <div class="col-xs-12 col-sm-6">
+                {# follow links #}
+                {#<div class="addthis_horizontal_follow_toolbox"></div>#}
+                Talk to us : <a href="//twitter.com/GimmeTheMenu">Twitter</a> or <a href="//www.facebook.com/gimmethemenu">Facebook</a>
+                <br>
+                {{ render(controller('ApplicationPageBundle:Page:list')) }}
             </div>
 
-            Talk to us : <a href="//twitter.com/GimmeTheMenu">Twitter</a> or <a href="//www.facebook.com/gimmethemenu">Facebook</a>
-            <br>
-            {{ render(controller('ApplicationPageBundle:Page:list')) }}
+            <div class="col-xs-12 col-sm-6">
+                <div class="pull-right">
+                    <a href="{{ path('changelog') }}">Changelog</a> | © 2014 GimmeTheMenu
+                </div>
+            </div>
 
         </div>
     </div>

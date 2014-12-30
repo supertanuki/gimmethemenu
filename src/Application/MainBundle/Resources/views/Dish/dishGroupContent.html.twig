@@ -13,18 +13,23 @@
 
 <h1>
     &ldquo;{{ dish.name }}&rdquo;
-</h1>
-
-<p class="restaurantAddress">
-    <span class="label label-warning label-lg price">
+    <span class="label label-warning price">
         {{ dish.price }}{#<small>,00</small>#}&nbsp;€
     </span>
+</h1>
 
-    <br>
+<div class="row">
+    <div class="col-xs-12 col-md-6">
+        <a href="{{ path('restaurant_show', dish.restaurant.paramsForUrl) }}">{{ dish.restaurant.name }}</a>
+        <br>{{ dish.restaurant.address }}
+    </div>
 
-    <a href="{{ path('restaurant_show', dish.restaurant.paramsForUrl) }}">{{ dish.restaurant.name }}</a>,
-    {{ dish.restaurant.address }}
-</p>
+    <div class="col-xs-12 col-md-6">
+        {# addthis sharing tools #}
+        <div class="addthis_sharing_toolbox pull-right">Share:</div>
+    </div>
+</div>
+
 
 <hr>
 
