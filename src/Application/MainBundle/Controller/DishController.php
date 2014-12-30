@@ -11,6 +11,7 @@ use Application\MainBundle\Entity\Dish;
 use Application\MainBundle\Entity\Review;
 use Application\MainBundle\Form\Type\ReviewType;
 use Application\MainBundle\Form\Type\ReviewQuickType;
+use Application\MainBundle\Form\Type\DishType;
 use Application\MainBundle\Form\Type\DishChildrenReviewType;
 use Application\MainBundle\Form\Type\DishGroupType;
 
@@ -342,6 +343,168 @@ class DishController extends Controller
                 'form_dish' => $form_dish->createView(),
             )
         );
+    }
+
+    /**
+     * Displays a form to edit an existing dish.
+     * @Route("/dish/{id}/edit", name="dish_edit")
+     * @Method("GET")
+     */
+    public function editAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $dish = $em->getRepository('ApplicationMainBundle:Dish')->find($id);
+
+        if (!$dish) {
+            throw $this->createNotFoundException('Unable to find this dish.');
+        }
+
+        if ($dish->getUser() != $this->getUser()) {
+            throw $this->createNotFoundException('You are not allowed to edit this dish');
+        }
+
+        $countOthersReviews = $em->getRepository('ApplicationMainBundle:Review')->countReviews($dish, $this->getUser());
+        if ($countOthersReviews) {
+            return $this->render(
+                'ApplicationMainBundle:Dish:editNotAllowed.html.twig',
+                array(
+                    'dish'        => $dish,
+                    'restaurant'  => $dish->getRestaurant(),
+                )
+            );
+        }
+
+        $editForm = $this->createEditForm($dish);
+        $deleteForm = $this->createDeleteForm($id);
+
+        return $this->render(
+            'ApplicationMainBundle:Dish:edit.html.twig',
+            array(
+                'dish'        => $dish,
+                'restaurant'  => $dish->getRestaurant(),
+                'dish_already_exists' => null,
+                'edit_form'   => $editForm->createView(),
+                'delete_form' => $deleteForm->createView(),
+            )
+        );
+    }
+
+    /**
+     * Creates a form to edit a dish.
+     * @param Dish $dish
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createEditForm(Dish $dish)
+    {
+        $form = $this->createForm(new DishType(), $dish, array(
+            'action' => $this->generateUrl('dish_update', array('id' => $dish->getId())),
+            'method' => 'PUT',
+        ));
+
+        return $form;
+    }
+
+    /**
+     * Edits an existing dish.
+     * @Route("/dish/{id}/update", name="dish_update")
+     * @Method("PUT")
+     * @Template("ApplicationMainBundle:Dish:edit.html.twig")
+     */
+    public function updateAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $dish = $em->getRepository('ApplicationMainBundle:Dish')->find($id);
+
+        if (!$dish) {
+            throw $this->createNotFoundException('Unable to find this dish.');
+        }
+
+        if ($dish->getUser() != $this->getUser()) {
+            throw $this->createNotFoundException('You are not allowed to edit this dish');
+        }
+
+        $countOthersReviews = $em->getRepository('ApplicationMainBundle:Review')->countReviews($dish, $this->getUser());
+        if ($countOthersReviews) {
+            throw $this->createNotFoundException('You are not allowed to edit this dish');
+        }
+
+        $deleteForm = $this->createDeleteForm($id);
+        $editForm = $this->createEditForm($dish);
+        $editForm->handleRequest($request);
+
+        if ($editForm->isValid()) {
+            $em->flush();
+
+            $this->get('session')->getFlashBag()->add('info', 'The dish is updated!');
+            return $this->redirect($this->generateUrl('dish_show', $dish->getParamsForUrl()));
+        }
+
+        $dish_already_exists = $this->getDoctrine()
+            ->getRepository('ApplicationMainBundle:Dish')
+            ->findOneBy(array(
+                'restaurant' => $dish->getRestaurant(),
+                'name' => $dish->getName(),
+            ));
+
+        return array(
+            'dish'        => $dish,
+            'restaurant'  => $dish->getRestaurant(),
+            'dish_already_exists' => $dish_already_exists,
+            'edit_form'   => $editForm->createView(),
+            'delete_form' => $deleteForm->createView(),
+        );
+    }
+
+    /**
+     * Deletes a dish
+     * @Route("/dish/{id}/delete", name="dish_delete")
+     * @Method("DELETE")
+     */
+    public function deleteAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $dish = $em->getRepository('ApplicationMainBundle:Dish')->find($id);
+
+        if (!$dish) {
+            throw $this->createNotFoundException('Unable to find dish');
+        }
+
+        if ($dish->getUser() != $this->getUser()) {
+            throw $this->createNotFoundException('You are not allowed to delete this dish');
+        }
+
+        $countOthersReviews = $em->getRepository('ApplicationMainBundle:Review')->countReviews($dish, $this->getUser());
+        if ($countOthersReviews) {
+            throw $this->createNotFoundException('You are not allowed to edit this dish');
+        }
+
+        $restaurant = $dish->getRestaurant();
+
+        $form = $this->createDeleteForm($id);
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $em->remove($dish);
+            $em->flush();
+            $this->get('session')->getFlashBag()->add('info', 'The dish is deleted.');
+        }
+
+        return $this->redirect($this->generateUrl('restaurant_show', $restaurant->getParamsForUrl()));
+    }
+
+    /**
+     * Creates a form to delete a dish.
+     * @param mixed $id The entity id
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createDeleteForm($id)
+    {
+        return $this->createFormBuilder()
+            ->setAction($this->generateUrl('dish_delete', array('id' => $id)))
+            ->setMethod('DELETE')
+            ->add('submit', 'submit', array('label' => 'Delete this dish', 'attr' => array('class' => 'btn btn-danger')))
+            ->getForm()
+            ;
     }
 
     /**

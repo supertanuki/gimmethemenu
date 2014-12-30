@@ -83,12 +83,12 @@ class Dish
     protected $user;
 
     /**
-     * @ORM\OneToMany(targetEntity="Review", mappedBy="dish", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Review", mappedBy="dish", cascade={"persist", "remove"})
      */
     protected $reviews;
 
     /**
-     * @ORM\OneToMany(targetEntity="Dish", mappedBy="parent", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Dish", mappedBy="parent", cascade={"persist", "remove"})
      */
     protected $dishes;
 

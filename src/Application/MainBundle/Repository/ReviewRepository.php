@@ -12,6 +12,19 @@ class ReviewRepository extends EntityRepository
         return $this->createQueryBuilder('review');
     }
 
+    public function countReviews($dish, $userToAvoid=null)
+    {
+        return $this->commonQuery()
+            ->select('COUNT(review.id)')
+            ->where('review.user != :user')
+            ->setParameter('user', $userToAvoid)
+            ->andWhere('review.dish = :dish')
+            ->setParameter('dish', $dish)
+            ->getQuery()
+            ->getSingleScalarResult()
+            ;
+    }
+
     public function getLatest()
     {
         return $this->commonQuery()

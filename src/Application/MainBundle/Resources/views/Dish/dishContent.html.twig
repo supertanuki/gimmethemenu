@@ -32,20 +32,32 @@
 
 
         {% if dish.parent %}
-            <br>
-            Meal:
-            <a href="{{ path('dish_show', dish.parent.paramsForUrl) }}">
-                {{ dish.parent.name }}
-            </a>
+            <p>
+                Meal:
+                <a href="{{ path('dish_show', dish.parent.paramsForUrl) }}">
+                    {{ dish.parent.name }}
+                </a>
+            </p>
         {% endif %}
 
         {#
         Last 10: <3 <3 <3 <3 <3
         #}
 
-        <br>
-        <a href="{{ path('restaurant_show', dish.restaurant.paramsForUrl) }}">{{ dish.restaurant.name }}</a>
-        <br>{{ dish.restaurant.address }}
+        <p>
+            <a href="{{ path('restaurant_show', dish.restaurant.paramsForUrl) }}">{{ dish.restaurant.name }}</a>
+            <br>{{ dish.restaurant.address }}
+        </p>
+
+
+        {% if app.user and app.user == dish.user %}
+            <small>
+                <a href="{{ path('dish_edit', {'id': dish.id}) }}">
+                    <span class="glyphicon glyphicon-pencil"></span> Edit
+                </a>
+            </small>
+        {% endif %}
+
     </div>
 
     <div class="col-xs-12 col-md-6">

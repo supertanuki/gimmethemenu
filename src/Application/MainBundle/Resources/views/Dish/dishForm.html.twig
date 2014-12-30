@@ -33,9 +33,11 @@
         </div>
     {% endif %}
 
-    {% for review in form_dish.reviews %}
-        {% include 'ApplicationMainBundle:Review:reviewContentForm.html.twig' with {'review': review} %}
-    {% endfor %}
+    {% if form_dish.reviews is defined %}
+        {% for review in form_dish.reviews %}
+            {% include 'ApplicationMainBundle:Review:reviewContentForm.html.twig' with {'review': review} %}
+        {% endfor %}
+    {% endif %}
 
     <button type="submit" class="btn btn-primary">Submit</button>
 

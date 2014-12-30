@@ -1,0 +1,48 @@
+{% extends '::base.html.twig' %}
+
+{% block head_meta %}
+    {% set meta = {
+    'title': 'Edit a dish for ' ~ restaurant.name ~ ' - Restaurant',
+    'description': 'Edit a dish form for ' ~ restaurant.name
+    } %}
+    {% include 'ApplicationMainBundle:Common:headMeta.html.twig' with { 'meta': meta } %}
+{% endblock %}
+
+{% block body %}
+    <ol class="breadcrumb">
+        <li><a href="{{ path('homepage') }}">Home</a></li>
+        <li>{{ restaurant.country }}</li>
+        <li>{{ restaurant.locality }}</li>
+        <li class="active">
+            <a href="{{ path('restaurant_show', restaurant.paramsForUrl) }}">
+                {{ restaurant.name }}
+            </a>
+        </li>
+    </ol>
+
+
+    <div class="row">
+        <div class="col-xs-12 col-md-6 col-md-offset-3">
+
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Edit a dish</h3>
+                </div>
+                <div class="panel-body">
+
+                    {% include 'ApplicationMainBundle:Dish:dishForm.html.twig' with {
+                        'form_dish': edit_form,
+                        'dish_already_exists': dish_already_exists
+                    } %}
+
+                </div>
+            </div>
+
+            <div class="text-center">
+                {{ form(delete_form) }}
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends '::base.html.twig' %}
+
+{% block head_meta %}
+    {% set meta = {
+    'title': 'Edit a dish for ' ~ restaurant.name ~ ' - Restaurant',
+    'description': 'Edit a dish form for ' ~ restaurant.name
+    } %}
+    {% include 'ApplicationMainBundle:Common:headMeta.html.twig' with { 'meta': meta } %}
+{% endblock %}
+
+{% block body %}
+    <ol class="breadcrumb">
+        <li><a href="{{ path('homepage') }}">Home</a></li>
+        <li>{{ restaurant.country }}</li>
+        <li>{{ restaurant.locality }}</li>
+        <li>
+            <a href="{{ path('restaurant_show', restaurant.paramsForUrl) }}">
+                {{ restaurant.name }}
+            </a>
+        </li>
+        <li class="active">
+            <a href="{{ path('dish_show', dish.paramsForUrl) }}">
+                {{ dish.name }}
+            </a>
+        </li>
+    </ol>
+
+
+    <div class="row">
+        <div class="col-xs-12 col-md-6 col-md-offset-3">
+
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Edit a dish</h3>
+                </div>
+                <div class="panel-body">
+                    <h4>Oops!</h4>
+                    <p>
+                        It is not possible to edit or delete this dish because others users reviewed it.
+                    </p>
+                    <p>
+                        <a href="{{ path('dish_show', dish.paramsForUrl) }}">
+                            Go back
+                        </a>
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}

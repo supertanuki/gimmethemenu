@@ -103,7 +103,7 @@ class ReviewController extends Controller
     /**
      * Deletes a Review entity.
      *
-     * @Route("review/{id}/delete", name="review_delete")
+     * @Route("/review/{id}/delete", name="review_delete")
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, $id)

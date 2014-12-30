@@ -9,6 +9,6 @@ class DishRepository extends EntityRepository
 {
     private function commonQuery()
     {
-        return $this->createQueryBuilder('r');
+        return $this->createQueryBuilder('d');
     }
 }
