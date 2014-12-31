@@ -2,7 +2,7 @@
     <div class="row images-gallery">
 
         {% for key, menuFile in restaurant.restaurantMenuFiles %}
-            <div class="col-xs-4 col-sm-3 col-md-3">
+            <div class="col-xs-4 col-sm-4 col-md-1">
                 <div class="thumbnail">
                     <a href="{{ vich_uploader_asset(menuFile, 'restaurant_menu_file')|imagine_filter('largest') }}"
                        class="zoom-hover"
@@ -19,30 +19,43 @@
     </div>
 {% endif %}
 
-<div class="panel panel-info">
-    <div class="panel-heading">
-        <h3 class="panel-title">
-            {% if restaurant.restaurantMenuFiles|length > 0 %}
-                The menu has changed or is incomplete?
-            {% else %}
-                You're the first one!
-            {% endif %}
-        </h3>
-    </div>
+<button type="button" data-toggle="modal" data-target="#menuModal" class="btn btn-default btn-sm">
+    {% if restaurant.restaurantMenuFiles|length > 0 %}
+        The menu has changed or is incomplete?
+    {% else %}
+        Upload photos of the menu
+    {% endif %}
+</button>
 
-    <div class="panel-body">
-        <div class="alert alert-warning">
-            Take photos of the menu with your mobile and upload them!
+<div class="modal fade" id="menuModal" tabindex="-1" role="dialog" aria-labelledby="menuModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="menuModalLabel">
+                    {% if restaurant.restaurantMenuFiles|length > 0 %}
+                        The menu has changed or is incomplete?
+                    {% else %}
+                        Upload photos of the menu
+                    {% endif %}
+                </h4>
+            </div>
+
+            <div class="modal-body">
+                <div class="alert alert-warning">
+                    Take photos of the menu with your mobile and upload them!
+                </div>
+
+                {% if not app.user %}
+                    {% include 'ApplicationMainBundle:Security:loginOrSigninLinks.html.twig' with {'redirect': restaurant_url} %}
+                {% else %}
+                    {% include 'ApplicationMainBundle:Restaurant:menuForm.html.twig' with {'form_restaurant_menu': form_restaurant_menu} %}
+                {% endif %}
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            </div>
         </div>
-
-        {% if not app.user %}
-
-            {% include 'ApplicationMainBundle:Security:loginOrSigninLinks.html.twig' with {'redirect': restaurant_url} %}
-
-        {% else %}
-
-            {% include 'ApplicationMainBundle:Restaurant:menuForm.html.twig' with {'form_restaurant_menu': form_restaurant_menu} %}
-
-        {% endif %}
     </div>
 </div>

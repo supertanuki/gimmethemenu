@@ -71,6 +71,10 @@ hr {
     margin-bottom: 10px;
 }
 
+.timeline dl dd .events .events-object {
+    margin-bottom: 10px;
+}
+
 @media screen and (max-width: 767px) {
     .timeline.reviews dl dd .time {
         left: 10%;

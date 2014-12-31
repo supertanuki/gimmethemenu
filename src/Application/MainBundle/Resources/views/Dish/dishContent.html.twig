@@ -211,39 +211,45 @@
                         <div class="circ"></div>
                         <div class="time hidden-xs">{{ review.when|localizeddate('medium', 'none') }}</div>
                         <div class="events">
+
+                            <div class="row">
+
                             {% if review.photoName %}
-                                <div class="pull-left">
-                                    <img class="events-object img-rounded" src="{{ vich_uploader_asset(review, 'dish_photo') | imagine_filter('thumb') }}" width="60">
+                                <div class="col-xs-12 col-sm-4">
+                                    <img class="events-object img-rounded" src="{{ vich_uploader_asset(review, 'dish_photo') | imagine_filter('square') }}" width="100%">
                                 </div>
                             {% endif %}
 
-                            <div class="events-body">
-                                <h4 class="events-heading">
-                                    <a href="{{ path('user_timeline', {'slug':review.user.slug}) }}">{{ review.user }}</a>
-                                </h4>
+                                <div class="col-xs-12 {% if review.photoName %}col-sm-8{% endif %}">
+                                    <div class="events-body">
+                                        <h4 class="events-heading">
+                                            <a href="{{ path('user_timeline', {'slug':review.user.slug}) }}">{{ review.user }}</a>
+                                        </h4>
 
-                                <div class="visible-xs-block">on {{ review.when|localizeddate('medium', 'none') }}</div>
+                                        <div class="visible-xs-block">on {{ review.when|localizeddate('medium', 'none') }}</div>
 
-                                {% include 'ApplicationMainBundle:Common:rating.html.twig' with {'rating': review.rank} %}
+                                        {% include 'ApplicationMainBundle:Common:rating.html.twig' with {'rating': review.rank} %}
 
-                                <p>
-                                    {{ review.review }}
-                                </p>
+                                        <p>
+                                            {{ review.review }}
+                                        </p>
 
-                                {% if review.personalNote and app.user and app.user.id == review.user.id %}
-                                    <blockquote class="blockquote-reverse">
-                                        <p><i>{{ review.personalNote }}</i></p>
-                                        <footer>My personal note</footer>
-                                    </blockquote>
-                                {% endif %}
+                                        {% if review.personalNote and app.user and app.user.id == review.user.id %}
+                                            <blockquote class="blockquote-reverse">
+                                                <p><i>{{ review.personalNote }}</i></p>
+                                                <footer>My personal note</footer>
+                                            </blockquote>
+                                        {% endif %}
 
-                                {% if app.user and app.user == review.user %}
-                                    <p>
-                                        <a href="{{ path('review_edit', {'id': review.id}) }}">
-                                            <small><span class="glyphicon glyphicon-pencil"></span> Edit</small>
-                                        </a>
-                                    </p>
-                                {% endif %}
+                                        {% if app.user and app.user == review.user %}
+                                            <p>
+                                                <a href="{{ path('review_edit', {'id': review.id}) }}">
+                                                    <small><span class="glyphicon glyphicon-pencil"></span> Edit</small>
+                                                </a>
+                                            </p>
+                                        {% endif %}
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </dd>
