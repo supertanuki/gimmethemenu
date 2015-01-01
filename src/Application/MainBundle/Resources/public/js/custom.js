@@ -5,8 +5,11 @@ $(document).ready(function() {
     // images gallery photoswipe
     initPhotoSwipeFromDOM('.images-gallery');
 
-    $('#dishes').isotope({
-        itemSelector : '.item'
+    /* activate jquery isotope */
+    $('#dishes').imagesLoaded( function(){
+        $('#dishes').isotope({
+            itemSelector : '.item'
+        });
     });
 });
 
