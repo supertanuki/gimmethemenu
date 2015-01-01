@@ -1,66 +1,49 @@
-{% if dishes|length == 0 %}
+<div class="modal fade" id="addDishModal" tabindex="-1" role="dialog" aria-labelledby="addDishModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="addDishModalLabel">
+                    Add a dish
+                </h4>
+            </div>
 
-    <a name="add-a-dish"></a>
-    <div class="row">
-        <div class="col-xs-12 col-md-6 col-md-offset-3">
-            <div class="panel panel-info">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Add the first dish for this restaurant</h3>
-                </div>
-                <div class="panel-body">
-                    {% if not app.user %}
+            <div class="modal-body">
+                {% if not app.user %}
 
-                        {% include 'ApplicationMainBundle:Security:loginOrSigninLinks.html.twig' with {'redirect': restaurant_url} %}
+                    {% include 'ApplicationMainBundle:Security:loginOrSigninLinks.html.twig' with {'redirect': restaurant_url} %}
 
-                    {% else %}
+                {% else %}
 
-                        <p>
-                            <a href="{{ path('add_group_dishes', restaurant.paramsForUrl) }}">Do you prefer to add a meal ?</a>
-                            <small>(for example starter + main course + dessert)</small>
-                        </p>
+                    <p>
+                        <a href="{{ path('add_group_dishes', restaurant.paramsForUrl) }}">Do you prefer to add a meal ?</a>
+                        <small>(for example starter + main course + dessert)</small>
+                    </p>
 
-                        {% include 'ApplicationMainBundle:Dish:dishForm.html.twig' with {'form_dish': form_dish} %}
+                    {% include 'ApplicationMainBundle:Dish:dishForm.html.twig' with {'form_dish': form_dish} %}
 
-                    {% endif %}
-                </div>
+                {% endif %}
             </div>
         </div>
     </div>
+</div>
 
-{% else %}
+
+{% if dishes|length %}
 
     <div class="well">
         Choose one below to see reviews and photos.
 
-        <a name="add-a-dish"></a>
         {% if app.user %}
-            Or <a href="#add-a-dish" class="btn btn-primary" onclick="$('#addDishForm').toggle();">add a dish</a>
+            Or
+            <button type="button" data-toggle="modal" data-target="#addDishModal" class="btn btn-primary btn-sm">
+                Add a dish
+            </button>
         {% else %}
-            Or you can add a dish if you're logged. {% include 'ApplicationMainBundle:Security:loginOrSigninLinks.html.twig' with {'redirect': restaurant_url} %}
+            You can add a dish if you're logged. {% include 'ApplicationMainBundle:Security:loginOrSigninLinks.html.twig' with {'redirect': restaurant_url} %}
         {% endif %}
     </div>
 
-    {% if app.user %}
-        <div id="addDishForm" class="row collapse">
-            <div class="col-xs-12 col-md-6 col-md-offset-3">
-                <div class="panel panel-info">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Add a dish or a drink</h3>
-                    </div>
-                    <div class="panel-body">
-
-                        <p>
-                            <a href="{{ path('add_group_dishes', restaurant.paramsForUrl) }}">Do you prefer to add a meal ?</a>
-                            <small>(for example starter + main course + dessert)</small>
-                        </p>
-
-                        {% include 'ApplicationMainBundle:Dish:dishForm.html.twig' with {'form_dish': form_dish} %}
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    {% endif %}
 
     <a name="dishes"></a>
     <div class="row">
@@ -75,4 +58,11 @@
         {% endfor %}
 
     </div><!-- /row -->
+
+{% else %}
+
+    <button type="button" data-toggle="modal" data-target="#addDishModal" class="btn btn-primary btn-sm">
+        Add a dish
+    </button>
+
 {% endif %}

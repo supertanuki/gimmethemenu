@@ -1,7 +1,6 @@
 $(document).ready(function() {
     $('#restaurant-address-link a').on('click', function() {
-        $('#restaurant-address-link').hide();
-        $('#restaurant-address-map').show();
+        $('#restaurantMapModal').modal('show');
 
         if (typeof restaurantPosition !== 'undefined') {
             var defaultIcon = assets_dir + '/img/mapicons/restaurant.png';
@@ -19,7 +18,6 @@ $(document).ready(function() {
             var marker = new google.maps.Marker({
                 position: myLatlng,
                 map: map,
-                title: 'Hello World!',
                 animation: google.maps.Animation.DROP,
                 icon: defaultIcon
             });
