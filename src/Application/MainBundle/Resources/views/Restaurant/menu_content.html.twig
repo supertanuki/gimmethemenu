@@ -19,7 +19,7 @@
     </div>
 {% endif %}
 
-<button type="button" data-toggle="modal" data-target="#menuModal" class="btn btn-default btn-sm">
+<button type="button" data-toggle="modal" data-target="#menuModal" class="btn btn-primary btn-sm">
     {% if restaurant.restaurantMenuFiles|length > 0 %}
         The menu has changed or is incomplete?
     {% else %}
@@ -41,21 +41,40 @@
                 </h4>
             </div>
 
+            {% if app.user %}
+                {{ form_start(form_restaurant_menu) }}
+            {% endif %}
+
             <div class="modal-body">
-                <div class="alert alert-warning">
-                    Take photos of the menu with your mobile and upload them!
-                </div>
+                <p>Take photos of the menu with your mobile and upload them!</p>
 
                 {% if not app.user %}
+
                     {% include 'ApplicationMainBundle:Security:loginOrSigninLinks.html.twig' with {'redirect': restaurant_url} %}
+
                 {% else %}
-                    {% include 'ApplicationMainBundle:Restaurant:menuForm.html.twig' with {'form_restaurant_menu': form_restaurant_menu} %}
+
+                    {{ form_errors(form_restaurant_menu) }}
+
+                    <div class="form-group">
+                        {{ form_errors(form_restaurant_menu.file) }}
+                        {{ form_widget(form_restaurant_menu.file, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+
+                    {{ form_rest(form_restaurant_menu) }}
+
                 {% endif %}
             </div>
 
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                {% if app.user %}
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                {% endif %}
             </div>
+
+            {% if app.user %}
+                {{ form_end(form_restaurant_menu) }}
+            {% endif %}
         </div>
     </div>
 </div>
