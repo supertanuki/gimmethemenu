@@ -334,14 +334,14 @@ $(document).ready(function() {
         var components={};
         $.each(place.address_components, function(k,v1) {jQuery.each(v1.types, function(k2, v2){components[v2]=v1.long_name});})
 
-    //    console.log(place);
-    //    console.log(components);
+//        console.log(place);
+//        console.log(components);
 
         var params = 'place_id=' + encodeRFC5987ValueChars(place.place_id)
             + '&name=' + encodeRFC5987ValueChars(place.name)
             + '&address=' + encodeRFC5987ValueChars(place.vicinity)
             + '&full_address=' + encodeRFC5987ValueChars(place.formatted_address)
-            + '&locality=' + encodeRFC5987ValueChars(components.locality)
+            + '&locality=' + encodeRFC5987ValueChars(typeof components.locality != 'undefined' ? components.locality : components.sublocality)
             + '&country=' + encodeRFC5987ValueChars(components.country)
             + '&international_phone_number=' + encodeRFC5987ValueChars(place.international_phone_number)
             + '&location_lat=' + encodeRFC5987ValueChars(place.geometry.location.lat())
