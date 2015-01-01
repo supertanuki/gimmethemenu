@@ -1,31 +1,36 @@
-{% if restaurant.restaurantMenuFiles|length > 0 %}
+<div class="well">
+
+    {% if restaurant.restaurantMenuFiles|length > 0 %}
     <div class="row images-gallery">
 
         {% for key, menuFile in restaurant.restaurantMenuFiles %}
-            <div class="col-xs-4 col-sm-4 col-md-1">
-                <div class="thumbnail">
-                    <a href="{{ vich_uploader_asset(menuFile, 'restaurant_menu_file')|imagine_filter('largest') }}"
-                       class="zoom-hover"
-                       title="Added by {{ menuFile.user }}"
-                       data-msrc="{{ vich_uploader_asset(menuFile, 'restaurant_menu_file')|imagine_filter('thumb') }}"
-                       data-size="{{ vich_uploader_asset(menuFile, 'restaurant_menu_file')|imagine_filter('largest')|image_size('x') }}"
-                       >
-                       <img src="{{ vich_uploader_asset(menuFile, 'restaurant_menu_file')|imagine_filter('square') }}" class="img-rounded">
-                    </a>
-                </div>
+            <div class="col-xs-4 col-sm-3 col-md-1">
+                <a href="{{ vich_uploader_asset(menuFile, 'restaurant_menu_file')|imagine_filter('largest') }}"
+                   class="zoom-hover"
+                   title="Added by {{ menuFile.user }}"
+                   data-msrc="{{ vich_uploader_asset(menuFile, 'restaurant_menu_file')|imagine_filter('thumb') }}"
+                   data-size="{{ vich_uploader_asset(menuFile, 'restaurant_menu_file')|imagine_filter('largest')|image_size('x') }}"
+                   >
+                   <img src="{{ vich_uploader_asset(menuFile, 'restaurant_menu_file')|imagine_filter('square') }}" class="img-rounded">
+                </a>
             </div>
         {% endfor %}
 
     </div>
-{% endif %}
-
-<button type="button" data-toggle="modal" data-target="#menuModal" class="btn btn-primary btn-sm">
-    {% if restaurant.restaurantMenuFiles|length > 0 %}
-        The menu has changed or is incomplete?
-    {% else %}
-        Upload photos of the menu
     {% endif %}
-</button>
+
+    <button type="button" data-toggle="modal" data-target="#menuModal" class="btn btn-primary btn-sm">
+        {% if restaurant.restaurantMenuFiles|length > 0 %}
+            The menu has changed or is incomplete?
+        {% else %}
+            Upload photos of the menu
+        {% endif %}
+    </button>
+
+</div>
+
+
+
 
 <div class="modal fade" id="menuModal" tabindex="-1" role="dialog" aria-labelledby="menuModalLabel" aria-hidden="true">
     <div class="modal-dialog">

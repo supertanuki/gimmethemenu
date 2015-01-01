@@ -16,8 +16,16 @@ h3 {
     font-size:19px;
 }
 
-#myAlertModal {
+.modal {
     z-index: 10000;
+}
+
+.images-gallery img {
+    width: 100%;
+}
+
+.images-gallery div {
+    margin-bottom: 20px;
 }
 
 .theme-dropdown .dropdown-menu {

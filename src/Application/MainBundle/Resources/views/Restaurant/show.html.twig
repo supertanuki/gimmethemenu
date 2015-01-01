@@ -43,14 +43,12 @@
 
 
     <div class="row">
-        <div class="col-xs-12 col-md-6">
-            <address id="restaurant-address-link">
-                <span class="well">
-                    <a href="#" title="show the map">
-                        <span class="glyphicon glyphicon-map-marker"></span>
-                        {{ restaurant.address }}
-                    </a>
-                </span>
+        <div class="col-xs-6">
+            <address class="well" id="restaurant-address-link">
+                <a href="#" title="show the map">
+                    <span class="glyphicon glyphicon-map-marker"></span>
+                    {{ restaurant.address }}
+                </a>
 
                 {#
                 <br />@todo:
@@ -63,8 +61,8 @@
             </address>
         </div>
 
-        <div class="col-xs-12 col-md-6">
-            <div class="addthis_sharing_toolbox pull-right">Share:</div>
+        <div class="col-xs-6">
+            <div class="addthis_sharing_toolbox pull-right"></div>
         </div>
     </div>
 
