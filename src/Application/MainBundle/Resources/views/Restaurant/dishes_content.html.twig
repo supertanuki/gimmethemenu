@@ -48,16 +48,11 @@
 
 
     <div id="dishes" class="row">
-
         {% for dish in dishes %}
-
-            <div class="col-xs-6 col-sm-4 col-md-2">
-
+            <div class="item col-xs-12 col-sm-6 col-md-2">
                 {% include 'ApplicationMainBundle:Dish:dishThumbnail.html.twig' with {'dish': dish} %}
-
             </div>
         {% endfor %}
-
     </div><!-- /row -->
 
 {% else %}

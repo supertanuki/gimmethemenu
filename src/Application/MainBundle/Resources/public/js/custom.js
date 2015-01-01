@@ -4,6 +4,10 @@ $(document).ready(function() {
 
     // images gallery photoswipe
     initPhotoSwipeFromDOM('.images-gallery');
+
+    $('#dishes').isotope({
+        itemSelector : '.item'
+    });
 });
 
 function showMyAlertModal(content, title) {
