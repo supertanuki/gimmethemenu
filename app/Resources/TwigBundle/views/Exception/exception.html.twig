@@ -2,15 +2,16 @@
 
 {#{% block head_meta %}#}
     {#{% set meta = {#}
-    {#'title':  '404 Page not found',#}
-    {#'description': 'Not found...'#}
+    {#'title':  'Oops',#}
+    {#'description': 'The server returned an error'#}
     {#} %}#}
     {#{% include 'ApplicationMainBundle:Common:headMeta.html.twig' with { 'meta': meta } %}#}
 {#{% endblock %}#}
 
+
 {% block body %}
-    <h1>404</h1>
+    <h1>Oops!</h1>
     <div class="well">
-        <h2>Page not found</h2>
+        <h2>{{ exception.message|nl2br|format_file_from_text }}</h2>
     </div>
 {% endblock body %}

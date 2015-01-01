@@ -1,17 +1,17 @@
 {% extends '::base.html.twig' %}
 
-{% block head_meta %}
-    {% set meta = {
-    'title':  status_code ~ ' ' ~ status_text,
-    'description': status_text
-    } %}
-    {% include 'ApplicationMainBundle:Common:headMeta.html.twig' with { 'meta': meta } %}
-{% endblock %}
+{#{% block head_meta %}#}
+    {#{% set meta = {#}
+    {#'title':  'Oops',#}
+    {#'description': 'The server returned an error'#}
+    {#} %}#}
+    {#{% include 'ApplicationMainBundle:Common:headMeta.html.twig' with { 'meta': meta } %}#}
+{#{% endblock %}#}
 
 
 {% block body %}
     <h1>Oops!</h1>
     <div class="well">
-        <h2>{{ status_code }} {{ status_text }}</h2>
+        <h2>The server returned an error.</h2>
     </div>
 {% endblock body %}
