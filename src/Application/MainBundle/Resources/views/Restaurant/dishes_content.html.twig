@@ -13,6 +13,8 @@
 
                     {% include 'ApplicationMainBundle:Security:loginOrSigninLinks.html.twig' with {'redirect': restaurant_url} %}
 
+                    <div class="modal-footer"></div>
+
                 {% else %}
 
                     <p>
@@ -37,10 +39,10 @@
         {% if app.user %}
             Or
             <button type="button" data-toggle="modal" data-target="#addDishModal" class="btn btn-primary btn-sm">
-                Add a dish
+                Add a dish and your review
             </button>
         {% else %}
-            You can add a dish if you're logged. {% include 'ApplicationMainBundle:Security:loginOrSigninLinks.html.twig' with {'redirect': restaurant_url} %}
+            <a href="#" data-toggle="modal" data-target="#addDishModal">Log in to add a dish</a>
         {% endif %}
     </div>
 
