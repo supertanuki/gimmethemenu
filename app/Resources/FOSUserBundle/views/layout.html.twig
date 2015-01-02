@@ -11,6 +11,12 @@
 {% block h1 %}My profile{% endblock h1 %}
 
 {% block body %}
+
+    {% if app.user %}
+        {% include 'ApplicationMainBundle:Common:user_menu.html.twig' %}
+    {% endif %}
+
     {{ parent() }}
+
     {% block fos_user_content %}{% endblock fos_user_content %}
 {% endblock body %}

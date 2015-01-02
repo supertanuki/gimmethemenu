@@ -11,11 +11,15 @@
 
 {% block body %}
 
+    {% if app.user and user is defined and app.user == user %}
+        {% include 'ApplicationMainBundle:Common:user_menu.html.twig' %}
+    {% endif %}
+
     <h1>Followed</h1>
 
     {% if user.followings|length %}
         <div class="well">
-            These are the people you follow.
+            These are the people you follow. <a href="{{ path('activities') }}">See their reviews</a>
         </div>
 
 
@@ -54,10 +58,10 @@
 
     {% else %}
         <div class="alert alert-danger">
-            It's sad. Nobody followed.
+            Nobody followed.
         </div>
         <p>
-            <a href="{{ path('users_top') }}" class="btn btn-default">Search people to follow here</a>
+            <a href="{{ path('users_top') }}" class="btn btn-default">Search people to follow</a>
         </p>
     {% endif %}
 

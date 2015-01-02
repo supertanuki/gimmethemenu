@@ -14,10 +14,12 @@
 
 {% block body %}
 
+    {% include 'ApplicationMainBundle:Common:user_menu.html.twig' %}
+
     <h1>Activities</h1>
 
     <div class="well">
-        These are the reviews of the people you follow.
+        These are the reviews of <a href="{{ path('user_followed', { 'slug': app.user.slug }) }}">the people you follow</a>.
     </div>
 
     {% if logs|length %}

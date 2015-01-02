@@ -26,7 +26,7 @@
     {{ form_label(review.review) }} *
     <p class="help-block">At least 20 characters, humor required!</p>
     {{ form_errors(review.review) }}
-    {{ form_widget(review.review, {'attr': {'class': 'form-control'}}) }}
+    {{ form_widget(review.review, {'attr': {'class': 'form-control', 'rows': 8}}) }}
 </div>
 {% endif %}
 
@@ -54,5 +54,5 @@
         <br>This won't be published ; only you will see it.
     </p>
     {{ form_errors(review.personalNote) }}
-    {{ form_widget(review.personalNote, {'attr': {'class': 'form-control'}}) }}
+    {{ form_widget(review.personalNote, {'attr': {'class': 'form-control', 'rows': 5}}) }}
 </div>

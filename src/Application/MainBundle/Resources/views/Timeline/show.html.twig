@@ -14,6 +14,10 @@
 
 {% block body %}
 
+    {% if app.user and app.user == user %}
+        {% include 'ApplicationMainBundle:Common:user_menu.html.twig' %}
+    {% endif %}
+
     <h1>
         {{ user.firstName }}'s timeline
     </h1>

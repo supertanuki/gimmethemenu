@@ -11,6 +11,10 @@
 
 {% block body %}
 
+    {% if app.user and user is defined and app.user == user %}
+        {% include 'ApplicationMainBundle:Common:user_menu.html.twig' %}
+    {% endif %}
+
     <h1>Followers</h1>
 
     {% if user.followers|length %}

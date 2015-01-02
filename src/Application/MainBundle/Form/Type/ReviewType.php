@@ -17,12 +17,11 @@ class ReviewType extends AbstractType
             ))
             ->add('review', null, array(
                 'label' => 'Your review',
-                'attr' => array('rows' => 8)
+                'required' => true,
             ))
             ->add('personalNote', null, array(
                 'label' => 'Your personal note',
                 'required' => false,
-                'attr' => array('rows' => 5)
             ))
             ->add('when', null, array(
                 'widget' => 'single_text',
