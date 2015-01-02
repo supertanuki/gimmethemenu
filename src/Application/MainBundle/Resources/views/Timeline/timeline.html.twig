@@ -122,7 +122,7 @@
                                                 <p>{% include 'ApplicationMainBundle:Common:rating.html.twig' with {'rating': review.rank} %}</p>
 
                                                 <p>
-                                                    <a href="{{ restaurant_url }}" style="color: #48cfad">
+                                                    <a href="{{ restaurant_url }}" class="second">
                                                         <span class="glyphicon glyphicon-map-marker"></span>
                                                         {{ review.dish.restaurant.name }}
                                                     </a>
@@ -130,7 +130,7 @@
 
                                                 {% if user is not defined and (not app.user or (app.user and app.user != review.user)) %}
                                                     <p>
-                                                        <a href="{{ path('user_timeline', {'slug':review.user.slug}) }}" style="color: #48cfad">
+                                                        <a href="{{ path('user_timeline', {'slug':review.user.slug}) }}" class="second">
                                                             <span class="glyphicon glyphicon-user"></span> {{ review.user }}
                                                         </a>
                                                     </p>

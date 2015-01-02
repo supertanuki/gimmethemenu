@@ -121,13 +121,13 @@
 
                     <p>
                         <small>
-                            <a href="{{ restaurant_url }}" style="color: #48cfad">
+                            <a href="{{ restaurant_url }}" class="second">
                                 <span class="glyphicon glyphicon-map-marker"></span>
                                 {{ review.dish.restaurant.name }},
                                 {{ review.dish.restaurant.locality }}
                             </a>
                             <br>
-                            <a href="{{ path('user_timeline', {'slug':review.user.slug}) }}" style="color: #48cfad">
+                            <a href="{{ path('user_timeline', {'slug':review.user.slug}) }}" class="second">
                                 <span class="glyphicon glyphicon-user"></span> {{ review.user }}
                             </a>
                         </small>

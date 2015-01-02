@@ -2,8 +2,8 @@
 
 {% block head_meta %}
     {% set meta = {
-    'title': 'Followings',
-    'description': 'Followings'
+    'title': 'Followed',
+    'description': 'Followed'
     } %}
     {% include 'ApplicationMainBundle:Common:headMeta.html.twig' with { 'meta': meta } %}
 {% endblock %}
@@ -11,7 +11,7 @@
 
 {% block body %}
 
-    <h1>Followings</h1>
+    <h1>Followed</h1>
 
     {% if user.followings|length %}
         <div class="well">

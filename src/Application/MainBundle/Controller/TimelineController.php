@@ -125,11 +125,11 @@ class TimelineController extends Controller
 
 
     /**
-     * @Route("/user/{slug}/followings", name="user_followings")
+     * @Route("/user/{slug}/followed", name="user_followed")
      * @Method("get")
      * @Template()
      */
-    public function followingsAction($slug)
+    public function followedAction($slug)
     {
         $user = $this->getDoctrine()
             ->getRepository('ApplicationMainBundle:User')

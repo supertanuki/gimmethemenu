@@ -86,9 +86,9 @@
                             {{ app.user }} <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="{{ path('user_timeline', { 'slug': app.user.slug }) }}">My timeline</a></li>
-                            <li><a href="{{ path('user_followings', { 'slug': app.user.slug }) }}">My followings</a></li>
-                            <li><a href="{{ path('user_followers', { 'slug': app.user.slug }) }}">My followers</a></li>
+                            <li><a href="{{ path('user_timeline', { 'slug': app.user.slug }) }}">Timeline</a></li>
+                            <li><a href="{{ path('user_followed', { 'slug': app.user.slug }) }}">Followed</a></li>
+                            <li><a href="{{ path('user_followers', { 'slug': app.user.slug }) }}">Followers</a></li>
                             <li><a href="{{ path('fos_user_profile_edit') }}">My profile</a></li>
                             <li><a href="{{ path('fos_user_security_logout') }}">Logout</a></li>
                         </ul>

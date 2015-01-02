@@ -16,6 +16,14 @@ h3 {
     font-size:19px;
 }
 
+a.second {
+    color: #48cfad;
+}
+
+a.second:hover {
+    color: #26816a;
+}
+
 .modal {
     z-index: 10000;
 }
