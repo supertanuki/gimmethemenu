@@ -212,16 +212,14 @@
                         <div class="time hidden-xs">{{ review.when|localizeddate('medium', 'none') }}</div>
                         <div class="events">
 
-                            <div class="row">
-
-                            {% if review.photoName %}
-                                <div class="col-xs-12 col-sm-4">
-                                    <img class="events-object img-rounded" src="{{ vich_uploader_asset(review, 'dish_photo') | imagine_filter('square') }}" width="100%">
-                                </div>
-                            {% endif %}
-
-                                <div class="col-xs-12 {% if review.photoName %}col-sm-8{% endif %}">
                                     <div class="events-body">
+
+                                        {% if review.photoName %}
+                                            <div class="pull-right">
+                                                <img class="events-object img-rounded" src="{{ vich_uploader_asset(review, 'dish_photo') | imagine_filter('square') }}" width="100">
+                                            </div>
+                                        {% endif %}
+
                                         <h4 class="events-heading">
                                             <a href="{{ path('user_timeline', {'slug':review.user.slug}) }}">{{ review.user }}</a>
                                         </h4>
@@ -249,8 +247,7 @@
                                             </p>
                                         {% endif %}
                                     </div>
-                                </div>
-                            </div>
+
                         </div>
                     </dd>
                 {% endfor %}
