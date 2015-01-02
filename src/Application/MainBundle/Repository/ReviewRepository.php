@@ -44,16 +44,34 @@ class ReviewRepository extends EntityRepository
     public function getLatestForUser($user)
     {
         return $this->commonQuery()
-            ->innerJoin('review.dish', 'd')
+            ->join('review.dish', 'd')
             ->where('review.user = :user')
             ->setParameter('user', $user)
             ->orderBy('review.when', 'DESC')
-            ->innerJoin('d.restaurant', 'r')
-            ->innerJoin('r.locality', 'l')
-            ->innerJoin('r.country', 'c')
+            ->join('d.restaurant', 'r')
+            ->join('r.locality', 'l')
+            ->join('r.country', 'c')
             ->select(array('review', 'd', 'r', 'l', 'c'))
             ->groupBy('r.id')
-            ->setMaxResults(6)
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getReviewsFromFollowings($user)
+    {
+        return $this->commonQuery()
+            ->join('review.dish', 'd')
+            ->join('review.user', 'u')
+            ->join('u.followers', 'f')
+            ->where('f = :user')
+            ->setParameter('user', $user)
+            ->orderBy('review.when', 'DESC')
+            ->addOrderBy('review.createdAt', 'DESC')
+            ->join('d.restaurant', 'r')
+            ->join('r.locality', 'l')
+            ->join('r.country', 'c')
+            ->select(array('review', 'f', 'd', 'u', 'r', 'l', 'c'))
             ->getQuery()
             ->getResult();
     }

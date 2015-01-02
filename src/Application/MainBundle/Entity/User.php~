@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass="Application\MainBundle\Repository\UserRepository")
@@ -53,7 +54,7 @@ class User extends BaseUser
     /** @ORM\Column(name="google_access_token", type="string", length=255, nullable=true) */
     protected $google_access_token;
 
-    /** @ORM\Column(name="is_timeline_public", type="boolean", nullable=true) */
+    /** @ORM\Column(name="is_timeline_public", type="boolean", nullable=true, options={"default" = 1}) */
     protected $isTimelinePublic;
 
     /**
@@ -62,74 +63,18 @@ class User extends BaseUser
     protected $reviews;
 
     /**
-     * Set slug
-     *
-     * @param string $slug
-     * @return Restaurant
-     */
-    public function setSlug($slug)
-    {
-        $this->slug = $slug;
-
-        return $this;
-    }
+     * @ORM\ManyToMany(targetEntity="User", mappedBy="followings")
+     **/
+    private $followers;
 
     /**
-     * Get slug
-     *
-     * @return string
-     */
-    public function getSlug()
-    {
-        return $this->slug;
-    }
-
-//    /**
-//     * @var string
-//     *
-//     * @ORM\Column(name="last_name", type="string", length=255)
-//     */
-//    private $lastName;
-//
-//    /**
-//     * @var string
-//     *
-//     * @ORM\Column(name="address", type="string", length=255)
-//     */
-//    private $address;
-//
-//    /**
-//     * @var string
-//     *
-//     * @ORM\Column(name="postal_code", type="string", length=255)
-//     */
-//    private $postalCode;
-//
-//    /**
-//     * @var string
-//     *
-//     * @ORM\Column(name="city", type="string", length=255)
-//     */
-//    private $city;
-//
-//    /**
-//     * @var string
-//     *
-//     * @ORM\Column(name="country", type="string", length=255)
-//     */
-//    private $country;
-//
-//    /**
-//     * @var string
-//     *
-//     * @ORM\Column(name="phone", type="string", length=255)
-//     */
-//    private $phone;
-//
-//    /**
-//     * ORM\OneToMany(targetEntity="ProjectResponse", mappedBy="user", cascade={"persist", "remove"}, orphanRemoval=true)
-//     */
-//    protected $projectResponses;
+     * @ORM\ManyToMany(targetEntity="User", inversedBy="followers")
+     * @ORM\JoinTable(name="user_followings",
+     *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="following_user_id", referencedColumnName="id")}
+     *      )
+     **/
+    private $followings;
 
     /**
      * @var \DateTime
@@ -153,14 +98,44 @@ class User extends BaseUser
     public function __construct()
     {
         parent::__construct();
-        $this->reviews = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->reviews = new ArrayCollection();
+        $this->followings = new ArrayCollection();
+        $this->followers = new ArrayCollection();
     }
 
+    /**
+     * Set Email
+     *
+     * @param string $email
+     */
     public function setEmail($email)
     {
         parent::setEmail($email);
         // we use email as the username
         $this->setUsername($email);
+    }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     * @return Restaurant
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
     }
 
     /**
@@ -536,5 +511,38 @@ class User extends BaseUser
     public function getGoogleAccessToken()
     {
         return $this->google_access_token;
+    }
+
+    /**
+     * Set isTimelinePublic
+     *
+     * @param boolean $isTimelinePublic
+     * @return User
+     */
+    public function setIsTimelinePublic($isTimelinePublic)
+    {
+        $this->isTimelinePublic = $isTimelinePublic;
+
+        return $this;
+    }
+
+    /**
+     * Get isTimelinePublic
+     *
+     * @return boolean 
+     */
+    public function getIsTimelinePublic()
+    {
+        return $this->isTimelinePublic;
+    }
+
+    /**
+     * Get isTimelinePublicLabel
+     *
+     * @return boolean
+     */
+    public function getIsTimelinePublicLabel()
+    {
+        return $this->isTimelinePublic ? 'public' : 'private';
     }
 }

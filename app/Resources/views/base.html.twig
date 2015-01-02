@@ -86,15 +86,15 @@
                             {{ app.user }} <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="{{ path('fos_user_profile_edit') }}">Edit my profile</a></li>
-                            <li class="divider"></li>
+                            <li><a href="{{ path('user_timeline', { 'slug': app.user.slug }) }}">My timeline</a></li>
+                            <li><a href="{{ path('user_followings', { 'slug': app.user.slug }) }}">My followings</a></li>
+                            <li><a href="{{ path('user_followers', { 'slug': app.user.slug }) }}">My followers</a></li>
+                            <li><a href="{{ path('fos_user_profile_edit') }}">My profile</a></li>
                             <li><a href="{{ path('fos_user_security_logout') }}">Logout</a></li>
                         </ul>
                     </li>
 
-                    <li><a href="{{ path('user_timeline', { 'slug': app.user.slug }) }}">My timeline</a></li>
-
-                    {{ render(controller('ApplicationMainBundle:Restaurant:getLatestForUser')) }}
+                    <li><a href="{{ path('activities') }}">Activities</a></li>
 
                 {% else %}
                     <li><a href="{{ path('fos_user_security_login') }}">Log in</a></li>
@@ -107,10 +107,23 @@
                 {% endif %}
 
                 {% if app.user %}
-                    <li><a href="{{ path('users_top') }}">Users</a></li>
+                    {{ render(controller('ApplicationMainBundle:Restaurant:getLatestForUser')) }}
                 {% endif %}
 
-                <li><a href="{{ path('about') }}">About</a></li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                        More <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu" role="menu">
+
+                        {% if app.user %}
+                            <li><a href="{{ path('users_top') }}">Food lovers <span class="glyphicon glyphicon-heart"></span> </a></li>
+                        {% endif %}
+
+                        <li><a href="{{ path('about') }}">About</a></li>
+                    </ul>
+                </li>
             </ul>
         </div><!--/.nav-collapse -->
     </div>

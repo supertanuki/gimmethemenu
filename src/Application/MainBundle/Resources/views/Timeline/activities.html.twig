@@ -1,0 +1,38 @@
+{% extends '::base.html.twig' %}
+
+{% block head_meta %}
+    {% set meta = {
+    'title': 'Activities',
+    'description': 'Activities of my following friends'
+    } %}
+    {% include 'ApplicationMainBundle:Common:headMeta.html.twig' with { 'meta': meta } %}
+{% endblock %}
+
+
+{% block body_attr %}data-spy="scroll" data-target="nav"{% endblock %}
+
+
+{% block body %}
+
+    <h1>Activities</h1>
+
+    <div class="well">
+        These are the reviews of the people you follow.
+    </div>
+
+    {% if logs|length %}
+
+        {% include 'ApplicationMainBundle:Timeline:timeline.html.twig' %}
+
+    {% else %}
+
+        <div class="alert alert-danger">
+            No reviews found.
+        </div>
+        <p>
+            <a href="{{ path('users_top') }}" class="btn btn-default">Search people to follow here</a>
+        </p>
+
+    {% endif %}
+
+{% endblock %}

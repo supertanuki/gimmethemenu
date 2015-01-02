@@ -26,6 +26,17 @@
             {#All time:#}
             {% include 'ApplicationMainBundle:Common:rating.html.twig' with {'rating': dish.averageRating} %}
 
+
+            {% if app.user and app.user == dish.user %}
+                <div class="pull-right">
+                    <small>
+                        <a href="{{ path('dish_edit', {'id': dish.id}) }}" class="btn btn-default btn-sm">
+                            <span class="glyphicon glyphicon-pencil"></span> Edit
+                        </a>
+                    </small>
+                </div>
+            {% endif %}
+
             {% if dish.price %}
                 <p>
                     Price:
@@ -63,17 +74,6 @@
     <div class="col-xs-6">
         {# addthis sharing tools #}
         <div class="addthis_sharing_toolbox pull-right"></div>
-
-        {% if app.user and app.user == dish.user %}
-            <div class="clearfix"></div>
-            <div class="pull-right">
-                <small>
-                    <a href="{{ path('dish_edit', {'id': dish.id}) }}" class="btn btn-default btn-sm">
-                        <span class="glyphicon glyphicon-pencil"></span> Edit this dish
-                    </a>
-                </small>
-            </div>
-        {% endif %}
     </div>
 </div>
 

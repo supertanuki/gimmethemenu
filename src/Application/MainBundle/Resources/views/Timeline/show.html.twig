@@ -19,22 +19,48 @@
     </h1>
 
     {% if app.user and app.user == user %}
-    <div class="row">
-        <div class="col-xs-6">
-            <a href="{{ path('fos_user_profile_edit') }}">
-                <span class="label label-info">
-                My timeline is {{ user.isTimelinePublicLabel }}
-                </span>
-            </a>
+
+        <div class="row">
+            <div class="col-xs-6">
+                <a href="{{ path('fos_user_profile_edit') }}">
+                    <span class="label label-info">
+                    My timeline is {{ user.isTimelinePublicLabel }}
+                    </span>
+                </a>
+            </div>
+
+            {% if user.isTimelinePublic %}
+            <div class="col-xs-6">
+                {# addthis sharing tools #}
+                <div class="addthis_sharing_toolbox pull-right"></div>
+            </div>
+            {% endif %}
         </div>
 
-        {% if user.isTimelinePublic %}
-        <div class="col-xs-6">
-            {# addthis sharing tools #}
-            <div class="addthis_sharing_toolbox pull-right"></div>
-        </div>
+    {% elseif app.user %}
+
+        {% if app.user.isFollowing(user) %}
+            <div class="btn-toolbar" role="toolbar">
+                <div class="btn-group">
+                    <button class="btn btn-sm btn-success dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+                        <span class="glyphicon glyphicon-ok"></span>
+                        Followed
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="{{ path('unfollow_user', {'slug': user.slug}) }}">Unfollow</a></li>
+                    </ul>
+                </div><!-- /btn-group -->
+            </div>
+
+        {% else %}
+            <div>
+                <a href="{{ path('follow_user', {'slug': user.slug}) }}" class="btn btn-info btn-sm">
+                    Follow this food lover
+                </a>
+            </div>
         {% endif %}
-    </div>
+
     {% endif %}
 
     {#{% if logs|length > 1 %}#}
@@ -54,178 +80,7 @@
         </div>
     {% else %}
 
-        {% set months = [] %}
-        {% set current_month = null %}
-        {% for log in logs %}
-            {% if log['reviews'] is defined %}
-                {% for review in log['reviews'] %}
-                    {% if current_month != review.when|date("m Y") %}
-                        {% set current_month = review.when|date("m Y") %}
-                        {% set months = months|merge([review.when|date("M Y")]) %}
-                    {% endif %}
-                {% endfor %}
-            {% endif %}
-        {% endfor %}
+        {% include 'ApplicationMainBundle:Timeline:timeline.html.twig' %}
 
-        <div class="row">
-
-            {% if months|length >= 2 %}
-            <div class="hidden-xs col-sm-2">
-                <nav data-spy="affix" class="affix">
-                    <ul class="nav nav-pills nav-stacked well" style="margin-top: 20px">
-                        {% for month in months %}
-                            <li role="presentation">
-                                <a href="#{{ month|replace({' ': '-'}) }}">
-                                    {{ month }}
-                                </a>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                </nav>
-            </div>
-            {% endif %}
-
-            <div class="col-xs-12 {% if months|length >= 2 %}col-sm-10{% endif %}">
-                <div id="timeline" class="timeline">
-                    <dl>
-
-                        {% set iterator = 0 %}
-                        {% set current_month = null %}
-
-                        {% for log in logs %}
-                            {% if log['menuFile'] is defined %}
-
-                                {% set iterator = iterator+1 %}
-
-                                {% set restaurant_url = path('restaurant_show', log['menuFile'].restaurant.paramsForUrl) %}
-
-                                <dd class="{% if iterator is odd %}pos-left{% else %}pos-right{% endif %} clearfix collapse">
-                                    <div class="circ"></div>
-                                    <div class="time">{{ log['menuFile'].createdAt|localizeddate('medium', 'none') }}</div>
-                                    <div class="events">
-                                        <div class="events-body">
-                                            <p>
-                                                <span class="label label-info">Added menu</span>
-                                                <a href="{{ restaurant_url }}">{{ log['menuFile'].restaurant.name }}</a>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </dd>
-
-                            {% elseif log['dish'] is defined %}
-
-                                {% set iterator = iterator+1 %}
-
-                                {% set dish_url = path('dish_show', log['dish'].restaurant.paramsForUrl) %}
-
-                                {% set restaurant_url = path('restaurant_show', log['dish'].restaurant.paramsForUrl) %}
-
-
-                                <dd class="{% if iterator is odd %}pos-left{% else %}pos-right{% endif %} clearfix collapse">
-                                    <div class="circ"></div>
-
-                                    <div class="time">{{ log['dish'].createdAt|localizeddate('medium', 'none') }}</div>
-                                    <div class="events">
-                                        <div class="events-body">
-                                            <p>
-                                                <span class="label label-info">Added dish</span>
-                                                <a href="{{ dish_url }}">{{ log['dish'].name }}</a>
-                                                @ <a href="{{ restaurant_url }}">{{ log['dish'].restaurant.name }}</a>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </dd>
-
-                            {% elseif log['reviews'] is defined %}
-                                {% for review in log['reviews'] %}
-
-                                    {% set iterator = iterator+1 %}
-                                    {% set dish_url = path('dish_show', review.dish.paramsForUrl) %}
-                                    {% set restaurant_url = path('restaurant_show', review.dish.restaurant.paramsForUrl) %}
-
-                                    {% if current_month != review.when|date("m Y") %}
-                                        {% set current_month = review.when|date("m Y") %}
-                                        <dt id="{{ review.when|date("M-Y") }}">{{ review.when|date("M Y") }}</dt>
-                                    {% endif %}
-
-                                    <dd class="{% if iterator is odd %}pos-left{% else %}pos-right{% endif %} clearfix">
-                                        <div class="circ"></div>
-
-                                        <div class="time">{{ review.when|localizeddate('medium', 'none') }}</div>
-                                        <div class="events">
-
-                                            <div class="row">
-                                                {% if review.photoName %}
-                                                    <div class="col-xs-12 col-sm-4">
-                                                        <a href="{{ dish_url }}">
-                                                            <img class="img-rounded" src="{{ vich_uploader_asset(review, 'dish_photo') | imagine_filter('square') }}" width="100%">
-                                                        </a>
-                                                    </div>
-                                                {% endif %}
-
-                                                <div class="col-xs-12 {% if review.photoName %}col-sm-8{% endif %}">
-                                                    <div class="events-body">
-                                                        <h4 class="events-heading">
-                                                            <a href="{{ dish_url }}">{{ review.dish.name }}</a>
-                                                        </h4>
-
-                                                        <p>
-                                                            <a href="{{ restaurant_url }}">
-                                                                <span class="glyphicon glyphicon-map-marker"></span>
-                                                                {{ review.dish.restaurant.name }}
-                                                            </a>
-                                                        </p>
-
-                                                        <p>{% include 'ApplicationMainBundle:Common:rating.html.twig' with {'rating': review.rank} %}</p>
-
-
-
-
-                                                        <p>{{ review.review }}</p>
-                                                        {% if review.personalNote and app.user and app.user.id == review.user.id %}
-                                                            <blockquote class="blockquote-reverse">
-                                                                <p><i>{{ review.personalNote }}</i></p>
-                                                                <footer>My personal note</footer>
-                                                            </blockquote>
-                                                        {% endif %}
-
-                                                        {% if app.user and app.user == review.user %}
-                                                            <p>
-                                                                <a href="{{ path('review_edit', {'id': review.id}) }}" class="btn btn-default btn-sm">
-                                                                    <small><span class="glyphicon glyphicon-pencil"></span> Edit</small>
-                                                                </a>
-                                                            </p>
-                                                        {% endif %}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </dd>
-
-                                {% endfor %}
-
-                            {% elseif log['registerAt'] is defined %}
-
-                                {% set iterator = iterator+1 %}
-
-                                <dd class="{% if iterator is odd %}pos-left{% else %}pos-right{% endif %} clearfix">
-                                    <div class="circ"></div>
-                                    <div class="time">{{ log['registerAt']|localizeddate('medium', 'none') }}</div>
-                                    <div class="events">
-                                        <div class="events-body">
-                                            <p>
-                                                <span class="glyphicon glyphicon-heart"></span>
-                                                <i>The very first time on</i> GimmeThe<b>Menu</b>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </dd>
-
-                            {% endif %}
-                        {% endfor %}
-                    </dl>
-                </div>
-            </div>
-        </div>
     {% endif %}
 {% endblock %}

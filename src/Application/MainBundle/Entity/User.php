@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass="Application\MainBundle\Repository\UserRepository")
@@ -32,14 +33,14 @@ class User extends BaseUser
      *      minMessage = "Your first name must be at least {{ limit }} characters long"
      * )
      */
-    private $firstName;
+    protected $firstName;
 
     /**
      * @var string
      * @Gedmo\Slug(fields={"firstName"}, updatable=true, separator="-")
      * @ORM\Column(name="slug", type="string", length=255, unique=false)
      */
-    private $slug;
+    protected $slug;
 
     /** @ORM\Column(name="facebook_id", type="string", length=255, nullable=true) */
     protected $facebook_id;
@@ -62,6 +63,59 @@ class User extends BaseUser
     protected $reviews;
 
     /**
+     * @ORM\ManyToMany(targetEntity="User", mappedBy="followings")
+     **/
+    protected $followers;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="User", inversedBy="followers")
+     * @ORM\JoinTable(name="user_followings",
+     *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="following_user_id", referencedColumnName="id")}
+     *      )
+     **/
+    protected $followings;
+
+    /**
+     * @var \DateTime
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(name="created_at", type="datetime")
+     */
+    protected $createdAt;
+
+    /**
+     * @var \DateTime
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(name="updated_at", type="datetime")
+     */
+    protected $updatedAt;
+
+    public function __toString()
+    {
+        return $this->getFirstName();
+    }
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->reviews = new ArrayCollection();
+        $this->followings = new ArrayCollection();
+        $this->followers = new ArrayCollection();
+    }
+
+    /**
+     * Set Email
+     *
+     * @param string $email
+     */
+    public function setEmail($email)
+    {
+        parent::setEmail($email);
+        // we use email as the username
+        $this->setUsername($email);
+    }
+
+    /**
      * Set slug
      *
      * @param string $slug
@@ -82,38 +136,6 @@ class User extends BaseUser
     public function getSlug()
     {
         return $this->slug;
-    }
-
-    /**
-     * @var \DateTime
-     * @Gedmo\Timestampable(on="create")
-     * @ORM\Column(name="created_at", type="datetime")
-     */
-    private $createdAt;
-
-    /**
-     * @var \DateTime
-     * @Gedmo\Timestampable(on="update")
-     * @ORM\Column(name="updated_at", type="datetime")
-     */
-    private $updatedAt;
-
-    public function __toString()
-    {
-        return $this->getFirstName();
-    }
-
-    public function __construct()
-    {
-        parent::__construct();
-        $this->reviews = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    public function setEmail($email)
-    {
-        parent::setEmail($email);
-        // we use email as the username
-        $this->setUsername($email);
     }
 
     /**
@@ -522,5 +544,85 @@ class User extends BaseUser
     public function getIsTimelinePublicLabel()
     {
         return $this->isTimelinePublic ? 'public' : 'private';
+    }
+
+    /**
+     * Add followers
+     *
+     * @param \Application\MainBundle\Entity\User $followers
+     * @return User
+     */
+    public function addFollower(\Application\MainBundle\Entity\User $followers)
+    {
+        $this->followers[] = $followers;
+
+        return $this;
+    }
+
+    /**
+     * Remove followers
+     *
+     * @param \Application\MainBundle\Entity\User $followers
+     */
+    public function removeFollower(\Application\MainBundle\Entity\User $followers)
+    {
+        $this->followers->removeElement($followers);
+    }
+
+    /**
+     * Get followers
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getFollowers()
+    {
+        return $this->followers;
+    }
+
+    /**
+     * Add followings
+     *
+     * @param \Application\MainBundle\Entity\User $followings
+     * @return User
+     */
+    public function addFollowing(\Application\MainBundle\Entity\User $followings)
+    {
+        $this->followings[] = $followings;
+
+        return $this;
+    }
+
+    /**
+     * Remove followings
+     *
+     * @param \Application\MainBundle\Entity\User $followings
+     */
+    public function removeFollowing(\Application\MainBundle\Entity\User $followings)
+    {
+        $this->followings->removeElement($followings);
+    }
+
+    /**
+     * Get followings
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getFollowings()
+    {
+        return $this->followings;
+    }
+
+    /**
+     *
+     */
+    public function isFollowing($user)
+    {
+        foreach($this->getFollowings() as $following) {
+            if ($following == $user) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

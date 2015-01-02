@@ -2,7 +2,7 @@
 
 {% block head_meta %}
     {% set meta = {
-    'title': 'Early-adopters users',
+    'title': 'Food lovers',
     'description': 'Dishes reviews of early adopters users'
     } %}
     {% include 'ApplicationMainBundle:Common:headMeta.html.twig' with { 'meta': meta } %}
@@ -12,10 +12,12 @@
 {% block body %}
 
     <h1>
-        Early-adopters
+        F<span style="font-size: 80%"><span class="glyphicon glyphicon-heart"></span><span class="glyphicon glyphicon-heart"></span></span>D lovers
     </h1>
 
-    <table class="table table-striped table-hover">
+    <p class="well">This is the early-adopters. Thank you to be part of this service!</p>
+
+    <table class="table table-bordered table-striped table-hover">
         <thead>
         <tr>
             <th>User</th>
@@ -29,6 +31,12 @@
         <tr>
             <td>
                 <a href="{{ path('user_timeline', {'slug':user.slug}) }}">{{ user }}</a>
+                {% if app.user and app.user.isFollowing(user) %}
+                    <span class="label label-success">
+                        <span class="glyphicon glyphicon-ok"></span>
+                        Followed
+                    </span>
+                {% endif %}
             </td>
             <td>
                 {{ user.reviews|length }}

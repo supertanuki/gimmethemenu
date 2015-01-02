@@ -54,7 +54,7 @@
 {% endblock content_outside_container %}
 
 {% block body %}
-    <h2>Last reviews</h2>
+    <h2>Latest reviews</h2>
 
     {# for mobile #}
     <div id="dish-photos" class="carousel slide visible-xs-block" data-ride="carousel">
@@ -109,11 +109,28 @@
                 {% endif %}
 
                 <div class="caption text-center">
-                    <h3><a href="{{ dish_url }}">{{ review.dish.name }}</a></h3>
-                    <p>@ <a href="{{ restaurant_url }}">{{ review.dish.restaurant.name }}</a>, {{ review.dish.restaurant.locality }}</p>
-                    <p>by <a href="{{ path('user_timeline', {'slug':review.user.slug}) }}">{{ review.user }}</a></p>
+                    <h3>
+                        <a href="{{ dish_url }}">
+                            {{ review.dish.name }}
+                        </a>
+                    </h3>
+
                     <p>
                         {% include 'ApplicationMainBundle:Common:rating.html.twig' with {'rating': review.rank} %}
+                    </p>
+
+                    <p>
+                        <small>
+                            <a href="{{ restaurant_url }}" style="color: #48cfad">
+                                <span class="glyphicon glyphicon-map-marker"></span>
+                                {{ review.dish.restaurant.name }},
+                                {{ review.dish.restaurant.locality }}
+                            </a>
+                            <br>
+                            <a href="{{ path('user_timeline', {'slug':review.user.slug}) }}" style="color: #48cfad">
+                                <span class="glyphicon glyphicon-user"></span> {{ review.user }}
+                            </a>
+                        </small>
                     </p>
                 </div>
             </div>
