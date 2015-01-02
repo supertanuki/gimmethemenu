@@ -2,6 +2,11 @@ $(document).ready(function() {
     // validator for forms
     $('form').bootstrapValidator();
 
+    $('.readmore').readmore({
+        speed: 75,
+        maxHeight: 20
+    });
+
     // images gallery photoswipe
     initPhotoSwipeFromDOM('.images-gallery');
 

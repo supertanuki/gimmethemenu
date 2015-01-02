@@ -39,8 +39,14 @@
                     <li {% if current_route in ['fos_user_profile_edit', 'fos_user_change_password', 'fos_user_profile_show'] and app.user %}class="active"{% endif %}>
                         <a href="{{ path('fos_user_profile_show') }}">Profile</a>
                     </li>
+                </ul>
 
-                    <li><a href="{{ path('fos_user_security_logout') }}">Logout <span class="glyphicon glyphicon-remove"></span></a></li>
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="{{ path('fos_user_security_logout') }}">
+                            Logout <span class="glyphicon glyphicon-remove"></span>
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>

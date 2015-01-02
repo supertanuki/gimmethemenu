@@ -91,6 +91,10 @@ hr {
     margin: 0 0 10px 10px;
 }
 
+.timeline dl dd .events {
+    padding: 10px;
+}
+
 .timeline dl dd .events .events-object {
     margin-bottom: 10px;
 }
@@ -104,6 +108,8 @@ hr {
     top: 0;
     margin-bottom:0;
 }
+
+
 
 @media screen and (max-width: 767px) {
     .timeline.reviews dl dd .time {

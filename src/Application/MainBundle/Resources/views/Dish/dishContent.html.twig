@@ -230,41 +230,41 @@
                         <div class="time hidden-xs">{{ review.when|localizeddate('medium', 'none') }}</div>
                         <div class="events">
 
-                                    <div class="events-body">
+                            <div class="events-body">
 
-                                        {% if review.photoName %}
-                                            <div class="pull-right">
-                                                <img class="events-object img-rounded" src="{{ vich_uploader_asset(review, 'dish_photo') | imagine_filter('square') }}" width="100">
-                                            </div>
-                                        {% endif %}
-
-                                        <h4 class="events-heading">
-                                            <a href="{{ path('user_timeline', {'slug':review.user.slug}) }}">{{ review.user }}</a>
-                                        </h4>
-
-                                        <div class="visible-xs-block">on {{ review.when|localizeddate('medium', 'none') }}</div>
-
-                                        {% include 'ApplicationMainBundle:Common:rating.html.twig' with {'rating': review.rank} %}
-
-                                        <p>
-                                            {{ review.review }}
-                                        </p>
-
-                                        {% if review.personalNote and app.user and app.user == review.user %}
-                                            <blockquote class="blockquote-reverse">
-                                                <p><i>{{ review.personalNote }}</i></p>
-                                                <footer>My private personal note</footer>
-                                            </blockquote>
-                                        {% endif %}
-
-                                        {% if app.user and app.user == review.user %}
-                                            <p>
-                                                <a href="{{ path('review_edit', {'id': review.id}) }}" class="btn btn-default btn-sm">
-                                                    <small><span class="glyphicon glyphicon-pencil"></span> Edit</small>
-                                                </a>
-                                            </p>
-                                        {% endif %}
+                                {% if review.photoName %}
+                                    <div class="pull-right">
+                                        <img class="events-object img-rounded" src="{{ vich_uploader_asset(review, 'dish_photo') | imagine_filter('square') }}" width="100">
                                     </div>
+                                {% endif %}
+
+                                <h4 class="events-heading">
+                                    <a href="{{ path('user_timeline', {'slug':review.user.slug}) }}">{{ review.user }}</a>
+                                </h4>
+
+                                <div class="visible-xs-block">on {{ review.when|localizeddate('medium', 'none') }}</div>
+
+                                {% include 'ApplicationMainBundle:Common:rating.html.twig' with {'rating': review.rank} %}
+
+                                <div>
+                                    {{ review.review }}
+                                </div>
+
+                                {% if review.personalNote and app.user and app.user == review.user %}
+                                    <blockquote class="blockquote-reverse">
+                                        <p><i>{{ review.personalNote }}</i></p>
+                                        <footer>My private personal note</footer>
+                                    </blockquote>
+                                {% endif %}
+
+                                {% if app.user and app.user == review.user %}
+                                    <p>
+                                        <a href="{{ path('review_edit', {'id': review.id}) }}" class="btn btn-default btn-sm">
+                                            <small><span class="glyphicon glyphicon-pencil"></span> Edit</small>
+                                        </a>
+                                    </p>
+                                {% endif %}
+                            </div>
 
                         </div>
                     </dd>
