@@ -12,7 +12,10 @@ class ImageSizeExtension extends \Twig_Extension
 
     public function imageSizeFilter($file, $option = null)
     {
-//        return '';
+        // photoswipe will not working on local
+        if($_SERVER['HTTP_HOST'] == 'menuresto.local') {
+            return '';
+        }
 
         $root = '';
         if (substr($file, 0, 4) != 'http') {

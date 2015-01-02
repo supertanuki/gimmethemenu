@@ -26,7 +26,7 @@ h3 {
 
 
 .images-gallery div {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 .theme-dropdown .dropdown-menu {
@@ -79,9 +79,22 @@ hr {
     margin-top: 0;
     margin-bottom: 10px;
 }
+.timeline.reviews dl dd .events img {
+    margin: 0 0 10px 10px;
+}
 
 .timeline dl dd .events .events-object {
     margin-bottom: 10px;
+}
+
+.timeline dl {
+    padding: 0;
+    margin: 0;
+}
+
+.timeline dl dt:first-child {
+    top: 0;
+    margin-bottom:0;
 }
 
 @media screen and (max-width: 767px) {
@@ -93,10 +106,17 @@ hr {
     .timeline dl dd .time {
         width: 50px;
     }
-    .timeline.reviews dl dd.pos-right .time {
-        padding:0;
-        margin-left: -100px;
-        text-align: right;
+    .timeline dl dd .events img {
+        margin-bottom: 10px;
+    }
+    .timeline dl dd.pos-left .events,
+    .timeline dl dd.pos-right .events {
+        width:75%
+    }
+
+    .timeline.review dl dd.pos-left .events,
+    .timeline.reviews dl dd.pos-right .events {
+        width:80%
     }
 }
 

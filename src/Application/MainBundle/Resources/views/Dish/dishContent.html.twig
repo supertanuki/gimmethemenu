@@ -17,56 +17,67 @@
 
 <h1>
     &ldquo;{{ dish.name }}&rdquo;
-
-    {% if dish.price %}
-        <span class="label label-warning price">
-            {{ dish.price }}{#<small>,00</small>#}&nbsp;€
-        </span>
-    {% endif %}
 </h1>
 
 <div class="row">
-    <div class="col-xs-12 col-md-6">
-        {#All time:#}
-        {% include 'ApplicationMainBundle:Common:rating.html.twig' with {'rating': dish.averageRating} %}
+    <div class="col-xs-6">
+        <div class="well">
+
+            {#All time:#}
+            {% include 'ApplicationMainBundle:Common:rating.html.twig' with {'rating': dish.averageRating} %}
+
+            {% if dish.price %}
+                <p>
+                    Price:
+                    <span class="label label-warning price">
+                        {{ dish.price }}{#<small>,00</small>#}&nbsp;€
+                    </span>
+                </p>
+            {% endif %}
 
 
-        {% if dish.parent %}
+            {% if dish.parent %}
+                <p>
+                    Meal:
+                    <a href="{{ path('dish_show', dish.parent.paramsForUrl) }}">
+                        {{ dish.parent.name }}
+                    </a>
+                </p>
+            {% endif %}
+
+            {#
+            Last 10: <3 <3 <3 <3 <3
+            #}
+
             <p>
-                Meal:
-                <a href="{{ path('dish_show', dish.parent.paramsForUrl) }}">
-                    {{ dish.parent.name }}
+                <a href="{{ path('restaurant_show', dish.restaurant.paramsForUrl) }}">
+                    <span class="glyphicon glyphicon-map-marker"></span>
+                    {{ dish.restaurant.name }}
+                    <br>{{ dish.restaurant.address }}
                 </a>
             </p>
-        {% endif %}
-
-        {#
-        Last 10: <3 <3 <3 <3 <3
-        #}
-
-        <p>
-            <a href="{{ path('restaurant_show', dish.restaurant.paramsForUrl) }}">{{ dish.restaurant.name }}</a>
-            <br>{{ dish.restaurant.address }}
-        </p>
-
-
-        {% if app.user and app.user == dish.user %}
-            <small>
-                <a href="{{ path('dish_edit', {'id': dish.id}) }}">
-                    <span class="glyphicon glyphicon-pencil"></span> Edit
-                </a>
-            </small>
-        {% endif %}
+        </div>
 
     </div>
 
-    <div class="col-xs-12 col-md-6">
+    <div class="col-xs-6">
         {# addthis sharing tools #}
-        <div class="addthis_sharing_toolbox pull-right">Share:</div>
+        <div class="addthis_sharing_toolbox pull-right"></div>
+
+        {% if app.user and app.user == dish.user %}
+            <div class="clearfix"></div>
+            <div class="pull-right">
+                <small>
+                    <a href="{{ path('dish_edit', {'id': dish.id}) }}" class="btn btn-default btn-sm">
+                        <span class="glyphicon glyphicon-pencil"></span> Edit this dish
+                    </a>
+                </small>
+            </div>
+        {% endif %}
     </div>
 </div>
 
-<hr>
+
 
 <nav class="navbar navbar-inverse navbar-fixed-bottom visible-xs-block" role="navigation">
     <div class="container">
@@ -96,56 +107,64 @@
     </div>
 </nav>
 
+
+
 {% if app.user %}
-<a name="add-my-review"></a>
+    <div id="add-my-review" class="row">
+        <div class="col-xs-12 col-md-6 col-md-offset-3">
 
-<div class="row">
-    <div class="col-xs-12 col-md-6 col-md-offset-3">
+            <p class="text-center">
 
-        <p class="text-center">
+                {% if not already_reviewed %}
 
-            {% if not already_reviewed %}
+                    <a href="#add-my-review" id="addMyReviewBtn" class="btn btn-primary btn-lg"
+                       onclick="$('#reviewForm').show(); $(this).hide();">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                        Add a review
+                    </a>
 
-                <a href="#add-my-review" id="addMyReviewBtn" class="btn btn-primary btn-lg"
-                   onclick="$('#reviewForm').show(); $(this).hide();">
-                    <span class="glyphicon glyphicon-pencil"></span>
-                    Add a review
-                </a>
+                {% else %}
 
-            {% else %}
+                    <a href="{{ path('review_quick_add', dish.paramsForUrl) }}" class="btn btn-primary">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                        Add a quick review
+                        <br>
+                        <i><small>Just dish rating + when it was</small></i>
+                    </a>
 
-                <a href="{{ path('review_quick_add', dish.paramsForUrl) }}" class="btn btn-primary btn-lg">
-                    <span class="glyphicon glyphicon-pencil"></span>
-                    Add a quick review
-                </a>
 
-                or
+                    <br>
+                    or
+                    <br>
 
-                <a href="#add-my-review" id="addMyReviewBtn"
-                   onclick="$('#reviewForm').show(); $(this).hide();">
-                    Add a regular review
-                </a>
+                    <a href="#add-my-review" id="addMyReviewBtn"
+                       onclick="$('#reviewForm').show(); $(this).hide();">
+                        Add a regular review
+                        <br>
+                        <i><small>Dish rating + review + photo</small></i>
+                    </a>
 
-            {% endif %}
-        </p>
 
-        <div class="panel panel-primary collapse" id="reviewForm">
-            <div class="panel-heading">
-                <h3 class="panel-title">Add a review</h3>
+                {% endif %}
+            </p>
+
+            <div class="panel panel-primary collapse" id="reviewForm">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Add a review</h3>
+                </div>
+                <div class="panel-body">
+                    {% include 'ApplicationMainBundle:Review:reviewForm.html.twig' with {'form_review': form_review} %}
+                </div>
             </div>
-            <div class="panel-body">
-                {% include 'ApplicationMainBundle:Review:reviewForm.html.twig' with {'form_review': form_review} %}
-            </div>
+
         </div>
-
     </div>
-</div>
 {% endif %}
 
 
-<a name="photos"></a>
 
-<div class="row">
+
+<div id="photos" class="row">
 
     {% if photos|length %}
         <div class="col-md-6">
@@ -199,9 +218,8 @@
         </div>
     {% endif %}
 
-    <a name="reviews"></a>
 
-    <div class="{% if photos|length %}col-md-6{% else %}col-xs-12 col-md-6 col-md-offset-3{% endif %}">
+    <div id="reviews" class="{% if photos|length %}col-md-6{% else %}col-xs-12 col-md-6 col-md-offset-3{% endif %}">
         <h2>Reviews</h2>
 
         <div class="timeline reviews">
@@ -232,16 +250,16 @@
                                             {{ review.review }}
                                         </p>
 
-                                        {% if review.personalNote and app.user and app.user.id == review.user.id %}
+                                        {% if review.personalNote and app.user and app.user == review.user %}
                                             <blockquote class="blockquote-reverse">
                                                 <p><i>{{ review.personalNote }}</i></p>
-                                                <footer>My personal note</footer>
+                                                <footer>My private personal note</footer>
                                             </blockquote>
                                         {% endif %}
 
                                         {% if app.user and app.user == review.user %}
                                             <p>
-                                                <a href="{{ path('review_edit', {'id': review.id}) }}">
+                                                <a href="{{ path('review_edit', {'id': review.id}) }}" class="btn btn-default btn-sm">
                                                     <small><span class="glyphicon glyphicon-pencil"></span> Edit</small>
                                                 </a>
                                             </p>

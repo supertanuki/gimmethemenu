@@ -48,7 +48,7 @@
 
     {% if not user.isTimelinePublic and (not app.user or app.user and app.user.id != user.id) %}
         <div class="alert alert-danger">
-            This timeline is private
+            Sorry, this timeline is private!
         </div>
     {% else %}
 
@@ -85,8 +85,7 @@
             {% endif %}
 
             <div class="col-xs-12 {% if months|length >= 2 %}col-sm-10{% endif %}">
-                <div class="timeline">
-                    <a name="timeline"></a>
+                <div id="timeline" class="timeline">
                     <dl>
 
                         {% set iterator = 0 %}
@@ -149,7 +148,7 @@
                                     {% endif %}
 
                                     <dd class="{% if iterator is odd %}pos-left{% else %}pos-right{% endif %} clearfix">
-                                        <div class="circ hidden-xs"></div>
+                                        <div class="circ"></div>
 
                                         <div class="time">{{ review.when|localizeddate('medium', 'none') }}</div>
                                         <div class="events">
@@ -191,7 +190,7 @@
 
                                                         {% if app.user and app.user == review.user %}
                                                             <p>
-                                                                <a href="{{ path('review_edit', {'id': review.id}) }}">
+                                                                <a href="{{ path('review_edit', {'id': review.id}) }}" class="btn btn-default btn-sm">
                                                                     <small><span class="glyphicon glyphicon-pencil"></span> Edit</small>
                                                                 </a>
                                                             </p>
