@@ -2,10 +2,40 @@
 
 <div class="well">
 
-    <ul>
-        <li>Email: <b>{{ user.email }}</b></li>
-        <li>First name: <b>{{ user.firstName }}</b></li>
-    </ul>
+    <table class="table">
+        <tr>
+            <th>
+                Email
+            </th>
+            <td>
+                {{ user.email }}
+            </td>
+        </tr>
+
+        <tr>
+            <th>
+                First name
+            </th>
+            <td>
+                {{ user.firstName }}
+            </td>
+        </tr>
+
+        <tr>
+            <th>
+                Timeline
+            </th>
+            <td>
+                {{ user.isTimelinePublicLabel }}
+
+                {% if not user.isTimelinePublic %}
+                    <p class="help-block">
+                        My timeline is private but my reviews are still public in dish page.
+                    </p>
+                {% endif %}
+            </td>
+        </tr>
+    </table>
 
     <p><a href="{{ path('fos_user_profile_edit') }}" class="btn btn-default">Edit</a></p>
 </div>

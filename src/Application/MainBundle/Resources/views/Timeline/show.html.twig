@@ -18,20 +18,22 @@
         {{ user.firstName }}'s timeline
     </h1>
 
-    {% if app.user and app.user.id == user.id %}
+    {% if app.user and app.user == user %}
     <div class="row">
         <div class="col-xs-6">
             <a href="{{ path('fos_user_profile_edit') }}">
-                <span class="label">
+                <span class="label label-info">
                 My timeline is {{ user.isTimelinePublicLabel }}
                 </span>
             </a>
         </div>
 
+        {% if user.isTimelinePublic %}
         <div class="col-xs-6">
             {# addthis sharing tools #}
             <div class="addthis_sharing_toolbox pull-right"></div>
         </div>
+        {% endif %}
     </div>
     {% endif %}
 
