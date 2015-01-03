@@ -2,8 +2,8 @@
 
 {% block head_meta %}
     {% set meta = {
-    'title': 'Followed',
-    'description': 'Followed'
+    'title': 'Followers',
+    'description': 'Followers'
     } %}
     {% include 'ApplicationMainBundle:Common:headMeta.html.twig' with { 'meta': meta } %}
 {% endblock %}
@@ -15,13 +15,12 @@
         {% include 'ApplicationMainBundle:Common:user_menu.html.twig' %}
     {% endif %}
 
-    <h1>Followed</h1>
+    <h1>Followers</h1>
 
-    {% if user.followings|length %}
+    {% if user.followers|length %}
         <div class="well">
-            These are the people you follow. <a href="{{ path('activities') }}">See their reviews</a>
+            These are the people who follow you.
         </div>
-
 
         <table class="table table-bordered table-striped table-hover">
             <thead>
@@ -33,17 +32,17 @@
             </thead>
 
             <tbody>
-            {% for user in user.followings %}
+            {% for u in user.followers %}
                 <tr>
                     <td>
-                        <a href="{{ path('user_timeline', {'slug':user.slug}) }}">{{ user }}</a>
+                        <a href="{{ path('user_timeline', {'slug': u.slug}) }}">{{ u }}</a>
                     </td>
                     <td>
-                        {{ user.reviews|length }}
+                        {{ u.reviews|length }}
                     </td>
                     <td>
-                        {% if user.reviews|length %}
-                            {% set last_review = user.reviews[user.reviews|length - 1] %}
+                        {% if u.reviews|length %}
+                            {% set last_review = u.reviews[u.reviews|length - 1] %}
                             {% if last_review %}
                                 <a href="{{ path('dish_show', last_review.dish.paramsForUrl) }}">
                                     {{ last_review.dish.name }}
@@ -57,12 +56,10 @@
         </table>
 
     {% else %}
-        <div class="alert alert-danger">
-            Nobody followed.
+        <div class="well">
+            <b>Oops... Nobody is following you!</b>
+            <br>Don't panic ;) Add reviews and follow people and be sure you'll get followers!
         </div>
-        <p>
-            <a href="{{ path('users_top') }}" class="btn btn-default">Search people to follow</a>
-        </p>
     {% endif %}
 
 {% endblock %}

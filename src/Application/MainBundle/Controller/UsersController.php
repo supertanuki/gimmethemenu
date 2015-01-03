@@ -84,4 +84,46 @@ class UsersController extends Controller
 
         return $this->redirect($this->generateUrl('user_timeline', array('slug' => $userToUnfollow->getSlug())));
     }
+
+
+    /**
+     * @Route("/user/{slug}/followed", name="user_followed")
+     * @Method("get")
+     * @Template()
+     */
+    public function followedAction($slug)
+    {
+        $user = $this->getDoctrine()
+            ->getRepository('ApplicationMainBundle:User')
+            ->findOneBy(array('slug' => $slug));
+
+        if (!$user) {
+            throw $this->createNotFoundException('User not found');
+        }
+
+        return array(
+            'user' => $user,
+        );
+    }
+
+
+    /**
+     * @Route("/user/{slug}/followers", name="user_followers")
+     * @Method("get")
+     * @Template()
+     */
+    public function followersAction($slug)
+    {
+        $user = $this->getDoctrine()
+            ->getRepository('ApplicationMainBundle:User')
+            ->findOneBy(array('slug' => $slug));
+
+        if (!$user) {
+            throw $this->createNotFoundException('User not found');
+        }
+
+        return array(
+            'user' => $user,
+        );
+    }
 }

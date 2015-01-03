@@ -122,46 +122,4 @@ class TimelineController extends Controller
             'logs' => $logs,
         );
     }
-
-
-    /**
-     * @Route("/user/{slug}/followed", name="user_followed")
-     * @Method("get")
-     * @Template()
-     */
-    public function followedAction($slug)
-    {
-        $user = $this->getDoctrine()
-            ->getRepository('ApplicationMainBundle:User')
-            ->findOneBy(array('slug' => $slug));
-
-        if (!$user) {
-            throw $this->createNotFoundException('User not found');
-        }
-
-        return array(
-            'user' => $user,
-        );
-    }
-
-
-    /**
-     * @Route("/user/{slug}/followers", name="user_followers")
-     * @Method("get")
-     * @Template()
-     */
-    public function followersAction($slug)
-    {
-        $user = $this->getDoctrine()
-            ->getRepository('ApplicationMainBundle:User')
-            ->findOneBy(array('slug' => $slug));
-
-        if (!$user) {
-            throw $this->createNotFoundException('User not found');
-        }
-
-        return array(
-            'user' => $user,
-        );
-    }
 }
