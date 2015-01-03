@@ -122,3 +122,9 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+
+hip_mandrill:
+    api_key: "%mandrill_app_key%"
+    default:
+        sender: no-reply@gimmethemenu.com
+        sender_name: Gimme The Menu

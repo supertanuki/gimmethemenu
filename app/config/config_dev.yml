@@ -39,3 +39,6 @@ swiftmailer:
 parameters:
     facebook_app_id: 868056013228847
     facebook_app_secret: c8e3f0d8da0f632ab49b38803eeb5a74
+
+hip_mandrill:
+    disable_delivery: true # useful for dev/test environment. Default value is 'false'

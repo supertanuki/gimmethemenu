@@ -16,3 +16,4 @@ parameters:
 
     facebook_app_id: xxx
     facebook_app_secret: xxx
+    mandrill_app_key: xxx

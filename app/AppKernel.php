@@ -53,6 +53,9 @@ class AppKernel extends Kernel
             // image transformation
             new Liip\ImagineBundle\LiipImagineBundle(),
 
+            // Mandrill
+            new Hip\MandrillBundle\HipMandrillBundle(),
+
             // Main application bundle
             new Application\MainBundle\ApplicationMainBundle(),
             new Application\PageBundle\ApplicationPageBundle(),
