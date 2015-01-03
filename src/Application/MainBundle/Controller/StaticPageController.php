@@ -41,9 +41,13 @@ class StaticPageController extends Controller
 
         $message
             ->addTo('supertanuki@gmail.com')
-            ->setSubject('Test Mandrill')
-            ->setHtml('<html><body><h1>Tu vas bien ?</h1></body></html>')
-            ;
+            ->setSubject('New followers')
+            ->setHtml($this->renderView(
+                'ApplicationMainBundle:Email:follower.html.twig',
+                array(
+                    'name' => 'Richard',
+                )
+            ));
 
         $result = $dispatcher->send($message);
 
