@@ -32,7 +32,8 @@
             </thead>
 
             <tbody>
-            {% for u in user.followers %}
+            {% for follower in user.followers %}
+                {% set u = follower.user %}
                 <tr>
                     <td>
                         <a href="{{ path('user_timeline', {'slug': u.slug}) }}">{{ u }}</a>

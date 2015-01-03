@@ -33,17 +33,18 @@
             </thead>
 
             <tbody>
-            {% for following in user.followed %}
+            {% for followed in user.followed %}
+                {% set u = followed.userFollowed %}
                 <tr>
                     <td>
-                        <a href="{{ path('user_timeline', {'slug':following.userFollowed.slug}) }}">{{ following.userFollowed }}</a>
+                        <a href="{{ path('user_timeline', {'slug':u.slug}) }}">{{ u }}</a>
                     </td>
                     <td>
-                        {{ following.userFollowed.reviews|length }}
+                        {{ u.reviews|length }}
                     </td>
                     <td>
-                        {% if following.userFollowed.reviews|length %}
-                            {% set last_review = following.userFollowed.reviews[following.userFollowed.reviews|length - 1] %}
+                        {% if u.reviews|length %}
+                            {% set last_review = u.reviews[u.reviews|length - 1] %}
                             {% if last_review %}
                                 <a href="{{ path('dish_show', last_review.dish.paramsForUrl) }}">
                                     {{ last_review.dish.name }}
