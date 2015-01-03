@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Application\MainBundle\Entity\UserFollowing;
 
 class UsersController extends Controller
 {
@@ -42,14 +43,25 @@ class UsersController extends Controller
             throw $this->createNotFoundException('User not found');
         }
 
-        $current_user->getFollowings()->add($userToFollow);
-        $userToFollow->getFollowers()->add($current_user);
+        // already followed ?
+        $userFollowing = $this->getDoctrine()
+            ->getRepository('ApplicationMainBundle:UserFollowing')
+            ->findOneBy(array(
+                'user' => $current_user,
+                'userFollowed' => $userToFollow
+            ));
 
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($current_user);
-        $em->flush();
+        if (!$userFollowing) {
+            $userFollowing = new UserFollowing();
+            $userFollowing->setUser($current_user);
+            $userFollowing->setUserFollowed($userToFollow);
 
-        $this->get('session')->getFlashBag()->add('info', sprintf('Now you follow %s!', $userToFollow));
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($userFollowing);
+            $em->flush();
+
+            $this->get('session')->getFlashBag()->add('info', sprintf('Now you follow %s!', $userToFollow));
+        }
 
         return $this->redirect($this->generateUrl('user_timeline', array('slug' => $userToFollow->getSlug())));
     }
@@ -73,14 +85,21 @@ class UsersController extends Controller
             throw $this->createNotFoundException('User not found');
         }
 
-        $current_user->removeFollowing($userToUnfollow);
-        $userToUnfollow->removeFollower($current_user);
+        // user is followed ?
+        $userFollowing = $this->getDoctrine()
+            ->getRepository('ApplicationMainBundle:UserFollowing')
+            ->findOneBy(array(
+                'user' => $current_user,
+                'userFollowed' => $userToUnfollow
+            ));
 
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($current_user);
-        $em->flush();
+        if ($userFollowing) {
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($userFollowing);
+            $em->flush();
 
-        $this->get('session')->getFlashBag()->add('info', sprintf('%s is no longer followed.', $userToUnfollow));
+            $this->get('session')->getFlashBag()->add('info', sprintf('%s is no longer followed.', $userToUnfollow));
+        }
 
         return $this->redirect($this->generateUrl('user_timeline', array('slug' => $userToUnfollow->getSlug())));
     }

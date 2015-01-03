@@ -58,23 +58,19 @@ class User extends BaseUser
     protected $isTimelinePublic;
 
     /**
-     * @ORM\OneToMany(targetEntity="Review", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="Review", mappedBy="user", cascade={"persist", "remove"})
      */
     protected $reviews;
 
     /**
-     * @ORM\ManyToMany(targetEntity="User", mappedBy="followings")
-     **/
-    protected $followers;
+     * @ORM\OneToMany(targetEntity="UserFollowing", mappedBy="user", cascade={"persist", "remove"})
+     */
+    protected $followed;
 
     /**
-     * @ORM\ManyToMany(targetEntity="User", inversedBy="followers")
-     * @ORM\JoinTable(name="user_followings",
-     *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="following_user_id", referencedColumnName="id")}
-     *      )
-     **/
-    protected $followings;
+     * @ORM\OneToMany(targetEntity="UserFollowing", mappedBy="userFollowed", cascade={"persist", "remove"})
+     */
+    protected $followers;
 
     /**
      * @var \DateTime
@@ -99,7 +95,7 @@ class User extends BaseUser
     {
         parent::__construct();
         $this->reviews = new ArrayCollection();
-        $this->followings = new ArrayCollection();
+        $this->followed = new ArrayCollection();
         $this->followers = new ArrayCollection();
     }
 
@@ -107,19 +103,22 @@ class User extends BaseUser
      * Set Email
      *
      * @param string $email
+     * @return User
      */
     public function setEmail($email)
     {
         parent::setEmail($email);
         // we use email as the username
         $this->setUsername($email);
+
+        return $this;
     }
 
     /**
      * Set slug
      *
      * @param string $slug
-     * @return Restaurant
+     * @return User
      */
     public function setSlug($slug)
     {
@@ -580,45 +579,49 @@ class User extends BaseUser
     }
 
     /**
-     * Add followings
+     * Add followed
      *
-     * @param \Application\MainBundle\Entity\User $followings
+     * @param \Application\MainBundle\Entity\User $followed
      * @return User
      */
-    public function addFollowing(\Application\MainBundle\Entity\User $followings)
+    public function addFollowed(\Application\MainBundle\Entity\User $followed)
     {
-        $this->followings[] = $followings;
+        $this->followed[] = $followed;
 
         return $this;
     }
 
     /**
-     * Remove followings
+     * Remove followed
      *
-     * @param \Application\MainBundle\Entity\User $followings
+     * @param \Application\MainBundle\Entity\User $followed
      */
-    public function removeFollowing(\Application\MainBundle\Entity\User $followings)
+    public function removeFollowed(\Application\MainBundle\Entity\User $followed)
     {
-        $this->followings->removeElement($followings);
+        $this->followed->removeElement($followed);
     }
 
     /**
-     * Get followings
+     * Get followed
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getFollowings()
+    public function getFollowed()
     {
-        return $this->followings;
+        return $this->followed;
     }
 
     /**
+     * Check if user is followed
      *
+     * @param User $user
+     * @return Boolean
      */
-    public function isFollowing($user)
+    public function isFollowed(\Application\MainBundle\Entity\User $user)
     {
-        foreach($this->getFollowings() as $following) {
-            if ($following == $user) {
+        foreach($this->getFollowed() as $followed) {
+            if ($followed->getUserFollowed() == $user) {
+//                die($followed->getUserFollowed()->getId());
                 return true;
             }
         }

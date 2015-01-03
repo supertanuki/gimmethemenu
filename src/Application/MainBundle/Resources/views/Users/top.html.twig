@@ -32,7 +32,7 @@
         <tr>
             <td>
                 <a href="{{ path('user_timeline', {'slug':user.slug}) }}">{{ user }}</a>
-                {% if app.user and app.user.isFollowing(user) %}
+                {% if app.user and app.user.isFollowed(user) %}
                     <span class="label label-success">
                         <span class="glyphicon glyphicon-ok"></span>
                         Followed

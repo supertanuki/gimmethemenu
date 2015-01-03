@@ -17,7 +17,7 @@
 
     <h1>Followed</h1>
 
-    {% if user.followings|length %}
+    {% if user.followed|length %}
         <div class="well">
             These are the people you follow. See their reviews in <a href="{{ path('activities') }}">Activities page</a>.
         </div>
@@ -33,17 +33,17 @@
             </thead>
 
             <tbody>
-            {% for user in user.followings %}
+            {% for following in user.followed %}
                 <tr>
                     <td>
-                        <a href="{{ path('user_timeline', {'slug':user.slug}) }}">{{ user }}</a>
+                        <a href="{{ path('user_timeline', {'slug':following.userFollowed.slug}) }}">{{ following.userFollowed }}</a>
                     </td>
                     <td>
-                        {{ user.reviews|length }}
+                        {{ following.userFollowed.reviews|length }}
                     </td>
                     <td>
-                        {% if user.reviews|length %}
-                            {% set last_review = user.reviews[user.reviews|length - 1] %}
+                        {% if following.userFollowed.reviews|length %}
+                            {% set last_review = following.userFollowed.reviews[following.userFollowed.reviews|length - 1] %}
                             {% if last_review %}
                                 <a href="{{ path('dish_show', last_review.dish.paramsForUrl) }}">
                                     {{ last_review.dish.name }}

@@ -58,13 +58,13 @@ class ReviewRepository extends EntityRepository
             ->getResult();
     }
 
-    public function getReviewsFromFollowings($user)
+    public function getReviewsFromFollowed($user)
     {
         return $this->commonQuery()
             ->join('review.dish', 'd')
             ->join('review.user', 'u')
             ->join('u.followers', 'f')
-            ->where('f = :user')
+            ->where('f.user = :user')
             ->setParameter('user', $user)
             ->orderBy('review.when', 'DESC')
             ->addOrderBy('review.createdAt', 'DESC')

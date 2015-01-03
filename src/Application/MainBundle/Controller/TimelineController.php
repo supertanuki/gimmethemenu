@@ -99,7 +99,7 @@ class TimelineController extends Controller
 
         $reviews = $this->getDoctrine()
             ->getRepository('ApplicationMainBundle:Review')
-            ->getReviewsFromFollowings($user);
+            ->getReviewsFromFollowed($user);
 
         $dateFormat = 'Y-m-d H:i:s';
 

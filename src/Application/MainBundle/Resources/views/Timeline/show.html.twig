@@ -43,7 +43,7 @@
 
     {% elseif app.user %}
 
-        {% if app.user.isFollowing(user) %}
+        {% if app.user.isFollowed(user) %}
             <div class="btn-toolbar" role="toolbar">
                 <div class="btn-group">
                     <button class="btn btn-sm btn-success dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
