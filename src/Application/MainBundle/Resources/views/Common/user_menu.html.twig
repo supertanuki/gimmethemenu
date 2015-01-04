@@ -29,7 +29,12 @@
                     </li>
 
                     <li {% if current_route == 'activities' %}class="active"{% endif %}>
-                        <a href="{{ path('activities') }}">Activities</a>
+                        <a href="{{ path('activities') }}">
+                            Activities
+                            {# @todo: last reviews : disable it on "mark it read"
+                            <span class="badge badge-info">4</span>
+                            #}
+                        </a>
                     </li>
 
                     <li {% if current_route == 'user_followed' and user is defined and app.user == user %}class="active"{% endif %}>
@@ -37,7 +42,12 @@
                     </li>
 
                     <li {% if current_route == 'user_followers' and user is defined and app.user == user %}class="active"{% endif %}>
-                        <a href="{{ path('user_followers', { 'slug': app.user.slug }) }}">Followers</a>
+                        <a href="{{ path('user_followers', { 'slug': app.user.slug }) }}">
+                            Followers
+                            {# @todo: last followers : disable it on show the followers page
+                            <span class="badge badge-info">4</span>
+                            #}
+                        </a>
                     </li>
                 </ul>
 

@@ -1,17 +1,21 @@
 {% extends 'ApplicationMainBundle:Email:layout.html.twig' %}
 
-{% block title %}You have new followers{% endblock title %}
+
+{% block title %}{{ user }}, you have new followers:{% endblock title %}
+
 
 {% block body %}
-    <a href="http://www.gimmethemenu.com" style="color:#26816a">{{ name }}</a>
-    <br>
-    Tra la la la la la la ra la la la la la la de {{ name }} !
-    <br>
-    <br>
 
-    <a href="http://www.gimmethemenu.com" style="color:#26816a">Test</a>
-    <br>
-    Tra la la la la la la ra la la la la la la
-    <br>
-    <br>
+    {% if user %}
+
+        <ul>
+        {% for follower in user.followers %}
+            <li>
+                <a href="http://www.gimmethemenu.com{{ path('user_timeline', {'slug': follower.user.slug}) }}" style="color:#26816a">{{ follower.user }}</a>
+            </li>
+        {% endfor %}
+        </ul>
+
+    {% endif %}
+
 {% endblock body %}

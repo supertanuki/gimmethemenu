@@ -7,9 +7,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
-use Hip\MandrillBundle\Message;
-use Hip\MandrillBundle\Dispatcher;
-
 class StaticPageController extends Controller
 {
     /**
@@ -28,29 +25,5 @@ class StaticPageController extends Controller
     public function changelogAction()
     {
         return array();
-    }
-
-    /**
-     * @Route("/send-email", name="send-email")
-     */
-    public function emailAction()
-    {
-        $dispatcher = $this->get('hip_mandrill.dispatcher');
-
-        $message = new Message();
-
-        $message
-            ->addTo('supertanuki@gmail.com')
-            ->setSubject('New followers')
-            ->setHtml($this->renderView(
-                'ApplicationMainBundle:Email:follower.html.twig',
-                array(
-                    'name' => 'Richard',
-                )
-            ));
-
-        $result = $dispatcher->send($message);
-
-        return new Response('<h1>Email</h1><pre>' . print_r($result, true) . '</pre>');
     }
 }

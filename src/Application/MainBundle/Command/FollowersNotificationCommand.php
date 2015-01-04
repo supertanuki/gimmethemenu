@@ -22,35 +22,49 @@ class FollowersNotificationCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $entityManager = $this->getContainer()->get('doctrine')->getEntityManager();
+        $doctrine = $this->getContainer()->get('doctrine');
+        $em = $doctrine->getManager();
 
         $output->writeln('Begin FollowersNotification!');
 
         $dispatcher = $this->getContainer()->get('hip_mandrill.dispatcher');
 
-        $message = new Message();
+        $users = $doctrine
+            ->getRepository('ApplicationMainBundle:User')
+            ->getLatestFollowers();
 
-        $message
-            ->addTo('supertanuki@gmail.com')
-            ->setSubject('New followers')
-            ->setHtml($this->getContainer()->get('templating')->render(
-                'ApplicationMainBundle:Email:follower.html.twig',
-                array(
-                    'name' => 'Richard',
-                )
-            ));
+        foreach ($users as $user) {
 
-        $results = $dispatcher->send($message);
+            // disable notification email
+            foreach ($user->getFollowers() as $follower) {
+                $follower->setIsNotificationEmail(true);
+                $em->persist($follower);
+            }
 
-        foreach ($results as $result) {
-            if(is_array($result)) {
-                $output->writeln(sprintf(
-                    "Email %s is %s with id=%s" . ($result['reject_reason'] ? " (reject with this reason: %s)" : " %s"),
-                    $result['email'],
-                    $result['status'],
-                    $result['_id'],
-                    $result['reject_reason']
+            $em->flush();
+
+            $message = new Message();
+            $message
+//                ->addTo('supertanuki@gmail.com')
+                ->addTo($user->getEmail())
+                ->setSubject(sprintf("%s, you have new followers on GimmeTheMenu", $user))
+                ->setHtml($this->getContainer()->get('templating')->render(
+                    'ApplicationMainBundle:Email:follower.html.twig',
+                    array('user' => $user)
                 ));
+
+            $results = $dispatcher->send($message);
+
+            foreach ($results as $result) {
+                if(is_array($result)) {
+                    $output->writeln(sprintf(
+                        "Email %s is %s with id=%s" . ($result['reject_reason'] ? " (reject with this reason: %s)" : " %s"),
+                        $result['email'],
+                        $result['status'],
+                        $result['_id'],
+                        $result['reject_reason']
+                    ));
+                }
             }
         }
 
