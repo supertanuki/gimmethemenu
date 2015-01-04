@@ -28,6 +28,12 @@ class UserFollowing
      */
     protected $userFollowed;
 
+    /** @ORM\Column(name="is_notification_email", type="boolean", nullable=true) */
+    protected $isNotificationEmail;
+
+    /** @ORM\Column(name="is_notification_web", type="boolean", nullable=true) */
+    protected $isNotificationWeb;
+
     /**
      * @var \DateTime
      * @Gedmo\Timestampable(on="create")
@@ -132,5 +138,51 @@ class UserFollowing
     public function getUserFollowed()
     {
         return $this->userFollowed;
+    }
+
+    /**
+     * Set isNotificationEmail
+     *
+     * @param boolean $isNotificationEmail
+     * @return UserFollowing
+     */
+    public function setIsNotificationEmail($isNotificationEmail)
+    {
+        $this->isNotificationEmail = $isNotificationEmail;
+
+        return $this;
+    }
+
+    /**
+     * Get isNotificationEmail
+     *
+     * @return boolean 
+     */
+    public function getIsNotificationEmail()
+    {
+        return $this->isNotificationEmail;
+    }
+
+    /**
+     * Set isNotificationWeb
+     *
+     * @param boolean $isNotificationWeb
+     * @return UserFollowing
+     */
+    public function setIsNotificationWeb($isNotificationWeb)
+    {
+        $this->isNotificationWeb = $isNotificationWeb;
+
+        return $this;
+    }
+
+    /**
+     * Get isNotificationWeb
+     *
+     * @return boolean 
+     */
+    public function getIsNotificationWeb()
+    {
+        return $this->isNotificationWeb;
     }
 }
