@@ -41,7 +41,7 @@
             {% endif %}
         </div>
 
-    {% elseif app.user %}
+    {% elseif app.user and user.isTimelinePublic %}
 
         {% if app.user.isFollowed(user) %}
             <div class="btn-toolbar" role="toolbar">

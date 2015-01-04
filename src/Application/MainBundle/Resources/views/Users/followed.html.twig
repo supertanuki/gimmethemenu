@@ -19,7 +19,8 @@
 
     {% if user.followed|length %}
         <div class="well">
-            These are the people you follow. See their reviews in <a href="{{ path('activities') }}">Activities page</a>.
+            These are the people you follow.
+            See their reviews in your <a href="{{ path('activities') }}">Activities page</a>.
         </div>
 
 
@@ -59,11 +60,13 @@
 
     {% else %}
         <div class="well">
-            Nobody followed.
+            <p>
+                <b>Nobody followed by you.</b>
+            </p>
+            <p>
+                <a href="{{ path('users_top') }}" class="btn btn-default">Search people to follow</a>
+            </p>
         </div>
-        <p>
-            <a href="{{ path('users_top') }}" class="btn btn-default">Search people to follow</a>
-        </p>
     {% endif %}
 
 {% endblock %}

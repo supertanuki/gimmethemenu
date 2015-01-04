@@ -29,11 +29,13 @@
     {% else %}
 
         <div class="alert alert-danger">
-            No reviews found.
+            <p>
+                <b>No reviews found</b>
+            </p>
+            <p>
+                <a href="{{ path('users_top') }}" class="btn btn-danger">Search people to follow here</a>
+            </p>
         </div>
-        <p>
-            <a href="{{ path('users_top') }}" class="btn btn-default">Search people to follow here</a>
-        </p>
 
     {% endif %}
 

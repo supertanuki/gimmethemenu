@@ -24,6 +24,10 @@
                         <a href="{{ path('user_timeline', { 'slug': app.user.slug }) }}">My timeline</a>
                     </li>
 
+                    <li {% if current_route in ['fos_user_profile_edit', 'fos_user_change_password', 'fos_user_profile_show'] and app.user %}class="active"{% endif %}>
+                        <a href="{{ path('fos_user_profile_show') }}">Profile</a>
+                    </li>
+
                     <li {% if current_route == 'activities' %}class="active"{% endif %}>
                         <a href="{{ path('activities') }}">Activities</a>
                     </li>
@@ -34,10 +38,6 @@
 
                     <li {% if current_route == 'user_followers' and user is defined and app.user == user %}class="active"{% endif %}>
                         <a href="{{ path('user_followers', { 'slug': app.user.slug }) }}">Followers</a>
-                    </li>
-
-                    <li {% if current_route in ['fos_user_profile_edit', 'fos_user_change_password', 'fos_user_profile_show'] and app.user %}class="active"{% endif %}>
-                        <a href="{{ path('fos_user_profile_show') }}">Profile</a>
                     </li>
                 </ul>
 

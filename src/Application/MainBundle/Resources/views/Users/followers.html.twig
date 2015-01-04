@@ -20,6 +20,7 @@
     {% if user.followers|length %}
         <div class="well">
             These are the people who follow you.
+            They see your reviews in their <a href="{{ path('activities') }}">Activities page</a>.
         </div>
 
         <table class="table table-bordered table-striped table-hover">
@@ -58,8 +59,8 @@
 
     {% else %}
         <div class="well">
-            <b>Oops... Nobody is following you!</b>
-            <br>Don't panic ;) Add reviews and follow people and be sure you'll get followers!
+            <p><b>Oops... Nobody is following you!</b></p>
+            <p>Don't panic ;) Add reviews and follow people and be sure you'll get followers!</p>
         </div>
     {% endif %}
 
