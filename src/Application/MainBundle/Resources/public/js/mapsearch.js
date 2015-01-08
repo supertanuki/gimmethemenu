@@ -90,6 +90,9 @@ $(document).ready(function() {
                 return;
             }
 
+            var isRestaurant = false;
+            $.each(typeSearch, function( index, value ) { if ($.inArray(value, place.types) != -1) { isRestaurant = true; return; }});
+
             // If the place has a geometry, then present it on a map.
             if (place.geometry.viewport) {
                 map.fitBounds(place.geometry.viewport);
@@ -98,27 +101,19 @@ $(document).ready(function() {
                 map.setZoom(17);
             }
 
-            // show marker and infowindow only if it is a typeSearch is found
-            $.each(typeSearch, function( index, value ) {
-                if ($.inArray(value, place.types) != -1) {
+            marker.setIcon(/** @type {google.maps.Icon} */({
+                url: isRestaurant ? activeIcon : '',
+                size: new google.maps.Size(71, 71),
+                origin: new google.maps.Point(0, 0),
+                anchor: new google.maps.Point(17, 34),
+                scaledSize: new google.maps.Size(35, 35)
+            }));
+            marker.setPosition(place.geometry.location);
+            marker.setVisible(true);
 
-                    marker.setIcon(/** @type {google.maps.Icon} */({
-                        url: activeIcon,
-                        size: new google.maps.Size(71, 71),
-                        origin: new google.maps.Point(0, 0),
-                        anchor: new google.maps.Point(17, 34),
-                        scaledSize: new google.maps.Size(35, 35)
-                    }));
-                    marker.setPosition(place.geometry.location);
-                    marker.setVisible(true);
-
-                    //google.maps.event.addListener(marker, 'click', getDetails(place, i));
-                    infowindow.setContent(getIWContent(place));
-                    infowindow.open(map, marker);
-
-                    return false;
-                }
-            });
+            //google.maps.event.addListener(marker, 'click', getDetails(place, i));
+            infowindow.setContent(getIWContent(place, isRestaurant));
+            infowindow.open(map, marker);
         });
         /*
          * End autocomplete
@@ -329,35 +324,55 @@ $(document).ready(function() {
 
 
 
-    function getIWContent(place) {
+    function getIWContent(place, isRestaurant) {
 
         var components={};
-        $.each(place.address_components, function(k,v1) {jQuery.each(v1.types, function(k2, v2){components[v2]=v1.long_name});})
+        $.each(place.address_components, function(k,v1) {jQuery.each(v1.types, function(k2, v2){ components[v2]=v1.long_name });})
 
 //        console.log(place);
 //        console.log(components);
 
-        var params = 'place_id=' + encodeRFC5987ValueChars(place.place_id)
-            + '&name=' + encodeRFC5987ValueChars(place.name)
-            + '&address=' + encodeRFC5987ValueChars(place.vicinity)
-            + '&full_address=' + encodeRFC5987ValueChars(place.formatted_address)
-            + '&locality=' + encodeRFC5987ValueChars(typeof components.locality != 'undefined' ? components.locality : components.sublocality)
-            + '&country=' + encodeRFC5987ValueChars(components.country)
-            + '&international_phone_number=' + encodeRFC5987ValueChars(place.international_phone_number)
-            + '&location_lat=' + encodeRFC5987ValueChars(place.geometry.location.lat())
-            + '&location_lng=' + encodeRFC5987ValueChars(place.geometry.location.lng());
-
-    //    console.log(params);
 
         var content = '';
-        content += '<h5><a href="' + route_restaurant_get + '?' + params + '">';
-    //    content += '<img src="' + place.icon + '" width="16" />&nbsp;';
-        content += place.name;
-        content += '</a></h5>';
-        content += '<p>';
-        content += place.vicinity;
-    //    content += '<br>Type : ' + place.types.join(', ');
-        content += '</p>';
+
+        if (isRestaurant) {
+
+            var params = 'place_id=' + encodeRFC5987ValueChars(place.place_id)
+                + '&name=' + encodeRFC5987ValueChars(place.name)
+                + '&address=' + encodeRFC5987ValueChars(place.vicinity)
+                + '&full_address=' + encodeRFC5987ValueChars(place.formatted_address)
+                + '&locality=' + encodeRFC5987ValueChars(typeof components.locality != 'undefined' ? components.locality : components.sublocality)
+                + '&country=' + encodeRFC5987ValueChars(components.country)
+                + '&international_phone_number=' + encodeRFC5987ValueChars(place.international_phone_number)
+                + '&location_lat=' + encodeRFC5987ValueChars(place.geometry.location.lat())
+                + '&location_lng=' + encodeRFC5987ValueChars(place.geometry.location.lng());
+
+            // console.log(params);
+
+            content += '<h5><a href="' + route_restaurant_get + '?' + params + '">';
+            // content += '<img src="' + place.icon + '" width="16" />&nbsp;';
+            content += place.name;
+            content += '</a></h5>';
+            content += '<p>';
+            content += place.vicinity;
+            // content += '<br>Type : ' + place.types.join(', ');
+            content += '</p>';
+
+        } else {
+
+            content += '<h5>';
+            content += '<img src="' + place.icon + '" width="16" />&nbsp;';
+            content += place.name;
+            content += '</h5>';
+            content += '<p>';
+            content += place.vicinity;
+            content += '<br><i>This place is not marked as a restaurant</i>';
+            //    content += '<br>Type : ' + place.types.join(', ');
+            content += '</p>';
+
+        }
+
+
     //    content += '<table>';
     //    content += '<tr class="iw_table_row">';
     //    content += '<td style="text-align: right"><img class="hotelIcon" src="' + place.icon + '"/></td>';
@@ -387,6 +402,8 @@ $(document).ready(function() {
     //        content += '<tr class="iw_table_row"><td class="iw_attribute_name">Website:</td><td><a href="' + fullUrl + '">' + website + '</a></td></tr>';
     //    }
     //    content += '</table>';
+
+
         return content;
     }
 
