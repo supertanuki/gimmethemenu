@@ -36,6 +36,12 @@ class Dish
     private $name;
 
     /**
+     * @var string
+     * @ORM\Column(name="description", type="string", length=255, nullable=true)
+     */
+    private $description;
+
+    /**
      * @var float
      *
      * @ORM\Column(name="price", type="float", nullable=true)
@@ -164,6 +170,29 @@ class Dish
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return Restaurant
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
     }
 
     /**

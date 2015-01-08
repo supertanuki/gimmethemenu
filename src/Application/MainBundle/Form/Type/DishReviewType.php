@@ -12,6 +12,7 @@ class DishReviewType extends AbstractType
     {
         $builder
             ->add('name')
+            ->add('description')
             ->add('price')
             ->add('dishType', null, array(
                 'required' => true

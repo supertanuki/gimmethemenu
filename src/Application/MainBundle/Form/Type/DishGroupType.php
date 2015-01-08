@@ -14,6 +14,7 @@ class DishGroupType extends AbstractType
             ->add('name', null, array(
                 'label' => 'Meal\'s name'
             ))
+            ->add('description')
             ->add('price', null, array(
                 'label' => 'Meal\'s price'
             ))

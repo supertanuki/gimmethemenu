@@ -14,6 +14,7 @@ class DishChildrenReviewType extends AbstractType
             ->add('name', null, array(
                 'label' => "Dish's name"
             ))
+            ->add('description')
             ->add('dishType', null, array(
                 'required' => true
             ))
