@@ -315,7 +315,7 @@ $(document).ready(function() {
 
             if (status == google.maps.places.PlacesServiceStatus.OK) {
                 iw = new google.maps.InfoWindow({
-                    content: getIWContent(place)
+                    content: getIWContent(place, true)
                 });
                 iw.open(map, markers[i]);
             }
