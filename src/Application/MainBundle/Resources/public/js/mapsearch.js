@@ -329,8 +329,8 @@ $(document).ready(function() {
         var components={};
         $.each(place.address_components, function(k,v1) {jQuery.each(v1.types, function(k2, v2){ components[v2]=v1.long_name });})
 
-//        console.log(place);
-//        console.log(components);
+//        console.debug(place);
+//        console.debug(components);
 
 
         var content = '';

@@ -83,7 +83,7 @@
 </div>
 
 
-
+{% if dish.reviews|length %}
 <nav class="navbar navbar-inverse navbar-fixed-bottom visible-xs-block" role="navigation">
     <div class="container">
         <ul class="nav nav-pills">
@@ -111,7 +111,7 @@
         </ul>
     </div>
 </nav>
-
+{% endif %}
 
 
 {% if app.user %}
@@ -224,6 +224,7 @@
     {% endif %}
 
 
+    {% if dish.reviews|length %}
     <div id="reviews" class="{% if photos|length %}col-md-6{% else %}col-xs-12 col-md-6 col-md-offset-3{% endif %}">
         <h2>Reviews</h2>
 
@@ -237,9 +238,19 @@
 
                             <div class="events-body">
 
-                                {% if review.photoName %}
+                                {% if review.photoName or app.user is defined and app.user == review.user %}
                                     <div class="pull-right">
+                                    {% if review.photoName %}
                                         <img class="events-object img-rounded" src="{{ vich_uploader_asset(review, 'dish_photo') | imagine_filter('square') }}" width="100">
+                                    {% endif %}
+
+                                    {% if app.user and app.user == review.user %}
+                                        <p class="text-center">
+                                            <a href="{{ path('review_edit', {'id': review.id}) }}" class="btn btn-default btn-sm">
+                                                <small><span class="glyphicon glyphicon-pencil"></span> Edit</small>
+                                            </a>
+                                        </p>
+                                    {% endif %}
                                     </div>
                                 {% endif %}
 
@@ -260,14 +271,6 @@
                                         <p><i>{{ review.personalNote }}</i></p>
                                         <footer>My private personal note</footer>
                                     </blockquote>
-                                {% endif %}
-
-                                {% if app.user and app.user == review.user %}
-                                    <p>
-                                        <a href="{{ path('review_edit', {'id': review.id}) }}" class="btn btn-default btn-sm">
-                                            <small><span class="glyphicon glyphicon-pencil"></span> Edit</small>
-                                        </a>
-                                    </p>
                                 {% endif %}
                             </div>
 
@@ -294,6 +297,7 @@
                 {% endif %}
             </dl>
         </div><!-- reviews -->
-
     </div><!-- /col-md-6 -->
+    {% endif %}
+
 </div><!-- /row -->

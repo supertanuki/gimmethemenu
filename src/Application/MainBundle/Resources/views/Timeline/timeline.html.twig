@@ -37,8 +37,6 @@
             <dl>
 
                 {% set iterator = 0 %}
-                {% set current_month = null %}
-
                 {% for log in logs %}
 
                     {#
@@ -86,10 +84,15 @@
                         </dd>
                         #}
 
-                    {% if log['reviews'] is defined %}
+
+                    {% set current_month = null %}
+                    {% set current_day = null %}
+                    {% set current_user = null %}
+                    {% set current_restaurant = null %}
+
+                    {% if log['reviews'] is defined and log['reviews']|length %}
                         {% for review in log['reviews'] %}
 
-                            {% set iterator = iterator+1 %}
                             {% set dish_url = path('dish_show', review.dish.paramsForUrl) %}
                             {% set restaurant_url = path('restaurant_show', review.dish.restaurant.paramsForUrl) %}
 
@@ -98,23 +101,50 @@
                                 <dt id="{{ review.when|date("M-Y") }}">{{ review.when|date("M Y") }}</dt>
                             {% endif %}
 
+                            {% if current_day != review.when or current_user != review.user or current_restaurant != review.dish.restaurant %}
+                                {% set new_day = true %}
+                                {% set iterator = iterator+1 %}
+                                {% set current_day = review.when %}
+                                {% set current_user = review.user %}
+                                {% set current_restaurant = review.dish.restaurant %}
+                            {% else %}
+                                {% set new_day = false %}
+                            {% endif %}
+
+
+
+                            {% if new_day %}
+                                {% if not loop.first %}
+                                </div>
+                            </dd>
+                                {% endif %}
+
                             <dd class="{% if iterator is odd %}pos-left{% else %}pos-right{% endif %} clearfix">
                                 <div class="circ"></div>
-
                                 <div class="time">{{ review.when|localizeddate('medium', 'none') }}</div>
                                 <div class="events">
+                            {% else %}
+                                <hr>
+                            {% endif %}
 
                                     <div class="row">
+
                                         {% if review.photoName %}
-                                            <div class="col-xs-12 col-sm-4">
-                                                <a href="{{ dish_url }}">
-                                                    <img class="img-rounded" src="{{ vich_uploader_asset(review, 'dish_photo') | imagine_filter('square') }}" width="100%">
-                                                </a>
-                                            </div>
+                                        <div class="col-xs-12 col-sm-4">
+                                            <a href="{{ dish_url }}">
+                                                <img class="img-rounded" src="{{ vich_uploader_asset(review, 'dish_photo') | imagine_filter('square') }}" width="100%">
+                                            </a>
+                                        </div>
                                         {% endif %}
 
                                         <div class="col-xs-12 {% if review.photoName %}col-sm-8{% endif %}">
                                             <div class="events-body">
+                                                {% if app.user and app.user == review.user %}
+                                                    <a href="{{ path('review_edit', {'id': review.id}) }}" class="btn btn-default btn-sm pull-right">
+                                                        <small><span class="glyphicon glyphicon-pencil"></span> Edit</small>
+                                                    </a>
+                                                {% endif %}
+
                                                 <h4 class="events-heading">
                                                     <a href="{{ dish_url }}">{{ review.dish.name }}</a>
                                                 </h4>
@@ -144,21 +174,12 @@
                                                         <footer>My personal note</footer>
                                                     </blockquote>
                                                 {% endif %}
-
-                                                {% if app.user and app.user == review.user %}
-                                                    <p>
-                                                        <a href="{{ path('review_edit', {'id': review.id}) }}" class="btn btn-default btn-sm">
-                                                            <small><span class="glyphicon glyphicon-pencil"></span> Edit</small>
-                                                        </a>
-                                                    </p>
-                                                {% endif %}
                                             </div>
                                         </div>
                                     </div>
+                        {% endfor %}
                                 </div>
                             </dd>
-
-                        {% endfor %}
 
                     {% elseif log['registerAt'] is defined %}
 
