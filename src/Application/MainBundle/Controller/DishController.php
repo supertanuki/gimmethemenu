@@ -41,7 +41,7 @@ class DishController extends Controller
             throw $this->createNotFoundException('Dish not found');
         }
 
-        // review form begin
+        // review form
         $review = new Review();
         $review->setWhen(new \DateTime("now"));
 
@@ -77,7 +77,20 @@ class DishController extends Controller
                 )
             );
         }
-        // review form end
+        // /review form
+
+//        $exif = null;
+//        $root = __DIR__ . '/../../../../web';
+//        $reviews = $dish->getReviews();
+//        foreach ($reviews as $r) {
+//            if ($r->getPhotoName()) {
+//                $helper = $this->container->get('vich_uploader.templating.helper.uploader_helper');
+//                $path = $helper->asset($r, 'dish_photo');
+//                $metadata = exif_read_data($root . $path, null, true);
+//                echo '<pre>'; var_dump($metadata); exit;
+//                break;
+//            }
+//        }
 
         return $this->render(
             'ApplicationMainBundle:Dish:show.html.twig',

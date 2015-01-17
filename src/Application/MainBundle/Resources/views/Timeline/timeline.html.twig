@@ -127,29 +127,48 @@
                                 <hr>
                             {% endif %}
 
-                                    <div class="row">
+                                    {#<div class="row">#}
 
-                                        {% if review.photoName %}
-                                        <div class="col-xs-12 col-sm-4">
-                                            <a href="{{ dish_url }}">
-                                                <img class="img-rounded" src="{{ vich_uploader_asset(review, 'dish_photo') | imagine_filter('square') }}" width="100%">
-                                            </a>
-                                        </div>
-                                        {% endif %}
+                                        {#{% if review.photoName %}#}
+                                        {#<div class="col-xs-12 col-sm-4">#}
+                                            {#<a href="{{ dish_url }}">#}
+                                                {#<img class="img-rounded" src="{{ vich_uploader_asset(review, 'dish_photo') | imagine_filter('square') }}" width="100%">#}
+                                            {#</a>#}
+                                        {#</div>#}
+                                        {#{% endif %}#}
 
-                                        <div class="col-xs-12 {% if review.photoName %}col-sm-8{% endif %}">
+                                        {#<div class="col-xs-12 {% if review.photoName %}col-sm-8{% endif %}">#}
+
                                             <div class="events-body">
-                                                {% if app.user and app.user == review.user %}
-                                                    <a href="{{ path('review_edit', {'id': review.id}) }}" class="btn btn-default btn-sm pull-right">
-                                                        <small><span class="glyphicon glyphicon-pencil"></span> Edit</small>
+                                                {% if review.photoName %}
+                                                    <a href="{{ dish_url }}">
+                                                        <img class="img-rounded" src="{{ vich_uploader_asset(review, 'dish_photo') | imagine_filter('large') }}" width="100%">
                                                     </a>
                                                 {% endif %}
 
-                                                <h4 class="events-heading">
-                                                    <a href="{{ dish_url }}">{{ review.dish.name }}</a>
-                                                </h4>
+                                                <div class="row">
+                                                    <div class="col-sm-7">
+                                                        <h3>
+                                                            <a href="{{ dish_url }}">
+                                                                {{ review.dish.name }}
+                                                            </a>
+                                                        </h3>
+                                                    </div>
+                                                    <div class="col-sm-5">
+                                                        {% if app.user and app.user == review.user %}
+                                                            <div class="pull-right">
+                                                                &nbsp;
+                                                                <a href="{{ path('review_edit', {'id': review.id}) }}" class="btn btn-default btn-xs">
+                                                                    <small><span class="glyphicon glyphicon-pencil"></span> Edit</small>
+                                                                </a>
+                                                            </div>
+                                                        {% endif %}
 
-                                                <p>{% include 'ApplicationMainBundle:Common:rating.html.twig' with {'rating': review.rank} %}</p>
+                                                        <div class="pull-right">
+                                                            {% include 'ApplicationMainBundle:Common:rating.html.twig' with {'rating': review.rank} %}
+                                                        </div>
+                                                    </div>
+                                                </div>
 
                                                 <p>
                                                     <a href="{{ restaurant_url }}" class="second">
@@ -158,15 +177,15 @@
                                                     </a>
                                                 </p>
 
-                                                {% if user is not defined and (not app.user or (app.user and app.user != review.user)) %}
-                                                    <p>
+
+                                                <div class="readmore">
+                                                    {% if user is not defined and (not app.user or (app.user and app.user != review.user)) %}
                                                         <a href="{{ path('user_timeline', {'slug':review.user.slug}) }}" class="second">
                                                             <span class="glyphicon glyphicon-user"></span> {{ review.user }}
-                                                        </a>
-                                                    </p>
-                                                {% endif %}
-
-                                                <div class="readmore">{{ review.review }}</div>
+                                                        </a>:
+                                                    {% endif %}
+                                                    {{ review.review }}
+                                                </div>
 
                                                 {% if review.personalNote and app.user and app.user.id == review.user.id %}
                                                     <blockquote class="blockquote-reverse">
@@ -174,9 +193,50 @@
                                                         <footer>My personal note</footer>
                                                     </blockquote>
                                                 {% endif %}
+
+
+                                                <br>
+                                                <p class="text-center">
+                                                    <a href="#" data-open-comments="comments{{ review.id }}">
+                                                        <span class="glyphicon glyphicon-comment"></span>
+                                                        2 comments
+                                                    </a>
+                                                </p>
+                                                <div id="comments{{ review.id }}" class="collapse">
+                                                    <p class="text-center">
+                                                        <b>Comments</b>
+                                                    </p>
+                                                    <p>
+                                                        <a href="{{ path('user_timeline', {'slug':review.user.slug}) }}" class="second">
+                                                            <span class="glyphicon glyphicon-user"></span> {{ review.user }}
+                                                        </a>:
+                                                        bla bla bla bla bla bla bla
+                                                    </p>
+                                                    <p>
+                                                        <a href="{{ path('user_timeline', {'slug':review.user.slug}) }}" class="second">
+                                                            <span class="glyphicon glyphicon-user"></span> {{ review.user }}
+                                                        </a>:
+                                                        bla bla bla bla bla bla bla
+                                                    </p>
+                                                </div>
+
+                                                {% if app.user %}
+                                                <form class="comment-form" data-add-comment="comments{{ review.id }}">
+                                                    <div class="{% if app.user.id == review.user.id %}form-group{% else %}input-group{% endif %}">
+                                                        {% if app.user.id != review.user.id %}
+                                                        <span class="input-group-btn">
+                                                            <button id="yummy{{ review.id }}" class="btn btn-default" data-yummy="{{ review.id }}" type="button">
+                                                                <span class="glyphicon glyphicon-heart-empty"></span> Yummy!
+                                                            </button>
+                                                        </span>
+                                                        {% endif %}
+                                                        <input type="text" class="form-control comment-input" placeholder="Add a comment">
+                                                    </div>
+                                                </form>
+                                                {% endif %}
                                             </div>
-                                        </div>
-                                    </div>
+                                        {#</div>#}
+                                    {#</div>#}
                         {% endfor %}
                                 </div>
                             </dd>
@@ -204,3 +264,14 @@
         </div>
     </div>
 </div>
+
+{% if app.user %}
+<div id="comment_template">
+    <p>
+        <a href="{{ path('user_timeline', {'slug':app.user.slug}) }}" class="second">
+            <span class="glyphicon glyphicon-user"></span> {{ app.user }}
+        </a>:
+        <span class="comment"></span>
+    </p>
+</div>
+{% endif %}

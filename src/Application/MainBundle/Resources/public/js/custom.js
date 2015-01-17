@@ -16,6 +16,49 @@ $(document).ready(function() {
             itemSelector : '.item'
         });
     });
+
+    $('a[data-open-comments]').on('click', function() {
+        $('#' + $(this).attr('data-open-comments')).slideDown();
+        $(this).hide();
+        return false;
+    });
+
+    $('button[data-yummy]').on('click', function() {
+        var span = $(this).find($('span'));
+        if ($(this).hasClass('btn-default')) {
+            $(this).removeClass('btn-default');
+            $(this).addClass('btn-warning');
+            span.removeClass('glyphicon glyphicon-heart-empty');
+            span.addClass('glyphicon glyphicon-heart');
+            $(this).blur();
+        } else {
+            $(this).removeClass('btn-warning');
+            $(this).addClass('btn-default');
+            span.removeClass('glyphicon glyphicon-heart');
+            span.addClass('glyphicon glyphicon-heart-empty');
+            $(this).blur();
+        }
+
+        return false;
+    });
+
+    $('form.comment-form').unbind('submit').submit(function(event) {
+
+        event.preventDefault();
+        event.stopImmediatePropagation();
+
+        var target = '#' + $(this).attr('data-add-comment');
+        var input = $(this).find($('input[type=text]'));
+        var templateHtml = $('#comment_template').html();
+        var comment = input.val();
+        input.val('');
+
+        var html = $(templateHtml);
+        html.find('span.comment').append(comment);
+        $(target).after(html);
+        input.blur();
+        return false;
+    });
 });
 
 function showMyAlertModal(content, title) {

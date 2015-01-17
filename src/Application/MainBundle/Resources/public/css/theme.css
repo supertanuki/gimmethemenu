@@ -109,6 +109,20 @@ hr {
     margin-bottom:0;
 }
 
+.timeline img {
+    margin-bottom: 20px;
+}
+
+.timeline h3 {
+    padding: 0;
+    margin: 0;
+}
+
+.timeline .form-group, .timeline .input-group {
+    padding: 0;
+    margin: 0;
+}
+
 
 
 @media screen and (max-width: 767px) {
