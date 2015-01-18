@@ -119,6 +119,11 @@ class Review
     protected $comments;
 
     /**
+     * @ORM\OneToMany(targetEntity="Yummy", mappedBy="review", cascade={"remove"})
+     */
+    protected $yummies;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -384,5 +389,79 @@ class Review
     public function getPhotoFile()
     {
         return $this->photoFile;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->comments = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->yummies = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add comments
+     *
+     * @param \Application\MainBundle\Entity\Comment $comments
+     * @return Review
+     */
+    public function addComment(\Application\MainBundle\Entity\Comment $comments)
+    {
+        $this->comments[] = $comments;
+
+        return $this;
+    }
+
+    /**
+     * Remove comments
+     *
+     * @param \Application\MainBundle\Entity\Comment $comments
+     */
+    public function removeComment(\Application\MainBundle\Entity\Comment $comments)
+    {
+        $this->comments->removeElement($comments);
+    }
+
+    /**
+     * Get comments
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getComments()
+    {
+        return $this->comments;
+    }
+
+    /**
+     * Add yummies
+     *
+     * @param \Application\MainBundle\Entity\Yummy $yummies
+     * @return Review
+     */
+    public function addYummy(\Application\MainBundle\Entity\Yummy $yummies)
+    {
+        $this->yummies[] = $yummies;
+
+        return $this;
+    }
+
+    /**
+     * Remove yummies
+     *
+     * @param \Application\MainBundle\Entity\Yummy $yummies
+     */
+    public function removeYummy(\Application\MainBundle\Entity\Yummy $yummies)
+    {
+        $this->yummies->removeElement($yummies);
+    }
+
+    /**
+     * Get yummies
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getYummies()
+    {
+        return $this->yummies;
     }
 }

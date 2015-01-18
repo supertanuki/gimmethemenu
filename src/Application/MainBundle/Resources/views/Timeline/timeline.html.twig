@@ -1,3 +1,6 @@
+{% set csrfTokenYummy = csrf_token('yummy') %}
+{% set csrfTokenComment = csrf_token('comment') %}
+
 {% set months = [] %}
 {% set current_month = null %}
 {% for log in logs %}
@@ -200,9 +203,26 @@
                                                     <a href="#" data-open-comments="comments{{ review.id }}">
                                                         <span class="glyphicon glyphicon-comment"></span>
                                                         2 comments
+                                                        {% if review.yummies|length %}
+                                                            <span class="glyphicon glyphicon-heart"></span>
+                                                            {{ review.yummies|length }} yummy!
+                                                        {% endif %}
                                                     </a>
                                                 </p>
                                                 <div id="comments{{ review.id }}" class="collapse">
+
+                                                    {% if review.yummies|length %}
+                                                        <p>
+                                                            <span class="glyphicon glyphicon-heart"></span>
+                                                            <b>{{ review.yummies|length }} Yummy:</b>
+                                                            {% for yummy in review.yummies %}
+                                                                <a href="{{ path('user_timeline', {'slug':yummy.user.slug}) }}">
+                                                                    {{ yummy.user }}
+                                                                </a>
+                                                            {% endfor %}
+                                                        </p>
+                                                    {% endif %}
+
                                                     <p class="text-center">
                                                         <b>Comments</b>
                                                     </p>
@@ -225,8 +245,18 @@
                                                     <div class="{% if app.user.id == review.user.id %}form-group{% else %}input-group{% endif %}">
                                                         {% if app.user.id != review.user.id %}
                                                         <span class="input-group-btn">
-                                                            <button id="yummy{{ review.id }}" class="btn btn-default" data-yummy="{{ review.id }}" type="button">
-                                                                <span class="glyphicon glyphicon-heart-empty"></span> Yummy!
+                                                            {% set already_yummy = false %}
+                                                            {% for yummy in review.yummies %}
+                                                                {% if app.user == yummy.user %}
+                                                                    {% set already_yummy = true %}
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                            <button id="yummy{{ review.id }}"
+                                                                    class="btn {% if already_yummy %}btn-warning{% else %}btn-default{% endif %}"
+                                                                    data-yummy="1"
+                                                                    data-src="{{ path('yummy', { 'review_id': review.id, '_token': csrfTokenYummy }) }}"
+                                                                    type="button">
+                                                                <span class="glyphicon glyphicon-heart{% if not already_yummy %}-empty{% endif %}"></span> Yummy!
                                                             </button>
                                                         </span>
                                                         {% endif %}

@@ -24,20 +24,29 @@ $(document).ready(function() {
     });
 
     $('button[data-yummy]').on('click', function() {
+
+        console.log('data-src = ' + $(this).attr('data-src'));
+
         var span = $(this).find($('span'));
         if ($(this).hasClass('btn-default')) {
+            // add
             $(this).removeClass('btn-default');
             $(this).addClass('btn-warning');
             span.removeClass('glyphicon glyphicon-heart-empty');
             span.addClass('glyphicon glyphicon-heart');
             $(this).blur();
         } else {
+            // remove
             $(this).removeClass('btn-warning');
             $(this).addClass('btn-default');
             span.removeClass('glyphicon glyphicon-heart');
             span.addClass('glyphicon glyphicon-heart-empty');
             $(this).blur();
         }
+
+
+
+        $.post( $(this).attr('data-src'), function( data ) {});
 
         return false;
     });

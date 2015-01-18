@@ -145,30 +145,4 @@ class UsersController extends Controller
             'user' => $user,
         );
     }
-
-
-
-    /**
-     * @ Route("/test-followers", name="testfollowers")
-     */
-    public function testFollowersAction()
-    {
-        $users = $this->getDoctrine()
-            ->getRepository('ApplicationMainBundle:User')
-            ->getLatestFollowers();
-
-        foreach ($users as $user) {
-            return $this->render(
-                'ApplicationMainBundle:Email:follower.html.twig',
-                array('user' => $user)
-            );
-        }
-
-        return $this->render(
-            'ApplicationMainBundle:Email:follower.html.twig',
-            array(
-                'user' => null,
-            )
-        );
-    }
 }
