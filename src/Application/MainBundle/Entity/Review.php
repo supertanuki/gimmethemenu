@@ -114,6 +114,11 @@ class Review
     protected $dish;
 
     /**
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="review", cascade={"remove"})
+     */
+    protected $comments;
+
+    /**
      * Get id
      *
      * @return integer 

@@ -208,13 +208,13 @@
                                                     </p>
                                                     <p>
                                                         <a href="{{ path('user_timeline', {'slug':review.user.slug}) }}" class="second">
-                                                            <span class="glyphicon glyphicon-user"></span> {{ review.user }}
+                                                            {{ review.user }}
                                                         </a>:
                                                         bla bla bla bla bla bla bla
                                                     </p>
                                                     <p>
                                                         <a href="{{ path('user_timeline', {'slug':review.user.slug}) }}" class="second">
-                                                            <span class="glyphicon glyphicon-user"></span> {{ review.user }}
+                                                            {{ review.user }}
                                                         </a>:
                                                         bla bla bla bla bla bla bla
                                                     </p>
@@ -269,7 +269,7 @@
 <div id="comment_template">
     <p>
         <a href="{{ path('user_timeline', {'slug':app.user.slug}) }}" class="second">
-            <span class="glyphicon glyphicon-user"></span> {{ app.user }}
+            {{ app.user }}
         </a>:
         <span class="comment"></span>
     </p>

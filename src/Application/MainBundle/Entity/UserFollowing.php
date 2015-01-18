@@ -5,12 +5,14 @@ namespace Application\MainBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * DishType
  *
  * @ORM\Table(name="user_following")
  * @ORM\Entity()
+ * @UniqueEntity(fields={"user", "userFollowed"}, message="This user is already followed")
  */
 class UserFollowing
 {
