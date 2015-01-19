@@ -23,10 +23,15 @@ $(document).ready(function() {
         return false;
     });
 
+    $('body').delegate('a[data-delete-comment]', 'click', function() {
+        if (confirm('Delete this comment?')) {
+            $(this).parent().slideUp();
+            $.post($(this).attr('href'));
+        }
+        return false;
+    });
+
     $('button[data-yummy]').on('click', function() {
-
-        console.log('data-src = ' + $(this).attr('data-src'));
-
         var span = $(this).find($('span'));
         if ($(this).hasClass('btn-default')) {
             // add
@@ -44,9 +49,7 @@ $(document).ready(function() {
             $(this).blur();
         }
 
-
-
-        $.post( $(this).attr('data-src'), function( data ) {});
+        $.post($(this).attr('data-src'));
 
         return false;
     });
@@ -57,22 +60,29 @@ $(document).ready(function() {
 
         var target = $(this).attr('data-add-comment');
         var input = $(this).find($('input[type=text]'));
-        var templateHtml = $('#comment_template').html();
+
         var comment = input.val();
         input.val('');
-
-        var html = $(templateHtml);
-        html.find('span.comment').append(strip_tags(comment));
-        $('#' + target).append(html);
-
-        // hide comments link
-        $('a[data-open-comments="' + target + '"]').hide();
-
-        if (!$('#' + target).is(':visible')) {
-            $('#' + target).slideDown();
-        };
-
         input.blur();
+
+        $.post($(this).attr('action'), { 'comment': comment }, function(data) {
+            console.debug(data);
+            var templateHtml = $('#comment_template').html();
+            var html = $(templateHtml);
+            html.find('span.comment').append(strip_tags(comment));
+            var delete_link = html.find('a[data-delete-comment]');
+            var delete_link_href = delete_link.attr('href');
+            delete_link_href = delete_link_href.replace('0', data.id);
+            delete_link.attr('href', delete_link_href);
+            $('#' + target).append(html);
+
+            // hide comments link
+            $('a[data-open-comments="' + target + '"]').hide();
+
+            if (!$('#' + target).is(':visible')) {
+                $('#' + target).slideDown();
+            }
+        });
         return false;
     });
 });

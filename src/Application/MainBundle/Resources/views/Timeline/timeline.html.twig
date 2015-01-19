@@ -199,16 +199,24 @@
 
 
                                                 <br>
+
+                                                {% if review.comments|length or review.yummies|length %}
                                                 <p class="text-center">
                                                     <a href="#" data-open-comments="comments{{ review.id }}">
-                                                        <span class="glyphicon glyphicon-comment"></span>
-                                                        2 comments
+                                                        {% if review.comments|length %}
+                                                            <span class="glyphicon glyphicon-comment"></span>
+                                                            {{ review.comments|length }} comment{% if review.comments|length > 1 %}s{% endif %}
+                                                        {% endif %}
+
                                                         {% if review.yummies|length %}
                                                             <span class="glyphicon glyphicon-heart"></span>
                                                             {{ review.yummies|length }} yummy!
                                                         {% endif %}
                                                     </a>
                                                 </p>
+                                                {% endif %}
+
+
                                                 <div id="comments{{ review.id }}" class="collapse">
 
                                                     {% if review.yummies|length %}
@@ -216,32 +224,38 @@
                                                             <span class="glyphicon glyphicon-heart"></span>
                                                             <b>{{ review.yummies|length }} Yummy:</b>
                                                             {% for yummy in review.yummies %}
-                                                                <a href="{{ path('user_timeline', {'slug':yummy.user.slug}) }}">
-                                                                    {{ yummy.user }}
-                                                                </a>
+                                                                <a href="{{ path('user_timeline', {'slug':yummy.user.slug}) }}">{{ yummy.user }}</a>{% if not loop.last %}, {% endif %}
                                                             {% endfor %}
                                                         </p>
                                                     {% endif %}
 
-                                                    <p class="text-center">
-                                                        <b>Comments</b>
-                                                    </p>
-                                                    <p>
-                                                        <a href="{{ path('user_timeline', {'slug':review.user.slug}) }}" class="second">
-                                                            {{ review.user }}
-                                                        </a>:
-                                                        bla bla bla bla bla bla bla
-                                                    </p>
-                                                    <p>
-                                                        <a href="{{ path('user_timeline', {'slug':review.user.slug}) }}" class="second">
-                                                            {{ review.user }}
-                                                        </a>:
-                                                        bla bla bla bla bla bla bla
-                                                    </p>
+                                                    {% if review.comments|length %}
+                                                        <p class="text-center">
+                                                            <b>Comments</b>
+                                                        </p>
+                                                        {% for comment in review.comments %}
+                                                            <p>
+                                                                {% if app.user.id == comment.user.id %}
+                                                                    <a href="{{ path('comment_delete', { 'id': comment.id, '_token': csrfTokenComment }) }}"
+                                                                       title="Delete this comment"
+                                                                       class="pull-right"
+                                                                       data-delete-comment="1">
+                                                                        <span class="glyphicon glyphicon-remove"></span>
+                                                                    </a>
+                                                                {% endif %}
+
+                                                                <a href="{{ path('user_timeline', {'slug':comment.user.slug}) }}" class="second">
+                                                                    {{ comment.user }}
+                                                                </a>:
+                                                                {{ comment.comment }}
+                                                            </p>
+                                                        {% endfor %}
+                                                    {% endif %}
                                                 </div>
 
+
                                                 {% if app.user %}
-                                                <form class="comment-form" data-add-comment="comments{{ review.id }}">
+                                                <form action="{{ path('comment_create', { 'review_id': review.id, '_token': csrfTokenComment }) }}" class="comment-form" data-add-comment="comments{{ review.id }}">
                                                     <div class="{% if app.user.id == review.user.id %}form-group{% else %}input-group{% endif %}">
                                                         {% if app.user.id != review.user.id %}
                                                         <span class="input-group-btn">
@@ -260,7 +274,7 @@
                                                             </button>
                                                         </span>
                                                         {% endif %}
-                                                        <input type="text" class="form-control comment-input" placeholder="Add a comment">
+                                                        <input type="text" class="form-control comment-input" placeholder="Add a comment" maxlength="255">
                                                     </div>
                                                 </form>
                                                 {% endif %}
@@ -296,8 +310,14 @@
 </div>
 
 {% if app.user %}
-<div id="comment_template">
+<div id="comment_template" class="hide">
     <p>
+        <a href="{{ path('comment_delete', { 'id': 0, '_token': csrfTokenComment }) }}"
+           title="Delete this comment"
+           class="pull-right"
+           data-delete-comment="1">
+            <span class="glyphicon glyphicon-remove"></span>
+        </a>
         <a href="{{ path('user_timeline', {'slug':app.user.slug}) }}" class="second">
             {{ app.user }}
         </a>:

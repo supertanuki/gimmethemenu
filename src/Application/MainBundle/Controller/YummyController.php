@@ -32,7 +32,7 @@ class YummyController extends Controller
         $em = $this->getDoctrine()->getManager();
         $review = $em->getRepository('ApplicationMainBundle:Review')->find($review_id);
         if (!$review) {
-            throw $this->createNotFoundException('Unable to find Yummy entity.');
+            throw $this->createNotFoundException('Unable to find Review.');
         }
 
         $yummy = $em->getRepository('ApplicationMainBundle:Yummy')->findOneBy(array(
