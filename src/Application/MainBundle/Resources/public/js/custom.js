@@ -66,7 +66,7 @@ $(document).ready(function() {
         input.blur();
 
         $.post($(this).attr('action'), { 'comment': comment }, function(data) {
-            console.debug(data);
+//            console.debug(data);
             var templateHtml = $('#comment_template').html();
             var html = $(templateHtml);
             html.find('span.comment').append(strip_tags(comment));
