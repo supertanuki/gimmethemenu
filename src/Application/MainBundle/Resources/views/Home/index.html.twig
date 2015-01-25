@@ -15,7 +15,7 @@
         <div class="container">
             <h1>Hi, food lovers!</h1>
             <p>
-            &ldquo;&nbsp;On <i>GimmeThe<b>Menu</b></i>, make your timeline of visited restaurants!
+            &ldquo;&nbsp;On <em>GimmeThe<strong>Menu</strong></em>, make your timeline of visited restaurants!
             Review not only the restaurant but also your chosen dish. For example, take a look on <a href="{{ path('user_timeline', {'slug': 'richard'}) }}">my timeline</a>.&nbsp;&rdquo;
             - <a href="{{ path('user_timeline', {'slug': 'richard'}) }}">Richard</a></p>
 
@@ -69,7 +69,7 @@
             {% for review in lastReviews %}
                 <div class="item {% if loop.index == 1 %}active{% endif %}">
                     <a href="{{ path('dish_show', review.dish.paramsForUrl) }}">
-                        <img src="{{ vich_uploader_asset(review, 'dish_photo') | imagine_filter('square') }}" style="width: 100%" alt="">
+                        <img src="{{ vich_uploader_asset(review, 'dish_photo') | imagine_filter('square') }}" style="width: 100%" alt="{{ review.dish.name }}">
                     </a>
 
                     <div class="carousel-caption">
@@ -104,7 +104,7 @@
 
                 {% if review.photoName %}
                     <a href="{{ dish_url }}">
-                        <img class="img-rounded" src="{{ vich_uploader_asset(review, 'dish_photo') | imagine_filter('square') }}">
+                        <img class="img-rounded" src="{{ vich_uploader_asset(review, 'dish_photo') | imagine_filter('square') }}" alt="{{ review.dish.name }}">
                     </a>
                 {% endif %}
 
@@ -137,23 +137,6 @@
         </div>
         {% endfor %}
     </div>
-
-    {#
-    <hr>
-    <h2>Latest menus</h2>
-    <div class="row">
-        <div class="col-xs-6 col-sm-3 col-md-2">
-            <div class="thumbnail">
-                <a href="#"><img class="img-rounded" src="img/samples/pizza.png"></a>
-                <div class="caption text-center">
-                    <h3><a href="#">Pizza Tino</a></h3>
-                    <p>Chelles</p>
-                </div>
-            </div>
-        </div>
-
-    </div>
-    #}
 
 {% endblock %}
 

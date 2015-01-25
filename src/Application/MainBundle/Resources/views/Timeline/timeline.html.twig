@@ -145,7 +145,7 @@
                                             <div class="events-body">
                                                 {% if review.photoName %}
                                                     <a href="{{ dish_url }}">
-                                                        <img class="img-rounded" src="{{ vich_uploader_asset(review, 'dish_photo') | imagine_filter('large') }}" width="100%">
+                                                        <img class="img-rounded" src="{{ vich_uploader_asset(review, 'dish_photo') | imagine_filter('large') }}" width="100%" alt="{{ review.dish.name }}">
                                                     </a>
                                                 {% endif %}
 
@@ -183,9 +183,7 @@
 
                                                 <div class="readmore">
                                                     {% if user is not defined and (not app.user or (app.user and app.user != review.user)) %}
-                                                        <a href="{{ path('user_timeline', {'slug':review.user.slug}) }}" class="second">
-                                                            <span class="glyphicon glyphicon-user"></span> {{ review.user }}
-                                                        </a>:
+                                                        {% include 'ApplicationMainBundle:Common:user_link.html.twig' with {'user': review.user} %}:
                                                     {% endif %}
                                                     {{ review.review }}
                                                 </div>
@@ -224,7 +222,7 @@
                                                             <span class="glyphicon glyphicon-heart"></span>
                                                             <b>{{ review.yummies|length }} Yummy:</b>
                                                             {% for yummy in review.yummies %}
-                                                                <a href="{{ path('user_timeline', {'slug':yummy.user.slug}) }}">{{ yummy.user }}</a>{% if not loop.last %}, {% endif %}
+                                                                {% include 'ApplicationMainBundle:Common:user_link.html.twig' with {'user': yummy.user} %}{% if not loop.last %}, {% endif %}
                                                             {% endfor %}
                                                         </p>
                                                     {% endif %}
@@ -244,9 +242,7 @@
                                                                     </a>
                                                                 {% endif %}
 
-                                                                <a href="{{ path('user_timeline', {'slug':comment.user.slug}) }}" class="second">
-                                                                    {{ comment.user }}
-                                                                </a>:
+                                                                {% include 'ApplicationMainBundle:Common:user_link.html.twig' with {'user': comment.user} %}:
                                                                 {{ comment.comment }}
                                                             </p>
                                                         {% endfor %}
@@ -318,9 +314,7 @@
            data-delete-comment="1">
             <span class="glyphicon glyphicon-remove"></span>
         </a>
-        <a href="{{ path('user_timeline', {'slug':app.user.slug}) }}" class="second">
-            {{ app.user }}
-        </a>:
+        {% include 'ApplicationMainBundle:Common:user_link.html.twig' with {'user': user} %}:
         <span class="comment"></span>
     </p>
 </div>

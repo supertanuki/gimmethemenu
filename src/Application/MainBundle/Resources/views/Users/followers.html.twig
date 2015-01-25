@@ -37,7 +37,7 @@
                 {% set u = follower.user %}
                 <tr>
                     <td>
-                        <a href="{{ path('user_timeline', {'slug': u.slug}) }}">{{ u }}</a>
+                        {% include 'ApplicationMainBundle:Common:user_link.html.twig' with {'user': u} %}
                     </td>
                     <td>
                         {{ u.reviews|length }}

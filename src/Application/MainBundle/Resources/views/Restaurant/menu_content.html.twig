@@ -12,7 +12,7 @@
                        data-msrc="{{ vich_uploader_asset(menuFile, 'restaurant_menu_file')|imagine_filter('thumb') }}"
                        data-size="{{ vich_uploader_asset(menuFile, 'restaurant_menu_file')|imagine_filter('largest')|image_size('x') }}"
                        >
-                       <img src="{{ vich_uploader_asset(menuFile, 'restaurant_menu_file')|imagine_filter('square') }}" class="img-rounded">
+                       <img src="{{ vich_uploader_asset(menuFile, 'restaurant_menu_file')|imagine_filter('square') }}" class="img-rounded" alt="{{ restaurant }} menu">
                     </a>
                 </div>
             </div>

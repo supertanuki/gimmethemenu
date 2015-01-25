@@ -180,8 +180,12 @@
                 {% if photos|length == 1 %}
 
                     {% for review in photos %}
-                        <img src="{{ vich_uploader_asset(review, 'dish_photo') | imagine_filter('large') }}" style="width: 100%" alt="">
-                        <p>Added by <a href="{{ path('user_timeline', {'slug':review.user.slug}) }}">{{ review.user }}</a> on {{ review.createdAt|localizeddate('medium', 'none') }}</p>
+                        <img src="{{ vich_uploader_asset(review, 'dish_photo') | imagine_filter('large') }}" style="width: 100%" alt="{{ dish.name }} photo added by {{ review.user }}">
+                        <p>
+                            Added by
+                            {% include 'ApplicationMainBundle:Common:user_link.html.twig' with {'user': review.user} %}
+                            on {{ review.createdAt|localizeddate('medium', 'none') }}
+                        </p>
                     {% endfor %}
 
                 {% else %}
@@ -197,10 +201,12 @@
                         <div class="carousel-inner" role="listbox">
                             {% for review in photos %}
                                 <div class="item {% if loop.index == 1 %}active{% endif %}">
-                                    <img src="{{ vich_uploader_asset(review, 'dish_photo') | imagine_filter('large') }}" style="width: 100%" alt="">
+                                    <img src="{{ vich_uploader_asset(review, 'dish_photo') | imagine_filter('large') }}" style="width: 100%" alt="{{ dish.name }} photo added by {{ review.user }}">
 
                                     <div class="carousel-caption">
-                                        Added by <a href="{{ path('user_timeline', {'slug':review.user.slug}) }}">{{ review.user }}</a> on {{ review.createdAt|localizeddate('medium', 'none') }}
+                                        Added by
+                                        {% include 'ApplicationMainBundle:Common:user_link.html.twig' with {'user': review.user} %}
+                                        on {{ review.createdAt|localizeddate('medium', 'none') }}
                                     </div>
                                 </div>
                             {% endfor %}
@@ -241,7 +247,7 @@
                                 {% if review.photoName or app.user is defined and app.user == review.user %}
                                     <div class="pull-right">
                                     {% if review.photoName %}
-                                        <img class="events-object img-rounded" src="{{ vich_uploader_asset(review, 'dish_photo') | imagine_filter('square') }}" width="100">
+                                        <img class="events-object img-rounded" src="{{ vich_uploader_asset(review, 'dish_photo') | imagine_filter('square') }}" width="100" alt="{{ dish.name }} photo added by {{ review.user }}">
                                     {% endif %}
 
                                     {% if app.user and app.user == review.user %}
@@ -255,7 +261,7 @@
                                 {% endif %}
 
                                 <h4 class="events-heading">
-                                    <a href="{{ path('user_timeline', {'slug':review.user.slug}) }}">{{ review.user }}</a>
+                                    {% include 'ApplicationMainBundle:Common:user_link.html.twig' with {'user': review.user} %}
                                 </h4>
 
                                 <div class="visible-xs-block">on {{ review.when|localizeddate('medium', 'none') }}</div>

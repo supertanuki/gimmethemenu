@@ -38,7 +38,7 @@
     {% set photoName = review.vars.value.photoName %}
     {% if photoName %}
         <p>
-            <img class="img-rounded" src="{{ vich_uploader_asset(review.vars.value, 'dish_photo') | imagine_filter('thumb') }}">
+            <img class="img-rounded" src="{{ vich_uploader_asset(review.vars.value, 'dish_photo') | imagine_filter('thumb') }}" alt="dish photo">
         </p>
         <p>Upload a new photo to change it:</p>
     {% endif %}
