@@ -11,7 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class SecurityController extends Controller
 {
     /**
-     * Route "fos_user_security_login" defined in app/config/routing.yml
+     * Login Controller for "fos_user_security_login" defined in app/config/routing.yml
      * @Template()
      */
     public function loginAction(Request $request)
@@ -37,6 +37,8 @@ class SecurityController extends Controller
     }
 
     /**
+     * Landing page after login
+     *
      * @Route("/login-end", name="login_end")
      */
     public function loginEndAction()
@@ -47,6 +49,9 @@ class SecurityController extends Controller
         return $this->redirect($this->generateUrl('restaurant_search'));
     }
 
+    /**
+     * Set a welcome message in flashBag
+     */
     private function setWelcomeMessage()
     {
         $this->get('session')->getFlashBag()->add('info', sprintf('Hi %s, happy to see you!', $this->getUser()->getFirstName()));

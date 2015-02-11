@@ -45,7 +45,6 @@ class FollowersNotificationCommand extends ContainerAwareCommand
 
             $message = new Message();
             $message
-//                ->addTo('supertanuki@gmail.com')
                 ->addTo($user->getEmail())
                 ->setSubject(sprintf("%s, you have new followers on GimmeTheMenu", $user))
                 ->setHtml($this->getContainer()->get('templating')->render(

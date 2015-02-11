@@ -11,6 +11,8 @@ use Application\MainBundle\Entity\UserFollowing;
 class UsersController extends Controller
 {
     /**
+     * List of top users
+     *
      * @Route("/users/top", name="users_top")
      * @Template()
      */
@@ -26,6 +28,8 @@ class UsersController extends Controller
     }
 
     /**
+     * Follow a user
+     *
      * @Route("/user/{slug}/follow", name="follow_user")
      */
     public function followUserAction($slug)
@@ -68,6 +72,8 @@ class UsersController extends Controller
 
 
     /**
+     * Unfollow a user
+     *
      * @Route("/user/{slug}/unfollow", name="unfollow_user")
      */
     public function unfollowUserAction($slug)
@@ -106,6 +112,8 @@ class UsersController extends Controller
 
 
     /**
+     * Get the user followed people
+     *
      * @Route("/user/{slug}/followed", name="user_followed")
      * @Method("get")
      * @Template()
@@ -125,8 +133,9 @@ class UsersController extends Controller
         );
     }
 
-
     /**
+     * Get the user followers
+     *
      * @Route("/user/{slug}/followers", name="user_followers")
      * @Method("get")
      * @Template()

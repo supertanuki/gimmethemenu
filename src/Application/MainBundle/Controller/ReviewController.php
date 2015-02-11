@@ -48,7 +48,6 @@ class ReviewController extends Controller
     * Creates a form to edit a Review entity.
     *
     * @param Review $entity The entity
-    *
     * @return \Symfony\Component\Form\Form The form
     */
     private function createEditForm(Review $review)

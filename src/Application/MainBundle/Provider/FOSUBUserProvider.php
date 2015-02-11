@@ -9,7 +9,10 @@ class FOSUBUserProvider extends BaseClass
 {
 
     /**
-     * {@inheritDoc}
+     * Connect user
+     *
+     * @param UserInterface $user
+     * @param UserResponseInterface $response
      */
     public function connect(UserInterface $user, UserResponseInterface $response)
     {
@@ -23,14 +26,14 @@ class FOSUBUserProvider extends BaseClass
         $setter_id = $setter.'Id';
         $setter_token = $setter.'AccessToken';
 
-        //we "disconnect" previously connected users
+        // we "disconnect" previously connected users
         if (null !== $previousUser = $this->userManager->findUserBy(array($property => $username))) {
             $previousUser->$setter_id(null);
             $previousUser->$setter_token(null);
             $this->userManager->updateUser($previousUser);
         }
 
-        //we connect current user
+        // we connect current user
         $user->$setter_id($username);
         $user->$setter_token($response->getAccessToken());
 
@@ -38,7 +41,10 @@ class FOSUBUserProvider extends BaseClass
     }
 
     /**
-     * {@inheritdoc}
+     * Load User By OAuth
+     *
+     * @param UserResponseInterface $response
+     * @return \FOS\UserBundle\Model\UserInterface|UserInterface
      */
     public function loadUserByOAuthUserResponse(UserResponseInterface $response)
     {
@@ -83,13 +89,13 @@ class FOSUBUserProvider extends BaseClass
             }
         }
 
-        //if user exists - go with the HWIOAuth way
+        // if user exists - go with the HWIOAuth way
         $user = parent::loadUserByOAuthUserResponse($response);
 
         $serviceName = $response->getResourceOwner()->getName();
         $setter = 'set' . ucfirst($serviceName) . 'AccessToken';
 
-        //update access token
+        // update access token
         $user->$setter($response->getAccessToken());
 
         return $user;

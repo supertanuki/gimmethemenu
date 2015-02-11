@@ -10,6 +10,8 @@ use Symfony\Component\Security\Core\SecurityContext;
 class AdminSecurityController extends Controller
 {
     /**
+     * Login
+     *
      * @Route("/_administration/login", name="admin_login")
      * @Template()
      */

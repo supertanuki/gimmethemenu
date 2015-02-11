@@ -22,6 +22,206 @@ use Application\MainBundle\Form\Type\DishReviewType;
 class RestaurantController extends Controller
 {
     /**
+     * Show restaurant page
+     *
+     * @Route("/restaurant/{country_slug}/{locality_slug}/{restaurant_slug}", name="restaurant_show")
+     * @Method("get|post")
+     */
+    public function showAction(Request $request, $country_slug, $locality_slug, $restaurant_slug)
+    {
+        $restaurant = $this->getDoctrine()
+            ->getRepository('ApplicationMainBundle:Restaurant')
+            ->findOneBy(array('slug' => $restaurant_slug));
+
+        if (!$restaurant) {
+            throw $this->createNotFoundException('Restaurant not found');
+        }
+
+        $dishes = $this->getDoctrine()
+            ->getRepository('ApplicationMainBundle:Dish')
+            ->findBy(array('restaurant' => $restaurant));
+
+        $form_menu = null;
+        $form_dish = null;
+
+        if ($this->getUser()) {
+            $form_menu = $this->getFormRestaurantMenu($request, $restaurant);
+            if ($form_menu instanceof RedirectResponse || $form_menu instanceof Response) {
+                return $form_menu;
+            }
+
+            $form_dish = $this->getFormDish($request, $restaurant);
+            if ($form_dish instanceof RedirectResponse || $form_dish instanceof Response) {
+                return $form_dish;
+            }
+        }
+
+        // set this restaurant in session
+        $this->get('session')->set('last_visited_restaurant_url', $this->getRestaurantUrl($restaurant));
+        $this->get('session')->set('last_visited_restaurant_name', $restaurant->getName());
+
+
+        return $this->render(
+            'ApplicationMainBundle:Restaurant:show.html.twig',
+            array(
+                'restaurant' => $restaurant,
+                'restaurant_url' => $this->getRestaurantUrl($restaurant),
+                'dishes' => $dishes,
+                'form_restaurant_menu' => $form_menu ? $form_menu->createView() : null,
+                'form_dish' => $form_dish ? $form_dish->createView() : null,
+            )
+        );
+    }
+
+    /**
+     * Restaurants search page
+     *
+     * @Route("/restaurant", name="restaurant_search")
+     * @Method("get")
+     * @Template()
+     */
+    public function searchAction()
+    {
+        return array();
+    }
+
+    /**
+     * Get latest user review
+     *
+     * @return Response
+     */
+    public function getLatestForUserAction()
+    {
+        $lastRestaurants = null;
+
+        if ($this->getUser()) {
+            $lastRestaurants = $this->getDoctrine()
+                ->getRepository('ApplicationMainBundle:Review')
+                ->getLatestForUser($this->getUser());
+        }
+
+        return $this->render(
+            'ApplicationMainBundle:Restaurant:getLatestForUser.html.twig',
+            array('lastRestaurants' => $lastRestaurants)
+        );
+    }
+
+    /**
+     * Get the restaurant url
+     *
+     * @param $restaurant
+     * @return string
+     */
+    private function getRestaurantUrl($restaurant)
+    {
+        return $this->generateUrl('restaurant_show', $restaurant->getParamsForUrl());
+    }
+
+    /**
+     * Get the menu form
+     *
+     * @param Request $request
+     * @param $restaurant
+     * @return \Symfony\Component\Form\Form|RedirectResponse
+     */
+    private function getFormRestaurantMenu(Request $request, $restaurant)
+    {
+        // files form begin
+        $form_restaurant_menu = $this->createForm(
+            new RestaurantMenuMultipleFilesType(),
+            null
+        );
+
+        if ($request->getMethod() === 'POST' && $request->request->has('application_main_restaurant_menu_multiple_files')) {
+            $form_restaurant_menu->handleRequest($request);
+            if ($form_restaurant_menu->isValid()) {
+                $em = $this->getDoctrine()->getManager();
+
+                $data = $form_restaurant_menu->getData();
+                foreach ($data['file'] as $file) {
+                    $menuFile = new RestaurantMenuFile();
+                    $menuFile->setFileFile($file);
+                    $menuFile->setRestaurant($restaurant);
+                    $menuFile->setUser($this->getUser());
+                    $em->persist($menuFile);
+                }
+
+                $em->flush();
+
+                $this->get('session')->getFlashBag()->add('info', 'Uploaded! Thanks!');
+
+                // redirect
+                return $this->redirect($this->getRestaurantUrl($restaurant));
+            }
+        }
+
+        return $form_restaurant_menu;
+    }
+
+    /**
+     * Get the dish form
+     *
+     * @param Request $request
+     * @param $restaurant
+     * @return \Symfony\Component\Form\Form|RedirectResponse|Response
+     */
+    private function getFormDish(Request $request, $restaurant)
+    {
+        $dish = new Dish();
+        $dish->setUser($this->getUser());
+        $dish->setRestaurant($restaurant);
+
+        $review = new Review();
+        $review->setDish($dish);
+        $review->setWhen(new \DateTime("now"));
+        $review->setUser($this->getUser());
+
+        $dish->getReviews()->add($review);
+
+        $form_dish = $this->createForm(
+            new DishReviewType(),
+            $dish,
+            array('action' => $this->getRestaurantUrl($restaurant))
+        );
+
+        if ($request->getMethod() === 'POST' && $request->request->has('application_main_dish_review')) {
+            $form_dish->handleRequest($request);
+            if ($form_dish->isValid()) {
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($dish);
+                $em->flush();
+
+                $this->get('session')->getFlashBag()->add('info', 'The dish is created. Thank you! __shareit__');
+
+                // redirect
+                return $this->redirect($this->generateUrl('dish_show', $dish->getParamsForUrl()));
+            }
+
+            $dish_already_exists = $this->getDoctrine()
+                ->getRepository('ApplicationMainBundle:Dish')
+                ->findOneBy(array(
+                    'restaurant' => $restaurant,
+                    'name' => $dish->getName(),
+                ));
+
+            // onError
+            return $this->render(
+                'ApplicationMainBundle:Dish:add.html.twig',
+                array(
+                    'restaurant' => $restaurant,
+                    'dish_already_exists' => $dish_already_exists,
+                    'restaurant_url' => $this->getRestaurantUrl($restaurant),
+                    'form_dish' => $form_dish->createView()
+                )
+            );
+        }
+
+        return $form_dish;
+    }
+
+    /**
+     * Get a restaurant
+     *
      * @Route("/restaurant/get", name="restaurant_get")
      * @Method("get|post")
      *
@@ -105,195 +305,10 @@ class RestaurantController extends Controller
         }
 
         if ($restaurant) {
-//            if ($request->isXmlHttpRequest()) {
-//                // return restaurant info
-//                $response = new JsonResponse();
-//                $response->setData(array(
-//                    'data' => 123
-//                ));
-//
-//            } else {
-                // redirect to the restaurant page
-                return $this->redirect($this->getRestaurantUrl($restaurant));
-//            }
+            // redirect to the restaurant page
+            return $this->redirect($this->getRestaurantUrl($restaurant));
         }
 
         throw $this->createNotFoundException('Nothing to do !');
-    }
-
-    /**
-     * @Route("/restaurant/{country_slug}/{locality_slug}/{restaurant_slug}", name="restaurant_show")
-     * @Method("get|post")
-     */
-    public function showAction(Request $request, $country_slug, $locality_slug, $restaurant_slug)
-    {
-        $restaurant = $this->getDoctrine()
-            ->getRepository('ApplicationMainBundle:Restaurant')
-            ->findOneBy(array('slug' => $restaurant_slug));
-
-        if (!$restaurant) {
-            throw $this->createNotFoundException('Restaurant not found');
-        }
-
-        // @todo : verify $country_slug & $locality_slug
-
-        $dishes = $this->getDoctrine()
-            ->getRepository('ApplicationMainBundle:Dish')
-            ->findBy(array('restaurant' => $restaurant));
-
-        $form_menu = null;
-        $form_dish = null;
-
-        if ($this->getUser()) {
-            $form_menu = $this->getFormRestaurantMenu($request, $restaurant);
-            if ($form_menu instanceof RedirectResponse || $form_menu instanceof Response) {
-                return $form_menu;
-            }
-
-            $form_dish = $this->getFormDish($request, $restaurant);
-            if ($form_dish instanceof RedirectResponse || $form_dish instanceof Response) {
-                return $form_dish;
-            }
-        }
-
-        // set this restaurant in session
-        $this->get('session')->set('last_visited_restaurant_url', $this->getRestaurantUrl($restaurant));
-        $this->get('session')->set('last_visited_restaurant_name', $restaurant->getName());
-
-
-//        $this->get('liip_imagine.cache.manager')->getBrowserPath('/relative/path/to/image.jpg', 'my_thumb', true),
-
-        return $this->render(
-            'ApplicationMainBundle:Restaurant:show.html.twig',
-            array(
-                'restaurant' => $restaurant,
-                'restaurant_url' => $this->getRestaurantUrl($restaurant),
-                'dishes' => $dishes,
-                'form_restaurant_menu' => $form_menu ? $form_menu->createView() : null,
-                'form_dish' => $form_dish ? $form_dish->createView() : null,
-            )
-        );
-    }
-
-    /**
-     * @Route("/restaurant", name="restaurant_search")
-     * @Method("get")
-     * @Template()
-     */
-    public function searchAction()
-    {
-        return array();
-    }
-
-    public function getLatestForUserAction()
-    {
-        $lastRestaurants = null;
-
-        if ($this->getUser()) {
-            $lastRestaurants = $this->getDoctrine()
-                ->getRepository('ApplicationMainBundle:Review')
-                ->getLatestForUser($this->getUser());
-        }
-
-        return $this->render(
-            'ApplicationMainBundle:Restaurant:getLatestForUser.html.twig',
-            array('lastRestaurants' => $lastRestaurants)
-        );
-    }
-
-    /*
-     * return the route for restaurant_show
-     */
-    private function getRestaurantUrl($restaurant)
-    {
-        return $this->generateUrl('restaurant_show', $restaurant->getParamsForUrl());
-    }
-
-    private function getFormRestaurantMenu(Request $request, $restaurant)
-    {
-        // files form begin
-        $form_restaurant_menu = $this->createForm(
-            new RestaurantMenuMultipleFilesType(),
-            null
-        );
-
-        if ($request->getMethod() === 'POST' && $request->request->has('application_main_restaurant_menu_multiple_files')) {
-            $form_restaurant_menu->handleRequest($request);
-            if ($form_restaurant_menu->isValid()) {
-                $em = $this->getDoctrine()->getManager();
-
-                $data = $form_restaurant_menu->getData();
-                foreach ($data['file'] as $file) {
-                    $menuFile = new RestaurantMenuFile();
-                    $menuFile->setFileFile($file);
-                    $menuFile->setRestaurant($restaurant);
-                    $menuFile->setUser($this->getUser());
-                    $em->persist($menuFile);
-                }
-
-                $em->flush();
-
-                $this->get('session')->getFlashBag()->add('info', 'Uploaded! Thanks!');
-
-                // redirect
-                return $this->redirect($this->getRestaurantUrl($restaurant));
-            }
-        }
-
-        return $form_restaurant_menu;
-    }
-
-    private function getFormDish(Request $request, $restaurant)
-    {
-        $dish = new Dish();
-        $dish->setUser($this->getUser());
-        $dish->setRestaurant($restaurant);
-
-        $review = new Review();
-        $review->setDish($dish);
-        $review->setWhen(new \DateTime("now"));
-        $review->setUser($this->getUser());
-
-        $dish->getReviews()->add($review);
-
-        $form_dish = $this->createForm(
-            new DishReviewType(),
-            $dish,
-            array('action' => $this->getRestaurantUrl($restaurant))
-        );
-
-        if ($request->getMethod() === 'POST' && $request->request->has('application_main_dish_review')) {
-            $form_dish->handleRequest($request);
-            if ($form_dish->isValid()) {
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($dish);
-                $em->flush();
-
-                $this->get('session')->getFlashBag()->add('info', 'The dish is created. Thank you! __shareit__');
-
-                // redirect
-                return $this->redirect($this->generateUrl('dish_show', $dish->getParamsForUrl()));
-            }
-
-            $dish_already_exists = $this->getDoctrine()
-                ->getRepository('ApplicationMainBundle:Dish')
-                ->findOneBy(array(
-                    'restaurant' => $restaurant,
-                    'name' => $dish->getName(),
-                ));
-
-            // onError
-            return $this->render(
-                'ApplicationMainBundle:Dish:add.html.twig',
-                array(
-                    'restaurant' => $restaurant,
-                    'dish_already_exists' => $dish_already_exists,
-                    'restaurant_url' => $this->getRestaurantUrl($restaurant),
-                    'form_dish' => $form_dish->createView()
-                )
-            );
-        }
-
-        return $form_dish;
     }
 }

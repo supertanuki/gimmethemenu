@@ -18,6 +18,8 @@ use Application\MainBundle\Form\Type\DishGroupType;
 class DishController extends Controller
 {
     /**
+     * Show a dish and add a review
+     *
      * @Route("/restaurant/{country_slug}/{locality_slug}/{restaurant_slug}/{dish_slug}", name="dish_show")
      * @Method("get|post")
      */
@@ -30,8 +32,6 @@ class DishController extends Controller
         if (!$restaurant) {
             throw $this->createNotFoundException('Restaurant not found');
         }
-
-        // @todo : verify $country_slug & $locality_slug
 
         $dish = $this->getDoctrine()
             ->getRepository('ApplicationMainBundle:Dish')
@@ -79,19 +79,6 @@ class DishController extends Controller
         }
         // /review form
 
-//        $exif = null;
-//        $root = __DIR__ . '/../../../../web';
-//        $reviews = $dish->getReviews();
-//        foreach ($reviews as $r) {
-//            if ($r->getPhotoName()) {
-//                $helper = $this->container->get('vich_uploader.templating.helper.uploader_helper');
-//                $path = $helper->asset($r, 'dish_photo');
-//                $metadata = exif_read_data($root . $path, null, true);
-//                echo '<pre>'; var_dump($metadata); exit;
-//                break;
-//            }
-//        }
-
         return $this->render(
             'ApplicationMainBundle:Dish:show.html.twig',
             array(
@@ -104,6 +91,8 @@ class DishController extends Controller
 
 
     /**
+     * Add a quick review
+     *
      * @Route("/restaurant/{country_slug}/{locality_slug}/{restaurant_slug}/{dish_slug}/add-quick-review", name="review_quick_add")
      * @Method("get|post")
      */
@@ -120,8 +109,6 @@ class DishController extends Controller
         if (!$restaurant) {
             throw $this->createNotFoundException('Restaurant not found');
         }
-
-        // @todo : verify $country_slug & $locality_slug
 
         $dish = $this->getDoctrine()
             ->getRepository('ApplicationMainBundle:Dish')
@@ -174,6 +161,8 @@ class DishController extends Controller
     }
 
     /**
+     * Add a meal
+     *
      * @Route("/restaurant/{country_slug}/{locality_slug}/{restaurant_slug}/meal/add", name="add_group_dishes")
      * @Method("get|post")
      */
@@ -256,6 +245,8 @@ class DishController extends Controller
     }
 
     /**
+     * Add a dish to a meal
+     *
      * @Route("/restaurant/{country_slug}/{locality_slug}/{restaurant_slug}/{dish_slug}/dish/add", name="dish_child_add")
      * @Method("get|post")
      */
@@ -359,7 +350,8 @@ class DishController extends Controller
     }
 
     /**
-     * Displays a form to edit an existing dish.
+     * Display a form to edit an existing dish
+     *
      * @Route("/dish/{id}/edit", name="dish_edit")
      * @Method("GET")
      */
@@ -418,7 +410,8 @@ class DishController extends Controller
     }
 
     /**
-     * Edits an existing dish.
+     * Edit an existing dish
+     *
      * @Route("/dish/{id}/update", name="dish_update")
      * @Method("PUT")
      * @Template("ApplicationMainBundle:Dish:edit.html.twig")
@@ -469,7 +462,8 @@ class DishController extends Controller
     }
 
     /**
-     * Deletes a dish
+     * Delete a dish
+     *
      * @Route("/dish/{id}/delete", name="dish_delete")
      * @Method("DELETE")
      */
@@ -507,7 +501,8 @@ class DishController extends Controller
 
     /**
      * Creates a form to delete a dish.
-     * @param mixed $id The entity id
+     *
+     * @param integer $id The entity id
      * @return \Symfony\Component\Form\Form The form
      */
     private function createDeleteForm($id)
@@ -521,6 +516,8 @@ class DishController extends Controller
     }
 
     /**
+     * Generate dish url
+     *
      * @param $dish
      * @return string
      */
@@ -529,9 +526,12 @@ class DishController extends Controller
         return $this->generateUrl('dish_show', $dish->getParamsForUrl());
     }
 
-    /*
+    /**
      * Check if there is already a review for this dish by this user
-     * @return boolean
+     *
+     * @param $dish
+     * @param $user
+     * @return bool
      */
     private function reviewDishByUserExists($dish, $user)
     {

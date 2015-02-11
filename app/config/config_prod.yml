@@ -12,8 +12,8 @@ imports:
 #        query_cache_driver: apc
 
 ewz_recaptcha:
-    public_key:   6Lf-c_4SAAAAAH2Gr7Hk6l2HUgr9sOr40TfAIJ5h # keys for gimmethemenu.com
-    private_key:  6Lf-c_4SAAAAAD670DPbdkWi1gqhEe3UZ_qbxhM0
+    public_key:   "%ewz_recaptcha_public_key_prod%"
+    private_key:  "%ewz_recaptcha_private_key_prod%"
     locale_key:   %kernel.default_locale%
     enabled:      true
 

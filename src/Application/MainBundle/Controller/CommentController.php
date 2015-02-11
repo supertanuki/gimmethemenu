@@ -17,7 +17,7 @@ class CommentController extends Controller
 {
 
     /**
-     * Creates a new Comment entity.
+     * Add a comment
      *
      * @Route("/comment/{review_id}/create", name="comment_create")
      * @Method("POST")
@@ -57,7 +57,7 @@ class CommentController extends Controller
     }
 
     /**
-     * Delete a comment entity.
+     * Delete a comment
      *
      * @Route("/comment/{id}/delete", name="comment_delete")
      * @Method("POST")
@@ -84,12 +84,18 @@ class CommentController extends Controller
         $em->flush();
 
         $response = new JsonResponse();
-//        $response->setData(array(
-//            'data' => 123
-//        ));
         return $response;
     }
 
+    /**
+     * Check comment CSRF
+     *
+     * @param Request $request
+     * @param $name
+     * @param string $query
+     * @return bool
+     * @throws \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException
+     */
     protected function checkCsrf(Request $request, $name, $query = '_token')
     {
         $csrfProvider = $this->get('form.csrf_provider');

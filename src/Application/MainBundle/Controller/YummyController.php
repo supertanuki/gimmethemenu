@@ -10,9 +10,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Application\MainBundle\Entity\Yummy;
 
-/**
- * Yummy controller.
- */
 class YummyController extends Controller
 {
     /**
@@ -56,12 +53,18 @@ class YummyController extends Controller
         $em->flush();
 
         $response = new JsonResponse();
-//        $response->setData(array(
-//            'data' => 123
-//        ));
         return $response;
     }
 
+    /**
+     * Check CSRF
+     *
+     * @param Request $request
+     * @param $name
+     * @param string $query
+     * @return bool
+     * @throws \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException
+     */
     protected function checkCsrf(Request $request, $name, $query = '_token')
     {
         $csrfProvider = $this->get('form.csrf_provider');

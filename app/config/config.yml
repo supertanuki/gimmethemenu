@@ -110,8 +110,8 @@ vich_uploader:
             delete_on_remove:   true
 
 ewz_recaptcha:
-    public_key:   6Lcn2_gSAAAAADTIWqTFAmKp6PjQGmynjqVKXIdB # keys for localhost
-    private_key:  6Lcn2_gSAAAAAMRZKbruKHt320-AQqMtsf0dkFQz
+    public_key:   "%ewz_recaptcha_public_key_test%"
+    private_key:  "%ewz_recaptcha_private_key_test%"
     locale_key:   %kernel.default_locale%
     enabled:      true
 

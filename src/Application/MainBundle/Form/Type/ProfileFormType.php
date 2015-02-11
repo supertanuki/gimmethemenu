@@ -25,12 +25,6 @@ class ProfileFormType extends BaseType
                 'label' => 'My timeline is public',
                 'required' => false
             ))
-//            ->add('lastName')
-//            ->add('address')
-//            ->add('postalCode')
-//            ->add('city')
-//            ->add('country')
-//            ->add('phone')
         ;
     }
 

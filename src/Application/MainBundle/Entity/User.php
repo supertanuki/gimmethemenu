@@ -170,144 +170,6 @@ class User extends BaseUser
         return $this->firstName;
     }
 
-//    /**
-//     * Set lastName
-//     *
-//     * @param  string $lastName
-//     * @return User
-//     */
-//    public function setLastName($lastName)
-//    {
-//        $this->lastName = $lastName;
-//
-//        return $this;
-//    }
-//
-//    /**
-//     * Get lastName
-//     *
-//     * @return string
-//     */
-//    public function getLastName()
-//    {
-//        return $this->lastName;
-//    }
-//
-//    /**
-//     * Set address
-//     *
-//     * @param  string $address
-//     * @return User
-//     */
-//    public function setAddress($address)
-//    {
-//        $this->address = $address;
-//
-//        return $this;
-//    }
-//
-//    /**
-//     * Get address
-//     *
-//     * @return string
-//     */
-//    public function getAddress()
-//    {
-//        return $this->address;
-//    }
-//
-//    /**
-//     * Set postalCode
-//     *
-//     * @param  string $postalCode
-//     * @return User
-//     */
-//    public function setPostalCode($postalCode)
-//    {
-//        $this->postalCode = $postalCode;
-//
-//        return $this;
-//    }
-//
-//    /**
-//     * Get postalCode
-//     *
-//     * @return string
-//     */
-//    public function getPostalCode()
-//    {
-//        return $this->postalCode;
-//    }
-//
-//    /**
-//     * Set city
-//     *
-//     * @param  string $city
-//     * @return User
-//     */
-//    public function setCity($city)
-//    {
-//        $this->city = $city;
-//
-//        return $this;
-//    }
-//
-//    /**
-//     * Get city
-//     *
-//     * @return string
-//     */
-//    public function getCity()
-//    {
-//        return $this->city;
-//    }
-//
-//    /**
-//     * Set country
-//     *
-//     * @param  string $country
-//     * @return User
-//     */
-//    public function setCountry($country)
-//    {
-//        $this->country = $country;
-//
-//        return $this;
-//    }
-//
-//    /**
-//     * Get country
-//     *
-//     * @return string
-//     */
-//    public function getCountry()
-//    {
-//        return $this->country;
-//    }
-//
-//    /**
-//     * Set phone
-//     *
-//     * @param  string $phone
-//     * @return User
-//     */
-//    public function setPhone($phone)
-//    {
-//        $this->phone = $phone;
-//
-//        return $this;
-//    }
-//
-//    /**
-//     * Get phone
-//     *
-//     * @return string
-//     */
-//    public function getPhone()
-//    {
-//        return $this->phone;
-//    }
-
     /**
      * Set createdAt
      *
@@ -353,39 +215,6 @@ class User extends BaseUser
     {
         return $this->updatedAt;
     }
-
-//    /**
-//     * Add projectResponses
-//     *
-//     * @param  \Application\MainBundle\Entity\ProjectResponse $projectResponses
-//     * @return User
-//     */
-//    public function addProjectResponse(\Application\MainBundle\Entity\ProjectResponse $projectResponses)
-//    {
-//        $this->projectResponses[] = $projectResponses;
-//
-//        return $this;
-//    }
-//
-//    /**
-//     * Remove projectResponses
-//     *
-//     * @param \Application\MainBundle\Entity\ProjectResponse $projectResponses
-//     */
-//    public function removeProjectResponse(\Application\MainBundle\Entity\ProjectResponse $projectResponses)
-//    {
-//        $this->projectResponses->removeElement($projectResponses);
-//    }
-//
-//    /**
-//     * Get projectResponses
-//     *
-//     * @return \Doctrine\Common\Collections\Collection
-//     */
-//    public function getProjectResponses()
-//    {
-//        return $this->projectResponses;
-//    }
 
     /**
      * Add reviews
@@ -621,7 +450,6 @@ class User extends BaseUser
     {
         foreach($this->getFollowed() as $followed) {
             if ($followed->getUserFollowed() == $user) {
-//                die($followed->getUserFollowed()->getId());
                 return true;
             }
         }

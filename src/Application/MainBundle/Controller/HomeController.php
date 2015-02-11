@@ -9,6 +9,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class HomeController extends Controller
 {
     /**
+     * Get the latest reviews
+     *
      * @Route("/", name="homepage")
      * @Template()
      */

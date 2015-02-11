@@ -10,6 +10,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class TimelineController extends Controller
 {
     /**
+     * Show the user timeline
+     *
      * @Route("/user/{slug}/timeline", name="user_timeline")
      * @Method("get")
      * @Template()
@@ -26,24 +28,6 @@ class TimelineController extends Controller
 
         $logs = array();
 
-        //added dishes
-        $dishes = array();
-//        $dishes = $this->getDoctrine()
-//            ->getRepository('ApplicationMainBundle:Dish')
-//            ->findBy(
-//                array('user' => $user),
-//                array('createdAt' => 'DESC')
-//            );
-
-        //added menuFile
-        $menuFiles = array();
-//        $menuFiles = $this->getDoctrine()
-//            ->getRepository('ApplicationMainBundle:RestaurantMenuFile')
-//            ->findBy(
-//                array('user' => $user),
-//                array('createdAt' => 'DESC')
-//            );
-
         //added reviews
         $reviews = $this->getDoctrine()
             ->getRepository('ApplicationMainBundle:Review')
@@ -56,14 +40,6 @@ class TimelineController extends Controller
             );
 
         $dateFormat = 'Y-m-d H:i:s';
-
-        foreach ($dishes as $dish) {
-            $logs[$dish->getCreatedAt()->format($dateFormat)]['dish'] = $dish;
-        }
-
-        foreach ($menuFiles as $menuFile) {
-            $logs[$menuFile->getCreatedAt()->format($dateFormat)]['menuFile'] = $menuFile;
-        }
 
         foreach ($reviews as $review) {
             $logs[$review->getWhen()->format($dateFormat)]['reviews'][] = $review;
@@ -83,6 +59,8 @@ class TimelineController extends Controller
 
 
     /**
+     * Show the activities timeline
+     *
      * @Route("/activities", name="activities")
      * @Method("get")
      * @Template()
@@ -102,15 +80,6 @@ class TimelineController extends Controller
             ->getReviewsFromFollowed($user);
 
         $dateFormat = 'Y-m-d H:i:s';
-
-//        foreach ($dishes as $dish) {
-//            $logs[$dish->getCreatedAt()->format($dateFormat)]['dish'] = $dish;
-//        }
-//
-//        foreach ($menuFiles as $menuFile) {
-//            $logs[$menuFile->getCreatedAt()->format($dateFormat)]['menuFile'] = $menuFile;
-//        }
-
         foreach ($reviews as $review) {
             $logs[$review->getWhen()->format($dateFormat)]['reviews'][] = $review;
         }

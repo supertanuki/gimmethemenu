@@ -10,6 +10,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class StaticPageController extends Controller
 {
     /**
+     * About page
+     *
      * @Route("/about", name="about")
      * @Template()
      */
@@ -19,6 +21,8 @@ class StaticPageController extends Controller
     }
 
     /**
+     * Changelog page
+     *
      * @Route("/changelog", name="changelog")
      * @Template()
      */

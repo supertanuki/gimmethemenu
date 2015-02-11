@@ -9,7 +9,7 @@ security:
         in_memory:
             memory:
                 users:
-                    richard:  { password: '1980#gtm', roles: ['ROLE_SONATA_ADMIN', 'ROLE_SUPER_ADMIN'] }
+                    admin:  { password: "%admin_password%", roles: ['ROLE_SONATA_ADMIN', 'ROLE_SUPER_ADMIN'] }
 
     firewalls:
         dev:
