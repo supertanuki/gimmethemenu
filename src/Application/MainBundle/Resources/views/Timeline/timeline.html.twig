@@ -42,52 +42,6 @@
                 {% set iterator = 0 %}
                 {% for log in logs %}
 
-                    {#
-                    {% if log['menuFile'] is defined %}
-
-                        {% set iterator = iterator+1 %}
-
-                        {% set restaurant_url = path('restaurant_show', log['menuFile'].restaurant.paramsForUrl) %}
-
-                        <dd class="{% if iterator is odd %}pos-left{% else %}pos-right{% endif %} clearfix collapse">
-                            <div class="circ"></div>
-                            <div class="time">{{ log['menuFile'].createdAt|localizeddate('medium', 'none') }}</div>
-                            <div class="events">
-                                <div class="events-body">
-                                    <p>
-                                        <span class="label label-info">Added menu</span>
-                                        <a href="{{ restaurant_url }}">{{ log['menuFile'].restaurant.name }}</a>
-                                    </p>
-                                </div>
-                            </div>
-                        </dd>
-
-                    {% elseif log['dish'] is defined %}
-
-                        {% set iterator = iterator+1 %}
-
-                        {% set dish_url = path('dish_show', log['dish'].restaurant.paramsForUrl) %}
-
-                        {% set restaurant_url = path('restaurant_show', log['dish'].restaurant.paramsForUrl) %}
-
-
-                        <dd class="{% if iterator is odd %}pos-left{% else %}pos-right{% endif %} clearfix collapse">
-                            <div class="circ"></div>
-
-                            <div class="time">{{ log['dish'].createdAt|localizeddate('medium', 'none') }}</div>
-                            <div class="events">
-                                <div class="events-body">
-                                    <p>
-                                        <span class="label label-info">Added dish</span>
-                                        <a href="{{ dish_url }}">{{ log['dish'].name }}</a>
-                                        @ <a href="{{ restaurant_url }}">{{ log['dish'].restaurant.name }}</a>
-                                    </p>
-                                </div>
-                            </div>
-                        </dd>
-                        #}
-
-
                     {% set current_month = null %}
                     {% set current_day = null %}
                     {% set current_user = null %}
@@ -314,7 +268,7 @@
            data-delete-comment="1">
             <span class="glyphicon glyphicon-remove"></span>
         </a>
-        {% include 'ApplicationMainBundle:Common:user_link.html.twig' with {'user': user} %}:
+        {% include 'ApplicationMainBundle:Common:user_link.html.twig' with {'user': app.user} %}:
         <span class="comment"></span>
     </p>
 </div>
