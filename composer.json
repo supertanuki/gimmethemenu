@@ -31,7 +31,8 @@
         "vich/uploader-bundle": "~0.10.0",
         "liip/imagine-bundle": "dev-master",
         "hwi/oauth-bundle": "0.4.*@dev",
-        "hipaway-travel/mandrill-bundle": "dev-master"
+        "hipaway-travel/mandrill-bundle": "dev-master",
+        "phpunit/phpunit": "~4.5"
     },
     "scripts": {
         "post-install-cmd": [
